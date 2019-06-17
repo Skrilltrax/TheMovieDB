@@ -53,7 +53,7 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:2.5.0"
 
     //Material Components
-    implementation 'com.google.android.material:material:1.1.0-alpha07'
+    implementation 'com.google.android.material:material:1.0.0'
     //Navigation
     implementation "androidx.navigation:navigation-fragment-ktx:2.1.0-alpha05"
     implementation "androidx.navigation:navigation-ui:2.1.0-alpha05"
