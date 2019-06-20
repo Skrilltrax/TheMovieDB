@@ -5,13 +5,14 @@
         android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/background"
         android:minHeight="?attr/actionBarSize">
 
     <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="40dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            android:minHeight="60dp"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|enterAlways|snap">
 
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -33,13 +34,14 @@
                         android:text="Browse"
                         android:textSize="40dp"
                         android:textStyle="bold"
-                        android:textColor="@android:color/black"/>
+                        android:textColor="@android:color/white"/>
 
                 <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="end"
                         android:layout_marginEnd="8dp"
+                        android:tint="@color/colorWhite"
                         android:src="@drawable/ic_search_black_24dp"
                 />
 
@@ -50,15 +52,15 @@
                     android:id="@+id/tabLayout"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="20dp"
+                    app:tabBackground="@color/background"
                     app:tabMinWidth="120dp"
                     app:tabPaddingStart="4dp"
                     app:tabPaddingEnd="4dp"
-                    app:tabTextColor="@android:color/black"
+                    app:tabTextColor="@android:color/white"
                     app:tabMode="scrollable"
                     app:tabIndicatorFullWidth="false"
-                    app:tabIndicatorColor="@color/colorAccent"
-                    app:tabIndicator="@drawable/tab_indicator"
+                    app:tabIndicatorColor="@color/colorWhite"
                     app:layout_constraintTop_toBottomOf="@id/toolBar"
                     app:layout_constraintStart_toStartOf="parent">
 

@@ -4,8 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatRatingBar
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import me.skrilltrax.themoviedb.model.MovieResultsItem
 import timber.log.Timber
 
@@ -27,10 +31,20 @@ class MovieAdapter(private val movieList: List<MovieResultsItem>) : RecyclerView
     inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val movieName: TextView = itemView.findViewById(R.id.movieTitle)
         val movieImage: ImageView = itemView.findViewById(R.id.movieImage)
+        val ratingsBar: AppCompatRatingBar = itemView.findViewById(R.id.ratingBar)
+        val ratingsText: TextView = itemView.findViewById(R.id.ratingText)
+        val releaseDate: TextView = itemView.findViewById(R.id.releaseDate)
         fun bind(movieResultsItem: MovieResultsItem) {
             Timber.d("InOnBind")
             Timber.d(movieResultsItem.title)
             movieName.text = movieResultsItem.title
+            releaseDate.text = movieResultsItem.releaseDate
+            ratingsText.text = movieResultsItem.voteAverage.toString()
+            ratingsBar.rating = (movieResultsItem.voteAverage!!.toFloat()/2)
+            Glide.with(itemView)
+                .load(Constants.POSTER_W500_IMAGE_PATH + movieResultsItem.posterPath)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(movieImage)
         }
     }
 }

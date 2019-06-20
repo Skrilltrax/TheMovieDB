@@ -27,19 +27,19 @@ class MainActivity : AppCompatActivity() {
                 R.id.movie -> {
                     it.isChecked = true
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        it.iconTintList = ColorStateList.valueOf(R.drawable.bottom_movie_color_list)
+                        it.iconTintList = ContextCompat.getColorStateList(this,R.color.colorAccent)
                     }
                 }
                 R.id.tv -> {
                     it.isChecked = true
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        it.iconTintList = ColorStateList.valueOf(R.drawable.bottom_tv_color_list)
+                        it.iconTintList = ContextCompat.getColorStateList(this, R.color.colorGreen)
                     }
                 }
                 R.id.profile -> {
                     it.isChecked = true
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        it.iconTintList = ColorStateList.valueOf(R.drawable.bottom_account_color_list)
+                        it.iconTintList = ContextCompat.getColorStateList(this, R.color.colorBlue)
                     }
                 }
             }

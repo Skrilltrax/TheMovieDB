@@ -63,6 +63,11 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
     //Viewpager
     implementation 'androidx.viewpager2:viewpager2:1.0.0-alpha05'
+    //Anko Commons
+    implementation "org.jetbrains.anko:anko-commons:0.10.8"
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'

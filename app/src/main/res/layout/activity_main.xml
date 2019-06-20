@@ -5,23 +5,28 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/background"
         tools:context=".ui.activity.MainActivity">
 
     <FrameLayout
             android:id="@+id/frame"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:background="@color/background"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:itemBackground="@color/background"
+            android:background="@color/background"
             app:menu="@menu/bottom_menu"
-            app:itemIconTint="@drawable/bottom_account_color_list"
-            app:itemTextColor="@drawable/bottom_account_color_list"
+            app:itemIconTint="@drawable/bottom_movie_color_list"
+            app:itemTextColor="@drawable/bottom_movie_color_list"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            style="@style/Widget.MaterialComponents.BottomNavigationView.Colored"
             android:id="@+id/bottomNavigationView"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
