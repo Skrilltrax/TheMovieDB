@@ -44,18 +44,6 @@ class HomeFragment : Fragment() {
         setupViewPager()
 
         val tab1 = tabLayout.getTabAt(0)
-        /*tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-            }
-
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-            }
-
-        })*/
         tab1?.select()
     }
 
@@ -67,6 +55,7 @@ class HomeFragment : Fragment() {
 
     private fun setupViewPager() {
         viewPager.adapter = ViewPagerAdapter(fragmentManager!!)
+        viewPager.offscreenPageLimit = 3
         tabLayout.setupWithViewPager(viewPager)
     }
 }

@@ -14,22 +14,20 @@ class ViewPagerAdapter(fragmentManager: FragmentManager) :
             1 -> CommonViewPagerFragment.newInstance(1)
             2 -> CommonViewPagerFragment.newInstance(2)
             3 -> CommonViewPagerFragment.newInstance(3)
-            4 -> CommonViewPagerFragment.newInstance(4)
             else -> CommonViewPagerFragment.newInstance(0)
         }
     }
 
     override fun getCount(): Int {
-        return 5
+        return 4
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
         return when (position) {
-            0 -> "Latest"
-            1 -> "Popular"
-            2 -> "Playing"
-            3 -> "Upcoming"
-            4 -> "Top Rated"
+            0 -> "Popular"
+            1 -> "Now Playing"
+            2 -> "Upcoming"
+            3 -> "Top Rated"
             else -> null
         }
     }

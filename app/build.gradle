@@ -68,6 +68,11 @@ dependencies {
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
+    //Lottie
+    implementation 'com.airbnb.android:lottie:3.0.7'
+    //Rating Bar
+    implementation 'com.github.fuzz-productions:RatingBar:1.0.3'
+
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'

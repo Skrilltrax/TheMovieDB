@@ -83,16 +83,16 @@
             app:layout_constraintVertical_bias="0.66"
     />
 
-    <androidx.appcompat.widget.AppCompatRatingBar
+    <com.fuzzproductions.ratingbar.RatingBar
             android:id="@+id/ratingBar"
             android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="55dp"
-            android:paddingStart="20dp"
-            android:scaleX="0.6"
-            android:scaleY="0.6"
             android:elevation="1dp"
-            app:layout_constraintStart_toStartOf="@id/movieImage"
+            android:numStars="5"
+            app:starSize="15dp"
+            android:isIndicator="true"
+            app:layout_constraintStart_toStartOf="@id/divider"
             app:layout_constraintTop_toBottomOf="@id/divider"
             app:layout_constraintEnd_toStartOf="@id/ratingText"
             app:layout_constraintBottom_toBottomOf="@id/movieCard"
