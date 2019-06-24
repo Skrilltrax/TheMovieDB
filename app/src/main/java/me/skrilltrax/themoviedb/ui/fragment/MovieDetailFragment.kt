@@ -1,5 +1,6 @@
 package me.skrilltrax.themoviedb.ui.fragment
 
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +26,8 @@ import me.skrilltrax.themoviedb.network.api.MovieApiInterface
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 import retrofit2.HttpException
 import retrofit2.Response
+
+
 
 class MovieDetailFragment : Fragment() {
 
@@ -101,12 +104,14 @@ class MovieDetailFragment : Fragment() {
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(moviePoster)
         Glide.with(this@MovieDetailFragment.context!!)
-            .load(Constants.POSTER_ORIGINAL_IMAGE_PATH + movieDetailResponse.body()?.posterPath)
+            .load(Constants.POSTER_ORIGINAL_IMAGE_PATH + movieDetailResponse.body()?.backdropPath)
             .transition(DrawableTransitionOptions.withCrossFade())
             .into(movieBackground)
     }
 
     private fun setupViews(movieDetailResponse: Response<MovieDetailResponse>) {
+        movieTitle.text = movieDetailResponse.body()?.title
+        movieTitle.isSelected = true
         synopsis.text = movieDetailResponse.body()?.overview
         ratingText.text = movieDetailResponse.body()?.voteAverage.toString()
         ratingBar.rating = (movieDetailResponse.body()?.voteAverage!!.toFloat() / 2)

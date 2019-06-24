@@ -40,7 +40,7 @@ class CommonViewPagerFragment : BaseFragment(), OnItemClickListener {
         showLoading()
         recyclerView = view.findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(view.context, RecyclerView.VERTICAL, false)
-        recyclerView.adapter = MovieAdapter(arrayListOf())
+        recyclerView.adapter = MovieAdapter(arrayListOf(), this)
         getMovies(fragmentType ?: 0)
     }
 
@@ -59,7 +59,7 @@ class CommonViewPagerFragment : BaseFragment(), OnItemClickListener {
                     if (movieResponse.isSuccessful) {
                         movieList.addAll(movieResponse.body()?.results as Collection<MovieResultsItem>)
                         withContext(Dispatchers.Main) {
-                            recyclerView.adapter = MovieAdapter(movieList)
+                            recyclerView.adapter = MovieAdapter(movieList, this@CommonViewPagerFragment)
                             (recyclerView.adapter as MovieAdapter).notifyDataSetChanged()
                             hideLoading()
                         }
@@ -89,7 +89,7 @@ class CommonViewPagerFragment : BaseFragment(), OnItemClickListener {
     override fun onMovieItemClick(movieResultsItem: MovieResultsItem) {
         fragmentManager?.beginTransaction()
             ?.addToBackStack("MovieDetails")
-            ?.replace(R.id.frame,MovieDetailFragment.newInstance(movieResultsItem.id.toString()))
+            ?.add(R.id.frame,MovieDetailFragment.newInstance(movieResultsItem.id.toString()))
             ?.commit()
     }
 
