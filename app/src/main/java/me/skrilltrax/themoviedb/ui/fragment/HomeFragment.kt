@@ -4,27 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
-import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import me.skrilltrax.themoviedb.BuildConfig
-import me.skrilltrax.themoviedb.MovieAdapter
 import me.skrilltrax.themoviedb.R
 import me.skrilltrax.themoviedb.adapter.ViewPagerAdapter
-import me.skrilltrax.themoviedb.model.MovieResultsItem
-import me.skrilltrax.themoviedb.network.api.MovieApiInterface
-import retrofit2.HttpException
-import java.text.FieldPosition
+import me.skrilltrax.themoviedb.model.movie.lists.MovieResultsItem
 
 class HomeFragment : Fragment() {
 

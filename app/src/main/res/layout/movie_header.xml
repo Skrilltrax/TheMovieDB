@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/background">
+
+    <ImageView
+            android:id="@+id/movieBackground"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:src="@drawable/movie_poster_background"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+    />
+
+    <ImageView
+            android:id="@+id/moviePoster"
+            android:layout_width="100dp"
+            android:layout_height="140dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="120dp"
+            android:minHeight="100dp"
+            android:minWidth="100dp"
+            android:maxHeight="200dp"
+            android:maxWidth="150dp"
+            android:scaleType="fitXY"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+    />
+
+    <TextView
+            android:id="@+id/movieTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:textStyle="bold"
+            android:textSize="17sp"
+            android:textColor="@color/colorWhite"
+            app:layout_constraintTop_toTopOf="@id/moviePoster"
+            app:layout_constraintStart_toEndOf="@id/moviePoster"
+            app:layout_constraintBottom_toTopOf="@id/releaseDate"
+            tools:text="The Best Movie APP"
+    />
+
+    <TextView
+            android:id="@+id/releaseDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Release Date : %s"
+            android:textStyle="bold"
+            android:textColor="#8d8d8d"
+            android:ellipsize="marquee"
+            app:layout_constraintTop_toBottomOf="@id/movieTitle"
+            app:layout_constraintBottom_toTopOf="@id/divider"
+            app:layout_constraintStart_toStartOf="@id/movieTitle"
+            tools:text="Release Date : %s"
+    />
+
+    <View
+            android:id="@+id/divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="#8d8d8d"
+            app:layout_constraintStart_toEndOf="@id/moviePoster"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/releaseDate"
+            app:layout_constraintBottom_toTopOf="@id/ratingBar"
+    />
+
+    <me.zhanghai.android.materialratingbar.MaterialRatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:numStars="5"
+            android:isIndicator="true"
+            android:stepSize="0.25"
+            app:layout_constraintStart_toStartOf="@id/releaseDate"
+            app:layout_constraintEnd_toStartOf="@id/ratingText"
+            app:layout_constraintBottom_toBottomOf="@id/moviePoster"
+            style="@style/Widget.MaterialRatingBar.RatingBar.Indicator"
+    />
+
+    <TextView
+            android:id="@+id/ratingText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text="0.0"
+            android:textColor="@color/colorWhite"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@id/ratingBar"
+            app:layout_constraintTop_toTopOf="@id/ratingBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/ratingBar"
+    />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
@@ -15,12 +14,13 @@ import kotlinx.coroutines.withContext
 import me.skrilltrax.themoviedb.BuildConfig
 import me.skrilltrax.themoviedb.MovieAdapter
 import me.skrilltrax.themoviedb.R
-import me.skrilltrax.themoviedb.model.MovieResultsItem
+import me.skrilltrax.themoviedb.interfaces.OnItemClickListener
+import me.skrilltrax.themoviedb.model.movie.lists.MovieResultsItem
 import me.skrilltrax.themoviedb.network.api.MovieApiInterface
 import retrofit2.HttpException
 import timber.log.Timber
 
-class CommonViewPagerFragment : BaseFragment() {
+class CommonViewPagerFragment : BaseFragment(), OnItemClickListener {
 
     private var fragmentType: Int? = null
     private lateinit var recyclerView: RecyclerView
@@ -84,6 +84,13 @@ class CommonViewPagerFragment : BaseFragment() {
                 e.printStackTrace()
             }
         }
+    }
+
+    override fun onMovieItemClick(movieResultsItem: MovieResultsItem) {
+        fragmentManager?.beginTransaction()
+            ?.addToBackStack("MovieDetails")
+            ?.replace(R.id.frame,MovieDetailFragment.newInstance(movieResultsItem.id.toString()))
+            ?.commit()
     }
 
     companion object {
