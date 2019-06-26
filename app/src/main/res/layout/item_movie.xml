@@ -91,7 +91,6 @@
             android:elevation="1dp"
             android:numStars="5"
             android:isIndicator="true"
-            android:stepSize="0.25"
             app:layout_constraintStart_toStartOf="@id/divider"
             app:layout_constraintTop_toBottomOf="@id/divider"
             app:layout_constraintEnd_toStartOf="@id/ratingText"

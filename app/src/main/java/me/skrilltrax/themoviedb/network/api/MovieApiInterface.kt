@@ -1,5 +1,6 @@
 package me.skrilltrax.themoviedb.network.api
 
+import me.skrilltrax.themoviedb.model.movie.credits.MovieCreditsResponse
 import me.skrilltrax.themoviedb.model.movie.detail.MovieDetailResponse
 import me.skrilltrax.themoviedb.model.movie.lists.MovieResponse
 import me.skrilltrax.themoviedb.network.RetrofitInstance
@@ -27,6 +28,9 @@ interface MovieApiInterface {
 
     @GET("movie/{movie_id}")
     suspend fun getMovieDetails(@Path("movie_id") id: String, @Query("api_key") apiKey: String): Response<MovieDetailResponse>
+
+    @GET("movie/{movie_id}/credits")
+    suspend fun getMovieCredits(@Path("movie_id") id: String, @Query("api_key") apiKey: String): Response<MovieCreditsResponse>
 
     companion object {
         fun getClient(): MovieApiInterface {

@@ -3,18 +3,20 @@ package me.skrilltrax.themoviedb.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import me.skrilltrax.themoviedb.ui.fragment.CommonViewPagerFragment
+import me.skrilltrax.themoviedb.constants.MovieTabs
+import me.skrilltrax.themoviedb.ui.homepage.MovieViewPagerFragment
+import timber.log.Timber
 
 class ViewPagerAdapter(fragmentManager: FragmentManager) :
     FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getItem(position: Int): Fragment {
-        return when (position) {
-            0 -> CommonViewPagerFragment.newInstance(0)
-            1 -> CommonViewPagerFragment.newInstance(1)
-            2 -> CommonViewPagerFragment.newInstance(2)
-            3 -> CommonViewPagerFragment.newInstance(3)
-            else -> CommonViewPagerFragment.newInstance(0)
+        val movieTab = MovieTabs.getMovieTabById(position)
+        return if (movieTab != null) {
+            Timber.d("Tab ID : ${movieTab.tabId}")
+            MovieViewPagerFragment.newInstance(movieTab.tabId)
+        } else {
+            MovieViewPagerFragment.newInstance(MovieTabs.TAB_POPULAR.tabId)
         }
     }
 

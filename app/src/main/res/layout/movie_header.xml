@@ -1,21 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools" android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/background">
+        android:background="@color/background"
+        app:layout_collapseMode="parallax">
 
-    <ImageView
-            android:id="@+id/movieBackground"
+    <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:src="@drawable/movie_poster_background"
-            android:scaleType="centerCrop"
+            android:layout_height="wrap_content"
             android:foreground="@drawable/movie_poster_background"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-    />
+            app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+                android:id="@+id/movieBackground"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:src="@drawable/movie_poster_background"
+                android:scaleType="centerCrop"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+        />
+    </FrameLayout>
 
     <ImageView
             android:id="@+id/moviePoster"
@@ -83,7 +93,6 @@
             android:layout_height="32dp"
             android:numStars="5"
             android:isIndicator="true"
-            android:stepSize="0.25"
             app:layout_constraintStart_toStartOf="@id/releaseDate"
             app:layout_constraintEnd_toStartOf="@id/ratingText"
             app:layout_constraintBottom_toBottomOf="@id/moviePoster"

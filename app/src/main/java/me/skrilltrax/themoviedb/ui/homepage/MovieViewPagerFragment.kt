@@ -1,5 +1,6 @@
-package me.skrilltrax.themoviedb.ui.fragment
+package me.skrilltrax.themoviedb.ui.homepage
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,13 +15,18 @@ import kotlinx.coroutines.withContext
 import me.skrilltrax.themoviedb.BuildConfig
 import me.skrilltrax.themoviedb.MovieAdapter
 import me.skrilltrax.themoviedb.R
+import me.skrilltrax.themoviedb.constants.MovieTabs
 import me.skrilltrax.themoviedb.interfaces.OnItemClickListener
 import me.skrilltrax.themoviedb.model.movie.lists.MovieResultsItem
 import me.skrilltrax.themoviedb.network.api.MovieApiInterface
+import me.skrilltrax.themoviedb.ui.BaseFragment
+import me.skrilltrax.themoviedb.ui.moviedetail.MovieDetailActivity
+import me.skrilltrax.themoviedb.ui.moviedetail.MovieDetailFragment
+import me.skrilltrax.themoviedb.ui.search.SearchActivity
 import retrofit2.HttpException
 import timber.log.Timber
 
-class CommonViewPagerFragment : BaseFragment(), OnItemClickListener {
+class MovieViewPagerFragment : BaseFragment(), OnItemClickListener {
 
     private var fragmentType: Int? = null
     private lateinit var recyclerView: RecyclerView
@@ -49,17 +55,17 @@ class CommonViewPagerFragment : BaseFragment(), OnItemClickListener {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val movieResponse = when (position) {
-                    0 -> MovieApiInterface.getClient().getPopularMovies(BuildConfig.API_KEY)
-                    1 -> MovieApiInterface.getClient().getNowPlayingMovies(BuildConfig.API_KEY)
-                    2 -> MovieApiInterface.getClient().getUpcomingMovies(BuildConfig.API_KEY)
-                    3 -> MovieApiInterface.getClient().getTopRatedMovies(BuildConfig.API_KEY)
+                    MovieTabs.TAB_POPULAR.tabId -> MovieApiInterface.getClient().getPopularMovies(BuildConfig.API_KEY)
+                    MovieTabs.TAB_PLAYING.tabId -> MovieApiInterface.getClient().getNowPlayingMovies(BuildConfig.API_KEY)
+                    MovieTabs.TAB_UPCOMING.tabId -> MovieApiInterface.getClient().getUpcomingMovies(BuildConfig.API_KEY)
+                    MovieTabs.TAB_TOP_RATED.tabId -> MovieApiInterface.getClient().getTopRatedMovies(BuildConfig.API_KEY)
                     else -> null
                 }
                 if (movieResponse != null) {
                     if (movieResponse.isSuccessful) {
                         movieList.addAll(movieResponse.body()?.results as Collection<MovieResultsItem>)
                         withContext(Dispatchers.Main) {
-                            recyclerView.adapter = MovieAdapter(movieList, this@CommonViewPagerFragment)
+                            recyclerView.adapter = MovieAdapter(movieList, this@MovieViewPagerFragment)
                             (recyclerView.adapter as MovieAdapter).notifyDataSetChanged()
                             hideLoading()
                         }
@@ -87,18 +93,17 @@ class CommonViewPagerFragment : BaseFragment(), OnItemClickListener {
     }
 
     override fun onMovieItemClick(movieResultsItem: MovieResultsItem) {
-        fragmentManager?.beginTransaction()
-            ?.addToBackStack("MovieDetails")
-            ?.add(R.id.frame,MovieDetailFragment.newInstance(movieResultsItem.id.toString()))
-            ?.commit()
+        val intent = Intent(this.context, SearchActivity::class.java)
+//        intent.putExtra("movie_id", movieResultsItem.id.toString())
+        startActivity(intent)
     }
 
     companion object {
-        fun newInstance(fragmentType: Int): CommonViewPagerFragment {
+        fun newInstance(fragmentType: Int): MovieViewPagerFragment {
             val bundle = Bundle()
-            bundle.putInt("fragmentType", fragmentType)
-            val commonViewPagerFragment = CommonViewPagerFragment()
+            val commonViewPagerFragment = MovieViewPagerFragment()
 
+            bundle.putInt("fragmentType", fragmentType)
             commonViewPagerFragment.arguments = bundle
             return commonViewPagerFragment
         }

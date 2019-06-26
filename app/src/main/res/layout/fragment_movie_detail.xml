@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_height="match_parent"
         android:background="@color/background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,11 +15,12 @@
 
         <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_view_genre"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 app:layout_constraintTop_toBottomOf="@id/movie_header"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
         />
 
         <TextView
@@ -43,9 +44,57 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"
                 android:padding="4dp"
+                android:textSize="16sp"
                 android:textColor="@color/colorWhite"
                 app:layout_constraintTop_toBottomOf="@id/title_synopsis"
                 app:layout_constraintStart_toStartOf="@id/title_synopsis"
+                app:layout_constraintEnd_toEndOf="parent"
+        />
+
+        <TextView
+                android:id="@+id/title_cast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:text="The Cast"
+                android:textColor="@color/colorWhite"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/synopsis"
+                app:layout_constraintStart_toStartOf="parent"
+        />
+        
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/cast_recycler_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/title_cast"
+                app:layout_constraintStart_toStartOf="@id/title_cast"
+                app:layout_constraintEnd_toEndOf="parent"
+        />
+
+
+        <TextView
+                android:id="@+id/title_crew"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:text="The Crew"
+                android:textColor="@color/colorWhite"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/cast_recycler_view"
+                app:layout_constraintStart_toStartOf="parent"
+        />
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/crew_recycler_view"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/title_crew"
+                app:layout_constraintStart_toStartOf="@id/title_crew"
                 app:layout_constraintEnd_toEndOf="parent"
         />
 

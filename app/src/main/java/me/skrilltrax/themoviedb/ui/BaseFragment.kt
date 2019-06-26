@@ -1,4 +1,4 @@
-package me.skrilltrax.themoviedb.ui.fragment
+package me.skrilltrax.themoviedb.ui
 
 import android.app.Dialog
 import android.graphics.Color
