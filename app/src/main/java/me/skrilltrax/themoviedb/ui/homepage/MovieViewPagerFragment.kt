@@ -93,8 +93,8 @@ class MovieViewPagerFragment : BaseFragment(), OnItemClickListener {
     }
 
     override fun onMovieItemClick(movieResultsItem: MovieResultsItem) {
-        val intent = Intent(this.context, SearchActivity::class.java)
-//        intent.putExtra("movie_id", movieResultsItem.id.toString())
+        val intent = Intent(this.context, MovieDetailActivity::class.java)
+        intent.putExtra("movie_id", movieResultsItem.id.toString())
         startActivity(intent)
     }
 
