@@ -72,8 +72,25 @@ class MovieDetailFragment : BaseFragment() {
 
     private fun observeScroll(view: View) {
         var oldScrollY = 0F
+        val movieHeaderHeight = binding.movieHeader.root.measuredHeight
         view.viewTreeObserver.addOnScrollChangedListener {
-
+            val scrollY = view.scrollY.toFloat()
+            if (scrollY <= 0) {
+                Utils.setStatusBarColor(activity!!, Color.TRANSPARENT)
+                oldScrollY = 0F
+            } else if (scrollY > 0 && scrollY <= binding.movieHeader.root.height) {
+                if (Math.abs(scrollY - oldScrollY) > 30) {
+                    oldScrollY = scrollY
+                    Utils.setStatusBarColor(
+                        activity!!,
+                        Color.argb(((scrollY / binding.movieHeader.root.height) * 255).toInt(), 25, 27, 27)
+                    )
+                    Timber.d("scrollY : ${((scrollY / binding.movieHeader.root.height) * 255).toInt()}")
+                }
+            } else {
+                Utils.setStatusBarColor(activity!!, Color.argb(255, 25, 27, 27))
+                oldScrollY = binding.movieHeader.root.height.toFloat()
+            }
         }
     }
 
