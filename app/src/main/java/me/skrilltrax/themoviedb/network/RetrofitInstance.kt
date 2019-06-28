@@ -1,12 +1,9 @@
 package me.skrilltrax.themoviedb.network
 
-import me.skrilltrax.themoviedb.BuildConfig
-import me.skrilltrax.themoviedb.network.api.MovieApiInterface
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import timber.log.Timber
 
 object RetrofitInstance {

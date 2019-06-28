@@ -13,10 +13,9 @@ import kotlinx.coroutines.withContext
 import me.skrilltrax.themoviedb.BuildConfig
 import me.skrilltrax.themoviedb.MovieAdapter
 import me.skrilltrax.themoviedb.R
-import me.skrilltrax.themoviedb.constants.MovieTabs
 import me.skrilltrax.themoviedb.interfaces.OnItemClickListener
 import me.skrilltrax.themoviedb.model.movie.lists.MovieResultsItem
-import me.skrilltrax.themoviedb.network.api.MovieApiInterface
+import me.skrilltrax.themoviedb.network.api.movie.MovieApiInterface
 import retrofit2.HttpException
 
 class SearchActivity : AppCompatActivity(), OnItemClickListener {

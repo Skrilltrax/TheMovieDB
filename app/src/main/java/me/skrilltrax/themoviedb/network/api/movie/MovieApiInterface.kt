@@ -1,4 +1,4 @@
-package me.skrilltrax.themoviedb.network.api
+package me.skrilltrax.themoviedb.network.api.movie
 
 import me.skrilltrax.themoviedb.model.movie.credits.MovieCreditsResponse
 import me.skrilltrax.themoviedb.model.movie.detail.MovieDetailResponse
@@ -20,6 +20,7 @@ interface MovieApiInterface {
     @GET("movie/now_playing")
     suspend fun getNowPlayingMovies(@Query("api_key") apiKey: String): Response<MovieResponse>
 
+    //TODO : Pass region parameter to get proper upcoming movies
     @GET("movie/upcoming")
     suspend fun getUpcomingMovies(@Query("api_key") apiKey: String): Response<MovieResponse>
 

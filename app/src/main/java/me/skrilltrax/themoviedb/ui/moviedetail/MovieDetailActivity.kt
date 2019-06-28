@@ -12,7 +12,6 @@ class MovieDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_movie_detail)
 
         val movieId = intent.getStringExtra("movie_id") ?: null
-
         if (movieId != null) {
             Timber.d(movieId)
             if (supportFragmentManager.backStackEntryCount == 0) {

@@ -18,11 +18,9 @@ import me.skrilltrax.themoviedb.R
 import me.skrilltrax.themoviedb.constants.MovieTabs
 import me.skrilltrax.themoviedb.interfaces.OnItemClickListener
 import me.skrilltrax.themoviedb.model.movie.lists.MovieResultsItem
-import me.skrilltrax.themoviedb.network.api.MovieApiInterface
+import me.skrilltrax.themoviedb.network.api.movie.MovieApiInterface
 import me.skrilltrax.themoviedb.ui.BaseFragment
 import me.skrilltrax.themoviedb.ui.moviedetail.MovieDetailActivity
-import me.skrilltrax.themoviedb.ui.moviedetail.MovieDetailFragment
-import me.skrilltrax.themoviedb.ui.search.SearchActivity
 import retrofit2.HttpException
 import timber.log.Timber
 

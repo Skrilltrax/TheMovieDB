@@ -28,7 +28,6 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
 
-
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -46,7 +45,6 @@
                         android:tint="@color/colorWhite"
                         android:src="@drawable/ic_search_black_24dp"
                 />
-
 
             </androidx.appcompat.widget.Toolbar>
 
@@ -82,12 +80,14 @@
                         android:layout_height="wrap_content"
                         android:text="Upcoming"
                 />
+
                 <com.google.android.material.tabs.TabItem
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Top Rated"
                 />
             </com.google.android.material.tabs.TabLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.appbar.CollapsingToolbarLayout>

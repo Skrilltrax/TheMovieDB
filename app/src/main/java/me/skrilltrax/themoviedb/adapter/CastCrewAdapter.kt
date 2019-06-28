@@ -21,7 +21,6 @@ import me.skrilltrax.themoviedb.model.movie.credits.CrewItem
 class CastCrewAdapter(val list: List<Any>, private val type: CastCrewAdapterType) :
     RecyclerView.Adapter<CastCrewViewHolder>() {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CastCrewViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_cast_crew, parent, false)
         return CastCrewViewHolder(view, type)
@@ -50,7 +49,7 @@ class CastCrewAdapter(val list: List<Any>, private val type: CastCrewAdapterType
                 Glide.with(itemView.context)
                     .load(Constants.POSTER_W185_IMAGE_PATH + castList[position].profilePath)
                     .transform(MultiTransformation(FitCenter(), RoundedCorners(8)))
-                    .error(R.drawable.ic_account_box_white_24dp)
+                    .error(R.drawable.ic_person_outline_black_16dp)
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(castCrewImageView)
             } else {
@@ -61,9 +60,10 @@ class CastCrewAdapter(val list: List<Any>, private val type: CastCrewAdapterType
                 Glide.with(itemView.context)
                     .load(Constants.POSTER_W185_IMAGE_PATH + crewList[position].profilePath)
                     .transform(MultiTransformation(FitCenter(), RoundedCorners(8)))
-                    .error(R.drawable.ic_account_box_white_24dp)
+                    .error(R.drawable.ic_person_outline_black_16dp)
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(castCrewImageView)
+
             }
         }
     }
