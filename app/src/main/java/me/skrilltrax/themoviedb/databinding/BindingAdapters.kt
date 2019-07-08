@@ -8,6 +8,7 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import me.skrilltrax.themoviedb.constants.Constants
+import me.zhanghai.android.materialratingbar.MaterialRatingBar
 
 object BindingAdapters {
 
@@ -33,5 +34,11 @@ object BindingAdapters {
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(view)
         }
+    }
+
+    @BindingAdapter("rating")
+    @JvmStatic
+    fun setRating(view: MaterialRatingBar, rating: Double) {
+        view.rating = rating.toFloat()/2
     }
 }
