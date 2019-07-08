@@ -13,11 +13,11 @@ def secretsProperties = new Properties()
 secretsProperties.load(new FileInputStream(secretsFile))
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 29
     defaultConfig {
         applicationId "me.skrilltrax.themoviedb"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -48,12 +48,10 @@ dependencies {
 
     //Timber
     implementation "com.jakewharton.timber:timber:4.7.1"
-
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.6.0'
     implementation "com.squareup.okhttp3:logging-interceptor:3.14.2"
     implementation "com.squareup.retrofit2:converter-gson:2.5.0"
-
     //Material Components
     implementation 'com.google.android.material:material:1.0.0'
     //Navigation

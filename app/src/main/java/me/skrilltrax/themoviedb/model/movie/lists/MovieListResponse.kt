@@ -2,7 +2,7 @@ package me.skrilltrax.themoviedb.model.movie.lists
 
 import com.google.gson.annotations.SerializedName
 
-data class MovieResponse(
+data class MovieListResponse(
 
     @field:SerializedName("page")
 	val page: Int? = null,
