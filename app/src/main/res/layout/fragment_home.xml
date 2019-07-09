@@ -1,32 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="match_parent" android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
 
-    <include
+        <include
             android:id="@+id/appBar"
-            layout="@layout/collapsing_appbar_tabs"/>
+            layout="@layout/collapsing_appbar_tabs" />
 
-    <androidx.viewpager.widget.ViewPager
+        <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_anchor="@id/appBar"
             app:layout_anchorGravity="bottom"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-    <!--    <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:listitem="@layout/item_movie"
-                app:layout_anchor="@id/appBar"
-                app:layout_anchorGravity="bottom"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        />-->
+        <!--    <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/item_movie"
+                    app:layout_anchor="@id/appBar"
+                    app:layout_anchorGravity="bottom"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            />-->
 
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
