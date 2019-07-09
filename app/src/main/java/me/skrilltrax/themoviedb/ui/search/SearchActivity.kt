@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.skrilltrax.themoviedb.BuildConfig
-import me.skrilltrax.themoviedb.MovieAdapter
+import me.skrilltrax.themoviedb.adapter.MovieListAdapter
 import me.skrilltrax.themoviedb.R
 import me.skrilltrax.themoviedb.interfaces.OnItemClickListener
 import me.skrilltrax.themoviedb.model.movie.lists.MovieResultsItem
@@ -40,7 +40,7 @@ class SearchActivity : AppCompatActivity(), OnItemClickListener {
     private fun setupRecyclerView() {
         recyclerView.apply {
             layoutManager = LinearLayoutManager(this@SearchActivity, RecyclerView.VERTICAL, false)
-            adapter = MovieAdapter(listOf(), this@SearchActivity)
+            adapter = MovieListAdapter(listOf(), this@SearchActivity)
         }
     }
 
@@ -53,8 +53,9 @@ class SearchActivity : AppCompatActivity(), OnItemClickListener {
                     if (movieResponse.isSuccessful) {
                         movieList.addAll(movieResponse.body()?.results as Collection<MovieResultsItem>)
                         withContext(Dispatchers.Main) {
-                            recyclerView.adapter = MovieAdapter(movieList, this@SearchActivity)
-                            (recyclerView.adapter as MovieAdapter).notifyDataSetChanged()
+                            recyclerView.adapter =
+                                MovieListAdapter(movieList, this@SearchActivity)
+                            (recyclerView.adapter as MovieListAdapter).notifyDataSetChanged()
 //                            hideLoading()
                         }
                     } else {
