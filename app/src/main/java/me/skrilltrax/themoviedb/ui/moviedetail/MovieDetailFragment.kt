@@ -14,9 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import me.skrilltrax.themoviedb.R
 import me.skrilltrax.themoviedb.Utils
-import me.skrilltrax.themoviedb.adapter.CastCrewAdapter
+import me.skrilltrax.themoviedb.adapter.CreditsAdapter
 import me.skrilltrax.themoviedb.adapter.MovieGenreAdapter
-import me.skrilltrax.themoviedb.constants.CastCrewAdapterType
+import me.skrilltrax.themoviedb.constants.CreditsType
 import me.skrilltrax.themoviedb.databinding.FragmentMovieDetailBinding
 import me.skrilltrax.themoviedb.model.movie.credits.CastItem
 import me.skrilltrax.themoviedb.model.movie.credits.CrewItem
@@ -46,8 +46,7 @@ class MovieDetailFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         showLoading()
         observeScroll(view)
-        setupObserves(viewLifecycleOwner)
-        setupRecyclerView()
+        setupObservers(viewLifecycleOwner)
         viewModel.movieId.postValue(movieId)
         viewModel.fetchMovieDetails()
         viewModel.fetchCastAndCrew()
@@ -55,7 +54,7 @@ class MovieDetailFragment : BaseFragment() {
 
     private fun observeScroll(view: View) {
         var oldScrollY = 0F
-            view.viewTreeObserver.addOnScrollChangedListener {
+        view.viewTreeObserver.addOnScrollChangedListener {
             val scrollY = view.scrollY.toFloat()
             if (scrollY <= 0) {
                 Utils.setStatusBarColor(activity!!, Color.TRANSPARENT)
@@ -76,15 +75,14 @@ class MovieDetailFragment : BaseFragment() {
         }
     }
 
-    private fun setupObserves(viewLifecycleOwner: LifecycleOwner) {
+    private fun setupObservers(viewLifecycleOwner: LifecycleOwner) {
 
         viewModel.movieDetail.observe(viewLifecycleOwner, Observer {
             binding.movieDetail = it
         })
 
         viewModel.genres.observe(viewLifecycleOwner, Observer<List<GenresItem>> {
-            binding.genreRecyclerView.adapter = MovieGenreAdapter(it)
-            (binding.genreRecyclerView.adapter as MovieGenreAdapter).notifyDataSetChanged()
+            binding.genreAdapter = MovieGenreAdapter(it)
         })
 
         viewModel.cast.observe(viewLifecycleOwner, Observer<List<CastItem>> {
@@ -94,8 +92,7 @@ class MovieDetailFragment : BaseFragment() {
                     castList.add(castListItem)
                 }
             }
-            binding.castRecyclerView.adapter = CastCrewAdapter(castList as List<CastItem>, CastCrewAdapterType.CAST)
-            (binding.castRecyclerView.adapter as CastCrewAdapter).notifyDataSetChanged()
+            binding.castAdapter = CreditsAdapter(castList as List<CastItem>, CreditsType.CAST)
         })
 
         viewModel.crew.observe(viewLifecycleOwner, Observer<List<CrewItem>> {
@@ -105,39 +102,19 @@ class MovieDetailFragment : BaseFragment() {
                     crewList.add(crewListItem)
                 }
             }
-            binding.crewRecyclerView.adapter =
-                CastCrewAdapter(crewList as List<CrewItem>, CastCrewAdapterType.CREW)
-            (binding.crewRecyclerView.adapter as CastCrewAdapter).notifyDataSetChanged()
+            binding.crewAdapter =
+                CreditsAdapter(crewList as List<CrewItem>, CreditsType.CREW)
         })
 
         viewModel.isLoading.observe(viewLifecycleOwner, Observer {
-            if (it == false) {
-                hideLoading()
-            }
+            if (it == false) hideLoading()
         })
-    }
-
-    private fun setupRecyclerView() {
-        binding.genreRecyclerView.apply {
-            layoutManager = LinearLayoutManager(this@MovieDetailFragment.context, RecyclerView.HORIZONTAL, false)
-            adapter = MovieGenreAdapter(listOf())
-        }
-        binding.castRecyclerView.apply {
-            layoutManager = LinearLayoutManager(this@MovieDetailFragment.context, RecyclerView.HORIZONTAL, false)
-            adapter = CastCrewAdapter(listOf(), CastCrewAdapterType.CAST)
-        }
-        binding.crewRecyclerView.apply {
-            layoutManager = LinearLayoutManager(this@MovieDetailFragment.context, RecyclerView.HORIZONTAL, false)
-            adapter = CastCrewAdapter(listOf(), CastCrewAdapterType.CREW)
-
-        }
     }
 
     override fun onPause() {
         super.onPause()
         dialog?.dismiss()
     }
-
 
     companion object {
 

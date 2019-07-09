@@ -10,7 +10,7 @@ enum class MovieTabs(val tabId: Int) {
     companion object {
 
         fun getMovieTabById(id: Int): MovieTabs? {
-            for (movieTab in MovieTabs.values()) {
+            for (movieTab in values()) {
                 if (movieTab.tabId == id) {
                     return movieTab
                 }

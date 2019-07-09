@@ -37,6 +37,14 @@ class MovieListAdapter(private val movieList: List<MovieResultsItem>, val listen
         return movieList.size
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
     inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(movieResultsItem: MovieResultsItem) {

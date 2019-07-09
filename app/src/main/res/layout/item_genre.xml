@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:orientation="vertical"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="genreDetail"
+            type="me.skrilltrax.themoviedb.model.movie.detail.GenresItem" />
+    </data>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-    <com.google.android.material.button.MaterialButton
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/genre_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
-            android:text="Action"
+            android:text="@{genreDetail.name}"
             android:textSize="12sp"
             app:strokeWidth="2dp"
             app:cornerRadius="4dp"
             app:strokeColor="@color/colorAccent"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-    />
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
 
-</LinearLayout>
+    </LinearLayout>
+</layout>

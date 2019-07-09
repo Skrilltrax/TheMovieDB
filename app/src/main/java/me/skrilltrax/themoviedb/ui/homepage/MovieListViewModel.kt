@@ -7,7 +7,7 @@ import me.skrilltrax.themoviedb.network.api.movie.MovieListRepository
 import timber.log.Timber
 
 @Suppress("UNCHECKED_CAST")
-class MovieListViewModel() : ViewModel() {
+class MovieListViewModel : ViewModel() {
 
     private var popularMovieStatus : Boolean = false
     private var playingMovieStatus : Boolean = false

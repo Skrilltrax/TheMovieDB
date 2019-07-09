@@ -1,24 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:orientation="vertical"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ImageView
+    <data>
+        <import type="me.skrilltrax.themoviedb.constants.CreditsType"/>
+        <variable
+            name="castData"
+            type="me.skrilltrax.themoviedb.model.movie.credits.CastItem" />
+        <variable
+            name="crewData"
+            type="me.skrilltrax.themoviedb.model.movie.credits.CrewItem" />
+        <variable
+            name="creditsType"
+            type="me.skrilltrax.themoviedb.constants.CreditsType" />
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageView
             android:id="@+id/cast_crew_image"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginTop="8dp"
             android:layout_marginStart="8dp"
-    />
+            app:creditImageUrl="@{creditsType == CreditsType.CAST ? castData.profilePath : crewData.profilePath}"/>
 
-    <TextView
+        <TextView
             android:id="@+id/cast_crew_name"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
+            android:text="@{creditsType == CreditsType.CAST ? castData.name : crewData.name}"
             android:textSize="13sp"
             android:textStyle="bold"
             android:textColor="@color/colorWhite"
@@ -26,21 +42,21 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:ellipsize="marquee"
-            tools:text="Keanu Reevessssssssss"
-    />
+            tools:text="Keanu Reevessssssssss" />
 
-    <TextView
+        <TextView
             android:id="@+id/cast_crew_role"
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginStart="8dp"
+            android:text="@{creditsType == CreditsType.CAST ? castData.character : crewData.job}"
             android:textColor="#8d8d8d"
             android:textSize="12sp"
             android:singleLine="true"
             android:gravity="center"
             android:ellipsize="marquee"
-            tools:text="Keanu Reevessssssssss"
-    />
+            tools:text="Keanu Reevessssssssss" />
 
-</LinearLayout>
+    </LinearLayout>
+</layout>

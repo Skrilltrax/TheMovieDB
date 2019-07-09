@@ -4,15 +4,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.button.MaterialButton
-import me.skrilltrax.themoviedb.R
+import me.skrilltrax.themoviedb.databinding.ItemGenreBinding
 import me.skrilltrax.themoviedb.model.movie.detail.GenresItem
 
 class MovieGenreAdapter(val genreList: List<GenresItem>) : RecyclerView.Adapter<MovieGenreAdapter.MovieGenreViewHolder>() {
 
+    private lateinit var binding: ItemGenreBinding
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieGenreViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_genre, parent, false)
-        return MovieGenreViewHolder(view)
+        val inflater = LayoutInflater.from(parent.context)
+        binding = ItemGenreBinding.inflate(inflater, parent, false)
+        return MovieGenreViewHolder(binding.root)
     }
 
     override fun onBindViewHolder(holder: MovieGenreViewHolder, position: Int) {
@@ -23,13 +25,19 @@ class MovieGenreAdapter(val genreList: List<GenresItem>) : RecyclerView.Adapter<
         return genreList.size
     }
 
-    inner class MovieGenreViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
 
-        private val genreButton: MaterialButton = itemView.findViewById(R.id.genre_button)
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
+    inner class MovieGenreViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private var genreID: Int? = null
         fun bind(position: Int) {
             genreID = genreList[position].id!!
-            genreButton.text = genreList[position].name
+            binding.genreDetail = genreList[position]
         }
     }
 }
