@@ -12,6 +12,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import me.skrilltrax.themoviedb.R
 import me.skrilltrax.themoviedb.constants.Constants
+import me.skrilltrax.themoviedb.databinding.ItemMovieBinding
 import me.skrilltrax.themoviedb.interfaces.OnItemClickListener
 import me.skrilltrax.themoviedb.model.movie.lists.MovieResultsItem
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
@@ -20,9 +21,12 @@ import timber.log.Timber
 class MovieListAdapter(private val movieList: List<MovieResultsItem>, val listener: OnItemClickListener) :
     RecyclerView.Adapter<MovieListAdapter.MovieViewHolder>() {
 
+    private lateinit var binding: ItemMovieBinding
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_movie, parent, false)
-        return MovieViewHolder(view)
+        val inflater = LayoutInflater.from(parent.context)
+        binding = ItemMovieBinding.inflate(inflater, parent, false)
+        return MovieViewHolder(binding.root)
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
@@ -34,11 +38,6 @@ class MovieListAdapter(private val movieList: List<MovieResultsItem>, val listen
     }
 
     inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val movieName: TextView = itemView.findViewById(R.id.movieTitle)
-        private val movieImage: ImageView = itemView.findViewById(R.id.movieImage)
-        private val ratingsBar: MaterialRatingBar = itemView.findViewById(R.id.ratingBar)
-        private val ratingsText: TextView = itemView.findViewById(R.id.ratingText)
-        private val releaseDate: TextView = itemView.findViewById(R.id.releaseDate)
 
         fun bind(movieResultsItem: MovieResultsItem) {
             Timber.d("InOnBind")
@@ -46,15 +45,7 @@ class MovieListAdapter(private val movieList: List<MovieResultsItem>, val listen
             itemView.setOnClickListener {
                 listener.onMovieItemClick(movieResultsItem)
             }
-            movieName.text = movieResultsItem.title
-            releaseDate.text = movieResultsItem.releaseDate
-            ratingsText.text = movieResultsItem.voteAverage.toString()
-            ratingsBar.rating = (movieResultsItem.voteAverage!!.toFloat() / 2)
-            Glide.with(itemView)
-                .load(Constants.POSTER_W500_IMAGE_PATH + movieResultsItem.posterPath)
-                .apply(RequestOptions.bitmapTransform(RoundedCorners(16)))
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .into(movieImage)
+            binding.movieData = movieResultsItem
         }
     }
 }

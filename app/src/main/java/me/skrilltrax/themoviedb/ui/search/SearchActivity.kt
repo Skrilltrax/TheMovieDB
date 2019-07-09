@@ -49,21 +49,19 @@ class SearchActivity : AppCompatActivity(), OnItemClickListener {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val movieResponse = MovieApiInterface.getClient().getPopularMovies(BuildConfig.API_KEY)
-                if (movieResponse != null) {
-                    if (movieResponse.isSuccessful) {
-                        movieList.addAll(movieResponse.body()?.results as Collection<MovieResultsItem>)
-                        withContext(Dispatchers.Main) {
-                            recyclerView.adapter =
-                                MovieListAdapter(movieList, this@SearchActivity)
-                            (recyclerView.adapter as MovieListAdapter).notifyDataSetChanged()
+                if (movieResponse.isSuccessful) {
+                    movieList.addAll(movieResponse.body()?.results as Collection<MovieResultsItem>)
+                    withContext(Dispatchers.Main) {
+                        recyclerView.adapter =
+                            MovieListAdapter(movieList, this@SearchActivity)
+                        (recyclerView.adapter as MovieListAdapter).notifyDataSetChanged()
 //                            hideLoading()
-                        }
-                    } else {
-                        withContext(Dispatchers.Main) {
-                            //                            hideLoading()
-                            Snackbar.make(recyclerView, "Please check your network connection", Snackbar.LENGTH_SHORT)
-                                .show()
-                        }
+                    }
+                } else {
+                    withContext(Dispatchers.Main) {
+                        //                            hideLoading()
+                        Snackbar.make(recyclerView, "Please check your network connection", Snackbar.LENGTH_SHORT)
+                            .show()
                     }
                 }
             } catch (e: HttpException) {

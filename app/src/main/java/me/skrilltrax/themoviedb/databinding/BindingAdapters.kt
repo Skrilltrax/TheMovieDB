@@ -1,6 +1,7 @@
 package me.skrilltrax.themoviedb.databinding
 
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.FitCenter

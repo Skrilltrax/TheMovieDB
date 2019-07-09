@@ -98,7 +98,7 @@
                 android:layout_height="32dp"
                 android:numStars="5"
                 android:isIndicator="true"
-                app:rating="@{movieDetail.voteAverage}"
+                app:rating="@{safeUnbox(movieDetail.voteAverage)}"
                 app:layout_constraintStart_toStartOf="@id/releaseDate"
                 app:layout_constraintEnd_toStartOf="@id/ratingText"
                 app:layout_constraintBottom_toBottomOf="@id/moviePoster"

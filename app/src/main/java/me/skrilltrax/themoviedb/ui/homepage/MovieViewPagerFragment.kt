@@ -46,16 +46,16 @@ class MovieViewPagerFragment : BaseFragment(), OnItemClickListener {
     private fun setupObservers(viewLifecycleOwner: LifecycleOwner, position: Int) {
         when (position) {
             MovieTabs.TAB_POPULAR.tabId -> viewModel.popularMovieList.observe(viewLifecycleOwner, Observer {
-                binding.recyclerView.adapter = MovieListAdapter(it, this)
+                binding.movieListAdapter = MovieListAdapter(it, this)
             })
             MovieTabs.TAB_PLAYING.tabId -> viewModel.playingMovieList.observe(viewLifecycleOwner, Observer {
-                binding.recyclerView.adapter = MovieListAdapter(it, this)
+                binding.movieListAdapter = MovieListAdapter(it, this)
             })
             MovieTabs.TAB_UPCOMING.tabId -> viewModel.upcomingMovieList.observe(viewLifecycleOwner, Observer {
-                binding.recyclerView.adapter = MovieListAdapter(it, this)
+                binding.movieListAdapter = MovieListAdapter(it, this)
             })
             MovieTabs.TAB_TOP_RATED.tabId -> viewModel.topRatedMovieList.observe(viewLifecycleOwner, Observer {
-                binding.recyclerView.adapter = MovieListAdapter(it, this)
+                binding.movieListAdapter = MovieListAdapter(it, this)
             })
         }
     }

@@ -41,6 +41,7 @@ class CastCrewAdapter(val list: List<Any>, private val type: CastCrewAdapterType
         private val castCrewName: TextView = itemView.findViewById(R.id.cast_crew_name)
         private val castCrewRole: TextView = itemView.findViewById(R.id.cast_crew_role)
 
+        @Suppress("UNCHECKED_CAST")
         fun bind(position: Int) {
             if (type == CastCrewAdapterType.CAST) {
                 val castList = list as List<CastItem>

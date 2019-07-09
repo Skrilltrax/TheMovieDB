@@ -28,8 +28,14 @@ class HomeFragment : BaseFragment() {
         showLoading()
         setupObservers()
         setupViewPager()
-        val tab1 = binding.appBar.tabLayout.getTabAt(MovieTabs.TAB_POPULAR.tabId)
-        tab1?.select()
+        setupTabLayout()
+    }
+
+    private fun setupTabLayout() {
+        binding.appBar.tabLayout.apply {
+            getTabAt(MovieTabs.TAB_POPULAR.tabId)?.select() //Select first tab of viewpager
+            setupWithViewPager(binding.viewPager)
+        }
     }
 
     private fun setupObservers() {
@@ -39,8 +45,9 @@ class HomeFragment : BaseFragment() {
     }
 
     private fun setupViewPager() {
-        binding.viewPager.adapter = ViewPagerAdapter(fragmentManager!!)
-        binding.viewPager.offscreenPageLimit = 3
-        binding.appBar.tabLayout.setupWithViewPager(binding.viewPager)
+        binding.viewPager.apply {
+            adapter = ViewPagerAdapter(fragmentManager!!)
+            offscreenPageLimit = 3
+        }
     }
 }
