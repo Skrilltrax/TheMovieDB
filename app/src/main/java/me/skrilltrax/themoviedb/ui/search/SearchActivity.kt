@@ -13,12 +13,12 @@ import kotlinx.coroutines.withContext
 import me.skrilltrax.themoviedb.BuildConfig
 import me.skrilltrax.themoviedb.adapter.MovieListAdapter
 import me.skrilltrax.themoviedb.R
-import me.skrilltrax.themoviedb.interfaces.OnItemClickListener
+import me.skrilltrax.themoviedb.interfaces.MovieListItemClickListener
 import me.skrilltrax.themoviedb.model.movie.lists.MovieResultsItem
 import me.skrilltrax.themoviedb.network.api.movie.MovieApiInterface
 import retrofit2.HttpException
 
-class SearchActivity : AppCompatActivity(), OnItemClickListener {
+class SearchActivity : AppCompatActivity(), MovieListItemClickListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var collapsingToolbar: CollapsingToolbarLayout

@@ -6,7 +6,10 @@ import me.skrilltrax.themoviedb.model.movie.credits.CastItem
 import me.skrilltrax.themoviedb.model.movie.credits.CrewItem
 import me.skrilltrax.themoviedb.model.movie.detail.GenresItem
 import me.skrilltrax.themoviedb.model.movie.detail.MovieDetailResponse
+import me.skrilltrax.themoviedb.model.movie.lists.MovieResultsItem
+import me.skrilltrax.themoviedb.model.movie.videos.VideoResultsItem
 import me.skrilltrax.themoviedb.network.api.movie.MovieDetailRepository
+import timber.log.Timber
 
 @Suppress("UNCHECKED_CAST")
 class MovieDetailViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
@@ -20,6 +23,9 @@ class MovieDetailViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
     private val _genres: MutableLiveData<List<GenresItem>> = MutableLiveData(listOf())
     private val _cast: MutableLiveData<List<CastItem>> = MutableLiveData(listOf())
     private val _crew: MutableLiveData<List<CrewItem>> = MutableLiveData(listOf())
+    private val _videos: MutableLiveData<List<VideoResultsItem>> = MutableLiveData(listOf())
+    private val _trailers: MutableLiveData<List<VideoResultsItem>> = MutableLiveData(listOf())
+    private val _extraVideos: MutableLiveData<List<VideoResultsItem>> = MutableLiveData(listOf())
 
     val movieId: MutableLiveData<String> = MutableLiveData("")
     val isLoading: MutableLiveData<Boolean> = MutableLiveData(true)
@@ -36,6 +42,14 @@ class MovieDetailViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
     val movieDetail: LiveData<MovieDetailResponse>
         get() = _movieDetail
 
+    val videos: LiveData<List<VideoResultsItem>>
+        get() = _videos
+
+    val trailers: LiveData<List<VideoResultsItem>>
+        get() = _trailers
+
+    val extraVideos: LiveData<List<VideoResultsItem>>
+        get() = _extraVideos
 
     @Suppress("UNCHECKED_CAST")
     fun fetchMovieDetails() {
@@ -63,6 +77,34 @@ class MovieDetailViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
                 checkStatus()
             }
         }
+    }
+
+    fun fetchVideos() {
+        viewModelScope.launch {
+            val movieVideos = movieDetailRepository.getVideos(movieId.value!!)
+            if (movieVideos != null) {
+                Timber.d("videos : ${movieVideos.results?.size}}")
+                _videos.postValue(movieVideos.results as List<VideoResultsItem>)
+                checkStatus()
+                sortVideos()
+            }
+        }
+    }
+
+    private fun sortVideos() {
+        val trailerList: ArrayList<VideoResultsItem> = arrayListOf()
+        val extraList: ArrayList<VideoResultsItem> = arrayListOf()
+        if (videos.value != null) {
+            for (video in videos.value!!) {
+                if (video.type?.contains("trailer",true)!!) {
+                    trailerList.add(video)
+                } else {
+                    extraList.add(video)
+                }
+            }
+        }
+        _trailers.postValue(trailerList)
+        _extraVideos.postValue(extraList)
     }
 
     private fun checkStatus() {

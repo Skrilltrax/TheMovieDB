@@ -7,19 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import me.skrilltrax.themoviedb.adapter.MovieListAdapter
 import me.skrilltrax.themoviedb.R
 import me.skrilltrax.themoviedb.constants.MovieTabs
 import me.skrilltrax.themoviedb.databinding.FragmentCommonViewpagerBinding
-import me.skrilltrax.themoviedb.interfaces.OnItemClickListener
+import me.skrilltrax.themoviedb.interfaces.MovieListItemClickListener
 import me.skrilltrax.themoviedb.model.movie.lists.MovieResultsItem
 import me.skrilltrax.themoviedb.ui.BaseFragment
 import me.skrilltrax.themoviedb.ui.moviedetail.MovieDetailActivity
 import timber.log.Timber
 
-class MovieViewPagerFragment : BaseFragment(), OnItemClickListener {
+class MovieViewPagerFragment : BaseFragment(), MovieListItemClickListener {
 
     private lateinit var viewModel: MovieListViewModel
 

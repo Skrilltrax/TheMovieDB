@@ -10,22 +10,26 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.SavedStateVMFactory
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import me.skrilltrax.themoviedb.R
-import me.skrilltrax.themoviedb.Utils
+import me.skrilltrax.themoviedb.utils.StatusBarUtils
 import me.skrilltrax.themoviedb.adapter.CreditsAdapter
 import me.skrilltrax.themoviedb.adapter.MovieGenreAdapter
 import me.skrilltrax.themoviedb.constants.CreditsType
 import me.skrilltrax.themoviedb.databinding.FragmentMovieDetailBinding
+import me.skrilltrax.themoviedb.interfaces.MovieDetailItemClickListener
 import me.skrilltrax.themoviedb.model.movie.credits.CastItem
 import me.skrilltrax.themoviedb.model.movie.credits.CrewItem
 import me.skrilltrax.themoviedb.model.movie.detail.GenresItem
+import me.skrilltrax.themoviedb.model.movie.videos.VideoResultsItem
 import me.skrilltrax.themoviedb.ui.BaseFragment
 import timber.log.Timber
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
+import me.skrilltrax.themoviedb.adapter.VideoAdapter
 
 
-class MovieDetailFragment : BaseFragment() {
+class MovieDetailFragment : BaseFragment(), MovieDetailItemClickListener {
 
     private val viewModel: MovieDetailViewModel by viewModels(factoryProducer = { SavedStateVMFactory(this) })
 
@@ -33,8 +37,8 @@ class MovieDetailFragment : BaseFragment() {
     private lateinit var binding: FragmentMovieDetailBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        Utils.makeFullScreen(activity!!)
-        Utils.setStatusBarColor(activity!!, Color.TRANSPARENT)
+        StatusBarUtils.makeFullScreen(activity!!)
+        StatusBarUtils.setStatusBarColor(activity!!, Color.TRANSPARENT)
         if (arguments != null) {
             movieId = arguments!!.getString("movie_id", "")
         }
@@ -50,6 +54,7 @@ class MovieDetailFragment : BaseFragment() {
         viewModel.movieId.postValue(movieId)
         viewModel.fetchMovieDetails()
         viewModel.fetchCastAndCrew()
+        viewModel.fetchVideos()
     }
 
     private fun observeScroll(view: View) {
@@ -57,19 +62,19 @@ class MovieDetailFragment : BaseFragment() {
         view.viewTreeObserver.addOnScrollChangedListener {
             val scrollY = view.scrollY.toFloat()
             if (scrollY <= 0) {
-                Utils.setStatusBarColor(activity!!, Color.TRANSPARENT)
+                StatusBarUtils.setStatusBarColor(activity!!, Color.TRANSPARENT)
                 oldScrollY = 0F
             } else if (scrollY > 0 && scrollY <= binding.movieHeader.root.height) {
                 if (Math.abs(scrollY - oldScrollY) > 30) {
                     oldScrollY = scrollY
-                    Utils.setStatusBarColor(
+                    StatusBarUtils.setStatusBarColor(
                         activity!!,
                         Color.argb(((scrollY / binding.movieHeader.root.height) * 255).toInt(), 25, 27, 27)
                     )
                     Timber.d("scrollY : ${((scrollY / binding.movieHeader.root.height) * 255).toInt()}")
                 }
             } else {
-                Utils.setStatusBarColor(activity!!, Color.argb(255, 25, 27, 27))
+                StatusBarUtils.setStatusBarColor(activity!!, Color.argb(255, 25, 27, 27))
                 oldScrollY = binding.movieHeader.root.height.toFloat()
             }
         }
@@ -106,9 +111,27 @@ class MovieDetailFragment : BaseFragment() {
                 CreditsAdapter(crewList as List<CrewItem>, CreditsType.CREW)
         })
 
+        viewModel.videos.observe(viewLifecycleOwner, Observer {
+            Timber.d("trailers : ${it.size}")
+            binding.videoAdapter = VideoAdapter(it, this)
+        })
+
         viewModel.isLoading.observe(viewLifecycleOwner, Observer {
             if (it == false) hideLoading()
         })
+    }
+
+    override fun onVideoItemClick(videoResultsItem: VideoResultsItem) {
+        val appIntent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:${videoResultsItem.key}"))
+        val webIntent = Intent(
+            Intent.ACTION_VIEW,
+            Uri.parse("http://www.youtube.com/watch?v=${videoResultsItem.key}")
+        )
+        try {
+            context?.startActivity(appIntent)
+        } catch (ex: ActivityNotFoundException) {
+            context?.startActivity(webIntent)
+        }
     }
 
     override fun onPause() {

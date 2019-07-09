@@ -1,10 +1,10 @@
-package me.skrilltrax.themoviedb
+package me.skrilltrax.themoviedb.utils
 
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 
-object Utils {
+object StatusBarUtils {
 
     fun setStatusBarColor(activity: AppCompatActivity, color: Int) {
         activity.window.statusBarColor = color

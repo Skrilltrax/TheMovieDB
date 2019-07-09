@@ -3,22 +3,13 @@ package me.skrilltrax.themoviedb.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.RequestOptions
-import me.skrilltrax.themoviedb.R
-import me.skrilltrax.themoviedb.constants.Constants
 import me.skrilltrax.themoviedb.databinding.ItemMovieBinding
-import me.skrilltrax.themoviedb.interfaces.OnItemClickListener
+import me.skrilltrax.themoviedb.interfaces.MovieListItemClickListener
 import me.skrilltrax.themoviedb.model.movie.lists.MovieResultsItem
-import me.zhanghai.android.materialratingbar.MaterialRatingBar
 import timber.log.Timber
 
-class MovieListAdapter(private val movieList: List<MovieResultsItem>, val listener: OnItemClickListener) :
+class MovieListAdapter(private val movieList: List<MovieResultsItem>, val listener: MovieListItemClickListener) :
     RecyclerView.Adapter<MovieListAdapter.MovieViewHolder>() {
 
     private lateinit var binding: ItemMovieBinding

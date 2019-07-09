@@ -11,6 +11,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import me.skrilltrax.themoviedb.R
 import me.skrilltrax.themoviedb.constants.Constants
+import me.skrilltrax.themoviedb.utils.YoutubeUtils
 import me.zhanghai.android.materialratingbar.MaterialRatingBar
 
 object BindingAdapters {
@@ -47,6 +48,18 @@ object BindingAdapters {
                 .load(Constants.POSTER_W185_IMAGE_PATH + url)
                 .transform(MultiTransformation(FitCenter(), RoundedCorners(8)))
                 .error(R.drawable.ic_person_outline_black_16dp)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(view)
+        }
+    }
+
+    @BindingAdapter("thumbnailUrl")
+    @JvmStatic
+    fun setThumbnail(view: ImageView, movieId: String?) {
+        if (movieId != null) {
+            Glide.with(view.context)
+                .load(YoutubeUtils.getMediumQualityThumbnail(movieId))
+                .transform(MultiTransformation(FitCenter(), RoundedCorners(24)))
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(view)
         }
