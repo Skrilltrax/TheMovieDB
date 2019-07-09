@@ -5,30 +5,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import me.skrilltrax.themoviedb.BuildConfig
 import me.skrilltrax.themoviedb.MovieAdapter
 import me.skrilltrax.themoviedb.R
 import me.skrilltrax.themoviedb.constants.MovieTabs
+import me.skrilltrax.themoviedb.databinding.FragmentCommonViewpagerBinding
 import me.skrilltrax.themoviedb.interfaces.OnItemClickListener
 import me.skrilltrax.themoviedb.model.movie.lists.MovieResultsItem
-import me.skrilltrax.themoviedb.network.api.movie.MovieApiInterface
 import me.skrilltrax.themoviedb.ui.BaseFragment
 import me.skrilltrax.themoviedb.ui.moviedetail.MovieDetailActivity
-import retrofit2.HttpException
 import timber.log.Timber
 
 class MovieViewPagerFragment : BaseFragment(), OnItemClickListener {
 
+    private lateinit var viewModel: MovieListViewModel
+
+    private lateinit var binding: FragmentCommonViewpagerBinding
     private var fragmentType: Int? = null
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var movieList: ArrayList<MovieResultsItem>
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val args = arguments
@@ -36,57 +33,46 @@ class MovieViewPagerFragment : BaseFragment(), OnItemClickListener {
             fragmentType = args.getInt("fragmentType", 0)
             Timber.d(fragmentType.toString())
         }
-        return inflater.inflate(R.layout.fragment_common_viewpager, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_common_viewpager, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        showLoading()
-        recyclerView = view.findViewById(R.id.recyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(view.context, RecyclerView.VERTICAL, false)
-        recyclerView.adapter = MovieAdapter(arrayListOf(), this)
+        viewModel = ViewModelProviders.of(activity!!).get(MovieListViewModel::class.java)
+        setupRecyclerView()
+        setupObservers(viewLifecycleOwner, fragmentType ?: 0)
         getMovies(fragmentType ?: 0)
     }
 
-    private fun getMovies(position: Int) {
-        movieList = ArrayList()
-        CoroutineScope(Dispatchers.IO).launch {
-            try {
-                val movieResponse = when (position) {
-                    MovieTabs.TAB_POPULAR.tabId -> MovieApiInterface.getClient().getPopularMovies(BuildConfig.API_KEY)
-                    MovieTabs.TAB_PLAYING.tabId -> MovieApiInterface.getClient().getNowPlayingMovies(BuildConfig.API_KEY)
-                    MovieTabs.TAB_UPCOMING.tabId -> MovieApiInterface.getClient().getUpcomingMovies(BuildConfig.API_KEY)
-                    MovieTabs.TAB_TOP_RATED.tabId -> MovieApiInterface.getClient().getTopRatedMovies(BuildConfig.API_KEY)
-                    else -> null
-                }
-                if (movieResponse != null) {
-                    if (movieResponse.isSuccessful) {
-                        movieList.addAll(movieResponse.body()?.results as Collection<MovieResultsItem>)
-                        withContext(Dispatchers.Main) {
-                            recyclerView.adapter = MovieAdapter(movieList, this@MovieViewPagerFragment)
-                            (recyclerView.adapter as MovieAdapter).notifyDataSetChanged()
-                            hideLoading()
-                        }
-                    } else {
-                        withContext(Dispatchers.Main) {
-                            hideLoading()
-                            Snackbar.make(recyclerView, "Please check your network connection", Snackbar.LENGTH_SHORT)
-                                .show()
-                        }
-                    }
-                }
-            } catch (e: HttpException) {
-                withContext(Dispatchers.Main) {
-                    hideLoading()
-                }
-                e.printStackTrace()
+    private fun setupObservers(viewLifecycleOwner: LifecycleOwner, position: Int) {
+        when (position) {
+            MovieTabs.TAB_POPULAR.tabId -> viewModel.popularMovieList.observe(viewLifecycleOwner, Observer {
+                binding.recyclerView.adapter = MovieAdapter(it, this)
+            })
+            MovieTabs.TAB_PLAYING.tabId -> viewModel.playingMovieList.observe(viewLifecycleOwner, Observer {
+                binding.recyclerView.adapter = MovieAdapter(it, this)
+            })
+            MovieTabs.TAB_UPCOMING.tabId -> viewModel.upcomingMovieList.observe(viewLifecycleOwner, Observer {
+                binding.recyclerView.adapter = MovieAdapter(it, this)
+            })
+            MovieTabs.TAB_TOP_RATED.tabId -> viewModel.topRatedMovieList.observe(viewLifecycleOwner, Observer {
+                binding.recyclerView.adapter = MovieAdapter(it, this)
+            })
+        }
+    }
 
-            } catch (e: Throwable) {
-                withContext(Dispatchers.Main) {
-                    hideLoading()
-                }
-                e.printStackTrace()
-            }
+    private fun setupRecyclerView() {
+        binding.recyclerView.layoutManager = LinearLayoutManager(view?.context, RecyclerView.VERTICAL, false)
+        binding.recyclerView.adapter = MovieAdapter(arrayListOf(), this)
+    }
+
+    private fun getMovies(position: Int) {
+        when (position) {
+            MovieTabs.TAB_POPULAR.tabId -> viewModel.fetchPopularMovieList()
+            MovieTabs.TAB_PLAYING.tabId -> viewModel.fetchPlayingMovieList()
+            MovieTabs.TAB_UPCOMING.tabId -> viewModel.fetchUpcomingMovieList()
+            MovieTabs.TAB_TOP_RATED.tabId -> viewModel.fetchTopRatedMovieList()
         }
     }
 

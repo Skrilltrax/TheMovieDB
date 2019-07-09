@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
@@ -14,16 +12,6 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.SavedStateVMFactory
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.RequestOptions
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import me.skrilltrax.themoviedb.BuildConfig
-import me.skrilltrax.themoviedb.constants.Constants
 import me.skrilltrax.themoviedb.R
 import me.skrilltrax.themoviedb.Utils
 import me.skrilltrax.themoviedb.adapter.CastCrewAdapter
@@ -33,12 +21,7 @@ import me.skrilltrax.themoviedb.databinding.FragmentMovieDetailBinding
 import me.skrilltrax.themoviedb.model.movie.credits.CastItem
 import me.skrilltrax.themoviedb.model.movie.credits.CrewItem
 import me.skrilltrax.themoviedb.model.movie.detail.GenresItem
-import me.skrilltrax.themoviedb.model.movie.detail.MovieDetailResponse
-import me.skrilltrax.themoviedb.network.api.movie.MovieApiInterface
 import me.skrilltrax.themoviedb.ui.BaseFragment
-import me.zhanghai.android.materialratingbar.MaterialRatingBar
-import retrofit2.HttpException
-import retrofit2.Response
 import timber.log.Timber
 
 
@@ -63,7 +46,7 @@ class MovieDetailFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         showLoading()
         observeScroll(view)
-        createObserves(viewLifecycleOwner)
+        setupObserves(viewLifecycleOwner)
         setupRecyclerView()
         viewModel.movieId.postValue(movieId)
         viewModel.fetchMovieDetails()
@@ -72,8 +55,7 @@ class MovieDetailFragment : BaseFragment() {
 
     private fun observeScroll(view: View) {
         var oldScrollY = 0F
-        val movieHeaderHeight = binding.movieHeader.root.measuredHeight
-        view.viewTreeObserver.addOnScrollChangedListener {
+            view.viewTreeObserver.addOnScrollChangedListener {
             val scrollY = view.scrollY.toFloat()
             if (scrollY <= 0) {
                 Utils.setStatusBarColor(activity!!, Color.TRANSPARENT)
@@ -94,7 +76,7 @@ class MovieDetailFragment : BaseFragment() {
         }
     }
 
-    private fun createObserves(viewLifecycleOwner: LifecycleOwner) {
+    private fun setupObserves(viewLifecycleOwner: LifecycleOwner) {
 
         viewModel.movieDetail.observe(viewLifecycleOwner, Observer {
             binding.movieDetail = it
