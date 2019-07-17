@@ -27,6 +27,14 @@ class VideoAdapter(private val videoList: List<VideoResultsItem>, private val li
         return videoList.size
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
     inner class VideoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(position: Int) {
