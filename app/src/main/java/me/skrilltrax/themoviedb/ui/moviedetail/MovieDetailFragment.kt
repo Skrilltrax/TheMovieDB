@@ -11,7 +11,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.lifecycle.SavedStateVMFactory
 import me.skrilltrax.themoviedb.R
-import me.skrilltrax.themoviedb.utils.StatusBarUtils
+import me.skrilltrax.themoviedb.utils.SystemLayoutUtils
 import me.skrilltrax.themoviedb.adapter.CreditsAdapter
 import me.skrilltrax.themoviedb.adapter.MovieGenreAdapter
 import me.skrilltrax.themoviedb.constants.CreditsType
@@ -26,6 +26,7 @@ import timber.log.Timber
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
+import androidx.core.content.ContextCompat
 import me.skrilltrax.themoviedb.adapter.VideoAdapter
 
 
@@ -37,8 +38,9 @@ class MovieDetailFragment : BaseFragment(), MovieDetailItemClickListener {
     private lateinit var binding: FragmentMovieDetailBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        StatusBarUtils.makeFullScreen(activity!!)
-        StatusBarUtils.setStatusBarColor(activity!!, Color.TRANSPARENT)
+        SystemLayoutUtils.makeFullScreenHideNavigation(activity!!)
+        SystemLayoutUtils.setStatusBarColor(activity!!, Color.TRANSPARENT)
+        SystemLayoutUtils.setNavigationBarColor(activity!!, ContextCompat.getColor(activity!!, android.R.color.transparent))
         if (arguments != null) {
             movieId = arguments!!.getString("movie_id", "")
         }
@@ -62,19 +64,19 @@ class MovieDetailFragment : BaseFragment(), MovieDetailItemClickListener {
         view.viewTreeObserver.addOnScrollChangedListener {
             val scrollY = view.scrollY.toFloat()
             if (scrollY <= 0) {
-                StatusBarUtils.setStatusBarColor(activity!!, Color.TRANSPARENT)
+                SystemLayoutUtils.setStatusBarColor(activity!!, Color.TRANSPARENT)
                 oldScrollY = 0F
             } else if (scrollY > 0 && scrollY <= binding.movieHeader.root.height) {
                 if (Math.abs(scrollY - oldScrollY) > 30) {
                     oldScrollY = scrollY
-                    StatusBarUtils.setStatusBarColor(
+                    SystemLayoutUtils.setStatusBarColor(
                         activity!!,
                         Color.argb(((scrollY / binding.movieHeader.root.height) * 255).toInt(), 25, 27, 27)
                     )
                     Timber.d("scrollY : ${((scrollY / binding.movieHeader.root.height) * 255).toInt()}")
                 }
             } else {
-                StatusBarUtils.setStatusBarColor(activity!!, Color.argb(255, 25, 27, 27))
+                SystemLayoutUtils.setStatusBarColor(activity!!, Color.argb(255, 25, 27, 27))
                 oldScrollY = binding.movieHeader.root.height.toFloat()
             }
         }

@@ -1,13 +1,12 @@
 package me.skrilltrax.themoviedb.ui.homepage
 
-import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import me.skrilltrax.themoviedb.R
-import me.skrilltrax.themoviedb.ui.search.SearchActivity
+import me.skrilltrax.themoviedb.utils.SystemLayoutUtils
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,6 +14,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        SystemLayoutUtils.setNavigationBarColor(this, ContextCompat.getColor(this, R.color.background))
         setContentView(R.layout.activity_main)
         if (supportFragmentManager.backStackEntryCount == 0) {
             supportFragmentManager.beginTransaction()
