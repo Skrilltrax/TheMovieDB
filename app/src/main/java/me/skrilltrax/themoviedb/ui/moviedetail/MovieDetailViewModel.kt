@@ -26,6 +26,7 @@ class MovieDetailViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
     private val _videos: MutableLiveData<List<VideoResultsItem>> = MutableLiveData(listOf())
     private val _trailers: MutableLiveData<List<VideoResultsItem>> = MutableLiveData(listOf())
     private val _extraVideos: MutableLiveData<List<VideoResultsItem>> = MutableLiveData(listOf())
+    private val _recommendations: MutableLiveData<List<MovieResultsItem>> = MutableLiveData(listOf())
 
     val movieId: MutableLiveData<String> = MutableLiveData("")
     val isLoading: MutableLiveData<Boolean> = MutableLiveData(true)
@@ -50,6 +51,9 @@ class MovieDetailViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
     val extraVideos: LiveData<List<VideoResultsItem>>
         get() = _extraVideos
+
+    val recommendations: LiveData<List<MovieResultsItem>>
+        get() = _recommendations
 
     @Suppress("UNCHECKED_CAST")
     fun fetchMovieDetails() {
@@ -87,6 +91,15 @@ class MovieDetailViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
                 _videos.postValue(movieVideos.results as List<VideoResultsItem>)
                 checkStatus()
                 sortVideos()
+            }
+        }
+    }
+
+    fun fetchRecommendations() {
+        viewModelScope.launch {
+            val recommendedVideos = movieDetailRepository.getRecommendations(movieId.value!!)
+            if (recommendations != null) {
+                _recommendations.postValue(recommendedVideos?.results as List<MovieResultsItem>)
             }
         }
     }

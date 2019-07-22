@@ -27,6 +27,10 @@
         <variable
             name="videoAdapter"
             type="me.skrilltrax.themoviedb.adapter.VideoAdapter" />
+
+        <variable
+            name="recommendationAdapter"
+            type="me.skrilltrax.themoviedb.adapter.MovieRecommendationAdapter" />
     </data>
 
     <ScrollView
@@ -173,10 +177,9 @@
                 android:id="@+id/recommended_recycler_view"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:adapter="@{videoAdapter}"
-                android:orientation="vertical"
-                app:spanCount="2"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                android:adapter="@{recommendationAdapter}"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/title_recommended"
                 app:layout_constraintTop_toBottomOf="@id/title_recommended" />

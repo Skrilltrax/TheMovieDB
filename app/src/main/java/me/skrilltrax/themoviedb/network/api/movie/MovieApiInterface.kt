@@ -37,6 +37,9 @@ interface MovieApiInterface {
     @GET("movie/{movie_id}/videos")
     suspend fun getMovieVideos(@Path("movie_id") id: String, @Query("api_key") apiKey: String): Response<MovieVideoResponse>
 
+    @GET("movie/{movie_id}/recommendations")
+    suspend fun getMovieRecommendations(@Path("movie_id") id: String, @Query("api_key") apiKey: String): Response<MovieListResponse>
+
     companion object {
         fun getClient(): MovieApiInterface {
             val retrofit = RetrofitInstance.getInstance()

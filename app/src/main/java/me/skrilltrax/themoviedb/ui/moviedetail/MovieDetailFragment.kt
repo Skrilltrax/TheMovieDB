@@ -9,7 +9,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import androidx.lifecycle.SavedStateVMFactory
 import me.skrilltrax.themoviedb.R
 import me.skrilltrax.themoviedb.utils.SystemLayoutUtils
 import me.skrilltrax.themoviedb.adapter.CreditsAdapter
@@ -26,21 +25,33 @@ import timber.log.Timber
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
+import android.view.ViewTreeObserver
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.SavedStateViewModelFactory
+import me.skrilltrax.themoviedb.adapter.MovieRecommendationAdapter
 import me.skrilltrax.themoviedb.adapter.VideoAdapter
+import me.skrilltrax.themoviedb.interfaces.MovieListItemClickListener
+import me.skrilltrax.themoviedb.model.movie.lists.MovieResultsItem
 
 
-class MovieDetailFragment : BaseFragment(), MovieDetailItemClickListener {
-
-    private val viewModel: MovieDetailViewModel by viewModels(factoryProducer = { SavedStateVMFactory(this) })
+class MovieDetailFragment : BaseFragment(), MovieDetailItemClickListener, MovieListItemClickListener {
+    private val viewModel: MovieDetailViewModel by viewModels(factoryProducer = { SavedStateViewModelFactory(this) })
 
     private lateinit var movieId: String
+
     private lateinit var binding: FragmentMovieDetailBinding
+
+    private lateinit var viewTreeObserver: ViewTreeObserver
+    private lateinit var scrollChangedListener: ViewTreeObserver.OnScrollChangedListener
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         SystemLayoutUtils.makeFullScreenHideNavigation(activity!!)
         SystemLayoutUtils.setStatusBarColor(activity!!, Color.TRANSPARENT)
-        SystemLayoutUtils.setNavigationBarColor(activity!!, ContextCompat.getColor(activity!!, android.R.color.transparent))
+        SystemLayoutUtils.setNavigationBarColor(
+            activity!!,
+            ContextCompat.getColor(activity!!, android.R.color.transparent)
+        )
         if (arguments != null) {
             movieId = arguments!!.getString("movie_id", "")
         }
@@ -57,29 +68,34 @@ class MovieDetailFragment : BaseFragment(), MovieDetailItemClickListener {
         viewModel.fetchMovieDetails()
         viewModel.fetchCastAndCrew()
         viewModel.fetchVideos()
+        viewModel.fetchRecommendations()
     }
 
     private fun observeScroll(view: View) {
         var oldScrollY = 0F
-        view.viewTreeObserver.addOnScrollChangedListener {
-            val scrollY = view.scrollY.toFloat()
-            if (scrollY <= 0) {
-                SystemLayoutUtils.setStatusBarColor(activity!!, Color.TRANSPARENT)
-                oldScrollY = 0F
-            } else if (scrollY > 0 && scrollY <= binding.movieHeader.root.height) {
-                if (Math.abs(scrollY - oldScrollY) > 30) {
-                    oldScrollY = scrollY
-                    SystemLayoutUtils.setStatusBarColor(
-                        activity!!,
-                        Color.argb(((scrollY / binding.movieHeader.root.height) * 255).toInt(), 25, 27, 27)
-                    )
-                    Timber.d("scrollY : ${((scrollY / binding.movieHeader.root.height) * 255).toInt()}")
+        viewTreeObserver = view.viewTreeObserver
+        scrollChangedListener = ViewTreeObserver.OnScrollChangedListener {
+            if (activity != null) {
+                val scrollY = view.scrollY.toFloat()
+                if (scrollY <= 0) {
+                    SystemLayoutUtils.setStatusBarColor(activity!!, Color.TRANSPARENT)
+                    oldScrollY = 0F
+                } else if (scrollY > 0 && scrollY <= binding.movieHeader.root.height) {
+                    if (Math.abs(scrollY - oldScrollY) > 30) {
+                        oldScrollY = scrollY
+                        SystemLayoutUtils.setStatusBarColor(
+                            activity!!,
+                            Color.argb(((scrollY / binding.movieHeader.root.height) * 255).toInt(), 25, 27, 27)
+                        )
+                        Timber.d("scrollY : ${((scrollY / binding.movieHeader.root.height) * 255).toInt()}")
+                    }
+                } else {
+                    SystemLayoutUtils.setStatusBarColor(activity!!, Color.argb(255, 25, 27, 27))
+                    oldScrollY = binding.movieHeader.root.height.toFloat()
                 }
-            } else {
-                SystemLayoutUtils.setStatusBarColor(activity!!, Color.argb(255, 25, 27, 27))
-                oldScrollY = binding.movieHeader.root.height.toFloat()
             }
         }
+        viewTreeObserver.addOnScrollChangedListener(scrollChangedListener)
     }
 
     private fun setupObservers(viewLifecycleOwner: LifecycleOwner) {
@@ -118,6 +134,10 @@ class MovieDetailFragment : BaseFragment(), MovieDetailItemClickListener {
             binding.videoAdapter = VideoAdapter(it, this)
         })
 
+        viewModel.recommendations.observe(viewLifecycleOwner, Observer {
+            binding.recommendationAdapter = MovieRecommendationAdapter(it, this)
+        })
+
         viewModel.isLoading.observe(viewLifecycleOwner, Observer {
             if (it == false) hideLoading()
         })
@@ -136,9 +156,22 @@ class MovieDetailFragment : BaseFragment(), MovieDetailItemClickListener {
         }
     }
 
+    override fun onMovieItemClick(movieResultsItem: MovieResultsItem) {
+        fragmentManager?.beginTransaction()
+            ?.add(R.id.frame, MovieDetailFragment.newInstance(movieResultsItem.id.toString()))
+            ?.addToBackStack("Movie Id : " + movieResultsItem.id.toString())
+            ?.commit()
+    }
+
+    override fun onDetach() {
+        viewTreeObserver.removeOnScrollChangedListener(scrollChangedListener)
+        super.onDetach()
+    }
+
+
     override fun onPause() {
-        super.onPause()
         dialog?.dismiss()
+        super.onPause()
     }
 
     companion object {

@@ -16,7 +16,7 @@ secretsProperties.load(FileInputStream(secretsFile))
 
 android {
     compileSdkVersion(29)
-
+    dataBinding.isEnabled = true
     defaultConfig {
         applicationId = "me.skrilltrax.themoviedb"
         minSdkVersion(21)
@@ -37,9 +37,6 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
-    dataBinding {
-    }
-
 }
 
 dependencies {
@@ -65,7 +62,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0-alpha02")
 //Gson
     implementation("com.google.code.gson:gson:2.8.5")
-//Viewpager
+//Viewpager`
     implementation("androidx.viewpager2:viewpager2:1.0.0-beta02")
 //Anko Commons
     implementation("org.jetbrains.anko:anko-commons:0.10.8")
