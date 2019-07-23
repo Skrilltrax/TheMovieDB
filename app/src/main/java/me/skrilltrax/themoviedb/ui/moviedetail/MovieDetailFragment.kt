@@ -76,7 +76,7 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListI
 
     private fun observeScroll(view: View) {
         var oldScrollY = 0F
-/*        scrollChangedListener = ViewTreeObserver.OnScrollChangedListener {
+        scrollChangedListener = ViewTreeObserver.OnScrollChangedListener {
             if (activity != null) {
                 val scrollY = view.scrollY.toFloat()
                 if (scrollY <= 0) {
@@ -97,28 +97,7 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListI
                 }
             }
         }
-        view.viewTreeObserver.addOnScrollChangedListener(scrollChangedListener)*/
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            binding.root.setOnScrollChangeListener { view, scrollX, scrollY, oldScrollX, oldScrollY ->
-                if (activity != null) {
-                    val scrollY = view.scrollY.toFloat()
-                    if (scrollY <= 0) {
-                        SystemLayoutUtils.setStatusBarColor(activity!!, Color.TRANSPARENT)
-                    } else if (scrollY > 0 && scrollY <= binding.movieHeader.root.height) {
-                        if (Math.abs(scrollY - oldScrollY) > 30) {
-                            SystemLayoutUtils.setStatusBarColor(
-                                activity!!,
-                                Color.argb(((scrollY / binding.movieHeader.root.height) * 255).toInt(), 25, 27, 27)
-                            )
-                            Timber.d("scrollY : ${((scrollY / binding.movieHeader.root.height) * 255).toInt()}")
-                        }
-                    } else {
-                        SystemLayoutUtils.setStatusBarColor(activity!!, Color.argb(255, 25, 27, 27))
-                    }
-                }
-            }
-        }
+        view.viewTreeObserver.addOnScrollChangedListener(scrollChangedListener)
     }
 
     private fun setupObservers(viewLifecycleOwner: LifecycleOwner) {
