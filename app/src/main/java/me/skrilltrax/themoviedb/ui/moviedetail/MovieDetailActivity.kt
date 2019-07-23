@@ -17,7 +17,7 @@ class MovieDetailActivity : BaseActivity() {
             Timber.d(movieId)
             if (supportFragmentManager.backStackEntryCount == 0) {
                 supportFragmentManager.beginTransaction()
-                    .add(R.id.frame, MovieDetailFragment.newInstance(movieId))
+                    .add(R.id.frame, MovieDetailFragment.newInstance(movieId), "FRAGMENT_MOVIE_DETAIL")
                     .commit()
             }
         }

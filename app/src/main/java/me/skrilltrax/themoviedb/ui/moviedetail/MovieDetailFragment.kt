@@ -26,6 +26,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.view.ViewTreeObserver
+import android.widget.ScrollView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.SavedStateViewModelFactory
@@ -34,7 +35,6 @@ import me.skrilltrax.themoviedb.adapter.VideoAdapter
 import me.skrilltrax.themoviedb.interfaces.MovieListItemClickListener
 import me.skrilltrax.themoviedb.model.movie.lists.MovieResultsItem
 import java.lang.ref.WeakReference
-
 
 class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListItemClickListener {
     private val viewModel: MovieDetailViewModel by viewModels(factoryProducer = { SavedStateViewModelFactory(this) })
@@ -180,10 +180,18 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListI
     }
 
     override fun onMovieItemClick(movieResultsItem: MovieResultsItem) {
-        fragmentManager?.beginTransaction()
-            ?.add(R.id.frame, MovieDetailFragment.newInstance(movieResultsItem.id.toString()))
-            ?.addToBackStack("Movie Id : " + movieResultsItem.id.toString())
-            ?.commit()
+        this.movieId = movieResultsItem.id.toString()
+        reloadFragment()
+    }
+
+    private fun reloadFragment() {
+        movieDetailActivity.get()?.showLoading()
+        (binding.root as ScrollView).fullScroll(ScrollView.FOCUS_UP)
+        viewModel.movieId.postValue(movieId)
+        viewModel.fetchMovieDetails()
+        viewModel.fetchCastAndCrew()
+        viewModel.fetchVideos()
+        viewModel.fetchRecommendations()
     }
 
     override fun onDetach() {

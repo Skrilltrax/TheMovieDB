@@ -73,6 +73,12 @@ dependencies {
     implementation("com.airbnb.android:lottie:3.0.7")
 //Rating Bar
     implementation("me.zhanghai.android.materialratingbar:library:1.3.2")
+//Room
+    implementation("androidx.room:room-runtime:2.2.0-alpha01")
+    kapt("androidx.room:room-compiler:2.2.0-alpha01") // For Kotlin use kapt instead of annotationProcessor
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation("androidx.room:room-ktx:2.2.0-alpha01")
+
 
     testImplementation("junit:junit:4.12")
     androidTestImplementation("androidx.test:runner:1.2.0")
