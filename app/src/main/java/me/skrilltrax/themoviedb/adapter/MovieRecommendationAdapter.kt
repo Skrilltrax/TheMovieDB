@@ -29,6 +29,14 @@ class MovieRecommendationAdapter(
         holder.bind(list[position])
     }
 
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
     inner class MovieRecommendationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(movieResultsItem: MovieResultsItem) {
