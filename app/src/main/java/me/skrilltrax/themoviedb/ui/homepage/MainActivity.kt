@@ -6,9 +6,10 @@ import android.os.Bundle
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import me.skrilltrax.themoviedb.R
+import me.skrilltrax.themoviedb.ui.BaseActivity
 import me.skrilltrax.themoviedb.utils.SystemLayoutUtils
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     private lateinit var bottomNav: BottomNavigationView
 
@@ -16,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         SystemLayoutUtils.setNavigationBarColor(this, ContextCompat.getColor(this, R.color.background))
         setContentView(R.layout.activity_main)
-        if (supportFragmentManager.backStackEntryCount == 0) {
+        if (supportFragmentManager.backStackEntryCount == 0 && savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .add(R.id.frame, HomeFragment())
                 .commit()
@@ -46,6 +47,14 @@ class MainActivity : AppCompatActivity() {
             }
             false
         }
+    }
+
+    override fun onPause() {
+        if (dialog?.isShowing == true) {
+            hideLoading()
+            dialog?.dismiss()
+        }
+        super.onPause()
     }
 }
 

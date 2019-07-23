@@ -3,9 +3,10 @@ package me.skrilltrax.themoviedb.ui.moviedetail
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import me.skrilltrax.themoviedb.R
+import me.skrilltrax.themoviedb.ui.BaseActivity
 import timber.log.Timber
 
-class MovieDetailActivity : AppCompatActivity() {
+class MovieDetailActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

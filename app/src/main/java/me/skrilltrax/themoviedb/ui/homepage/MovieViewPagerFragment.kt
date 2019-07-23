@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import me.skrilltrax.themoviedb.adapter.MovieListAdapter
 import me.skrilltrax.themoviedb.R
@@ -13,11 +14,10 @@ import me.skrilltrax.themoviedb.constants.MovieTabs
 import me.skrilltrax.themoviedb.databinding.FragmentCommonViewpagerBinding
 import me.skrilltrax.themoviedb.interfaces.MovieListItemClickListener
 import me.skrilltrax.themoviedb.model.movie.lists.MovieResultsItem
-import me.skrilltrax.themoviedb.ui.BaseFragment
 import me.skrilltrax.themoviedb.ui.moviedetail.MovieDetailActivity
 import timber.log.Timber
 
-class MovieViewPagerFragment : BaseFragment(), MovieListItemClickListener {
+class MovieViewPagerFragment : Fragment(), MovieListItemClickListener {
 
     private lateinit var viewModel: MovieListViewModel
 
@@ -36,6 +36,7 @@ class MovieViewPagerFragment : BaseFragment(), MovieListItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Timber.d("Config Changed")
         viewModel = ViewModelProviders.of(activity!!).get(MovieListViewModel::class.java)
         setupObservers(viewLifecycleOwner, fragmentType ?: 0)
         getMovies(fragmentType ?: 0)
