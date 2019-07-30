@@ -28,6 +28,9 @@ import android.os.Build
 import android.view.ViewTreeObserver
 import android.widget.ScrollView
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.doOnNextLayout
+import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.SavedStateViewModelFactory
 import me.skrilltrax.themoviedb.adapter.MovieRecommendationAdapter
@@ -49,11 +52,11 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListI
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         SystemLayoutUtils.makeFullScreenHideNavigation(activity!!)
-        SystemLayoutUtils.setStatusBarColor(activity!!, Color.TRANSPARENT)
-        SystemLayoutUtils.setNavigationBarColor(
-            activity!!,
-            ContextCompat.getColor(activity!!, android.R.color.transparent)
-        )
+//        SystemLayoutUtils.setStatusBarColor(activity!!, Color.TRANSPARENT)
+//        SystemLayoutUtils.setNavigationBarColor(
+//            activity!!,
+//            ContextCompat.getColor(activity!!, android.R.color.transparent)
+//        )
         if (arguments != null) {
             movieId = arguments!!.getString("movie_id", "")
         }
@@ -63,6 +66,11 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListI
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        view.setOnApplyWindowInsetsListener { detailView, windowInsets ->
+            detailView.updatePadding(0, 0, 0, windowInsets.stableInsetBottom)
+
+            windowInsets
+        }
         movieDetailActivity = WeakReference(activity as MovieDetailActivity)
         movieDetailActivity.get()?.showLoading()
         observeScroll(view)

@@ -43,7 +43,7 @@ dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${KotlinCompilerVersion.VERSION}")
     implementation("androidx.appcompat:appcompat:1.0.2")
-    implementation("androidx.core:core-ktx:1.0.2")
+    implementation("androidx.core:core-ktx:1.2.0-alpha02")
     implementation("androidx.constraintlayout:constraintlayout:1.1.3")
 
 //Timber
