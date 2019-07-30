@@ -66,10 +66,9 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListI
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        view.setOnApplyWindowInsetsListener { detailView, windowInsets ->
-            detailView.updatePadding(0, 0, 0, windowInsets.stableInsetBottom)
-
-            windowInsets
+        ViewCompat.setOnApplyWindowInsetsListener(view) { view, insets ->
+            view.updatePadding(0, 0, 0, insets.systemWindowInsetBottom)
+            insets
         }
         movieDetailActivity = WeakReference(activity as MovieDetailActivity)
         movieDetailActivity.get()?.showLoading()
