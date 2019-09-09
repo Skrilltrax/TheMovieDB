@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.config.KotlinCompilerVersion
 import java.io.FileInputStream
 import java.util.*
 
@@ -41,11 +40,11 @@ android {
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
+
     implementation(Libs.kotlin_stdlib_jdk7)
     implementation(Libs.appcompat)
     implementation(Libs.core_ktx)
     implementation(Libs.constraintlayout)
-
     //Timber
     implementation(Libs.timber)
     //Retrofit
