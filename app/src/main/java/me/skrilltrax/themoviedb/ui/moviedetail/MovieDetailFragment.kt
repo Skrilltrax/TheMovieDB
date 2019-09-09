@@ -24,7 +24,6 @@ import timber.log.Timber
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.view.ViewTreeObserver
 import android.widget.ScrollView
 import androidx.core.content.ContextCompat
@@ -35,6 +34,7 @@ import me.skrilltrax.themoviedb.adapter.VideoAdapter
 import me.skrilltrax.themoviedb.interfaces.MovieListItemClickListener
 import me.skrilltrax.themoviedb.model.movie.lists.MovieResultsItem
 import java.lang.ref.WeakReference
+import kotlin.math.abs
 
 class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListItemClickListener {
     private val viewModel: MovieDetailViewModel by viewModels(factoryProducer = { SavedStateViewModelFactory(this) })
@@ -83,7 +83,7 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListI
                     SystemLayoutUtils.setStatusBarColor(activity!!, Color.TRANSPARENT)
                     oldScrollY = 0F
                 } else if (scrollY > 0 && scrollY <= binding.movieHeader.root.height) {
-                    if (Math.abs(scrollY - oldScrollY) > 30) {
+                    if (abs(scrollY - oldScrollY) > 30) {
                         oldScrollY = scrollY
                         SystemLayoutUtils.setStatusBarColor(
                             activity!!,

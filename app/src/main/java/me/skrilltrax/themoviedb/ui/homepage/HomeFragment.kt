@@ -67,4 +67,11 @@ class HomeFragment : Fragment() {
         mainActivity.get()?.dialog?.dismiss()
         super.onStop()
     }
+
+    companion object {
+
+        fun newInstance(): HomeFragment {
+            return HomeFragment()
+        }
+    }
 }

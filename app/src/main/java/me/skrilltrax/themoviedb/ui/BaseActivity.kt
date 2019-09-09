@@ -18,7 +18,6 @@ open class BaseActivity : AppCompatActivity() {
         dialog!!.setContentView(R.layout.progress_lottie)
         dialog!!.setCanceledOnTouchOutside(false)
         dialog!!.show()
-
     }
 
     fun hideLoading() {

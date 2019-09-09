@@ -41,46 +41,46 @@ android {
 
 dependencies {
     implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:${KotlinCompilerVersion.VERSION}")
-    implementation("androidx.appcompat:appcompat:1.0.2")
-    implementation("androidx.core:core-ktx:1.0.2")
-    implementation("androidx.constraintlayout:constraintlayout:1.1.3")
+    implementation(Libs.kotlin_stdlib_jdk7)
+    implementation(Libs.appcompat)
+    implementation(Libs.core_ktx)
+    implementation(Libs.constraintlayout)
 
-//Timber
-    implementation("com.jakewharton.timber:timber:4.7.1")
-//Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.6.0")
-    implementation("com.squareup.okhttp3:logging-interceptor:3.14.2")
-    implementation("com.squareup.retrofit2:converter-gson:2.5.0")
-//Material Components
-    implementation("com.google.android.material:material:1.0.0")
-//Navigation
-    implementation("androidx.navigation:navigation-fragment-ktx:2.1.0-beta02")
-    implementation("androidx.navigation:navigation-ui:2.1.0-beta02")
-//Lifecycle
-    implementation("androidx.lifecycle:lifecycle-extensions:2.0.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:1.0.0-alpha02")
-//Gson
-    implementation("com.google.code.gson:gson:2.8.5")
-//Viewpager`
-    implementation("androidx.viewpager2:viewpager2:1.0.0-beta02")
-//Anko Commons
-    implementation("org.jetbrains.anko:anko-commons:0.10.8")
-//Glide
-    implementation("com.github.bumptech.glide:glide:4.9.0")
-    annotationProcessor("com.github.bumptech.glide:compiler:4.9.0")
-//Lottie
-    implementation("com.airbnb.android:lottie:3.0.7")
-//Rating Bar
-    implementation("me.zhanghai.android.materialratingbar:library:1.3.2")
-//Room
-    implementation("androidx.room:room-runtime:2.2.0-alpha01")
-    kapt("androidx.room:room-compiler:2.2.0-alpha01") // For Kotlin use kapt instead of annotationProcessor
+    //Timber
+    implementation(Libs.timber)
+    //Retrofit
+    implementation(Libs.retrofit)
+    implementation(Libs.logging_interceptor)
+    implementation(Libs.converter_gson)
+    //Material Components
+    implementation(Libs.material)
+    //Navigation
+    implementation(Libs.navigation_fragment_ktx)
+    implementation(Libs.navigation_ui)
+    //Lifecycle
+    implementation(Libs.lifecycle_extensions)
+    implementation(Libs.lifecycle_viewmodel_savedstate)
+    //Gson
+    implementation(Libs.gson)
+    //Viewpager
+    implementation(Libs.viewpager2)
+    //Anko Commons
+    implementation(Libs.anko_commons)
+    //Glide
+    implementation(Libs.glide)
+    annotationProcessor(Libs.com_github_bumptech_glide_compiler)
+    //Lottie
+    implementation(Libs.lottie)
+    //Rating Bar
+    implementation(Libs.library)
+    //Room
+    implementation(Libs.room_runtime)
+    kapt(Libs.room_compiler) // For Kotlin use kapt instead of annotationProcessor
     // optional - Kotlin Extensions and Coroutines support for Room
-    implementation("androidx.room:room-ktx:2.2.0-alpha01")
+    implementation(Libs.room_ktx)
 
 
-    testImplementation("junit:junit:4.12")
-    androidTestImplementation("androidx.test:runner:1.2.0")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")
+    testImplementation(Libs.junit)
+    androidTestImplementation(Libs.androidx_test_runner)
+    androidTestImplementation(Libs.espresso_core)
 }

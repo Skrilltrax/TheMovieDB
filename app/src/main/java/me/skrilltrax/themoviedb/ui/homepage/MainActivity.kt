@@ -19,7 +19,7 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
         if (supportFragmentManager.backStackEntryCount == 0 && savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .add(R.id.frame, HomeFragment())
+                .add(R.id.frame, HomeFragment.newInstance())
                 .commit()
         }
 
