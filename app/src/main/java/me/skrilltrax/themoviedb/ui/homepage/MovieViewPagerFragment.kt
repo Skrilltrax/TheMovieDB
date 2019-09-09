@@ -15,11 +15,13 @@ import me.skrilltrax.themoviedb.databinding.FragmentCommonViewpagerBinding
 import me.skrilltrax.themoviedb.interfaces.MovieListItemClickListener
 import me.skrilltrax.themoviedb.model.movie.lists.MovieResultsItem
 import me.skrilltrax.themoviedb.ui.moviedetail.MovieDetailActivity
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 class MovieViewPagerFragment : Fragment(), MovieListItemClickListener {
 
-    private lateinit var viewModel: MovieListViewModel
+    private val movieListViewModel by sharedViewModel<MovieListViewModel>(from = { parentFragment!! })
 
     private lateinit var binding: FragmentCommonViewpagerBinding
     private var fragmentType: Int? = null
@@ -37,23 +39,22 @@ class MovieViewPagerFragment : Fragment(), MovieListItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Timber.d("Config Changed")
-        viewModel = ViewModelProviders.of(activity!!).get(MovieListViewModel::class.java)
         setupObservers(viewLifecycleOwner, fragmentType ?: 0)
         getMovies(fragmentType ?: 0)
     }
 
     private fun setupObservers(viewLifecycleOwner: LifecycleOwner, position: Int) {
         when (position) {
-            MovieTabs.TAB_POPULAR.tabId -> viewModel.popularMovieList.observe(viewLifecycleOwner, Observer {
+            MovieTabs.TAB_POPULAR.tabId -> movieListViewModel.popularMovieList.observe(viewLifecycleOwner, Observer {
                 binding.movieListAdapter = MovieListAdapter(it, this)
             })
-            MovieTabs.TAB_PLAYING.tabId -> viewModel.playingMovieList.observe(viewLifecycleOwner, Observer {
+            MovieTabs.TAB_PLAYING.tabId -> movieListViewModel.playingMovieList.observe(viewLifecycleOwner, Observer {
                 binding.movieListAdapter = MovieListAdapter(it, this)
             })
-            MovieTabs.TAB_UPCOMING.tabId -> viewModel.upcomingMovieList.observe(viewLifecycleOwner, Observer {
+            MovieTabs.TAB_UPCOMING.tabId -> movieListViewModel.upcomingMovieList.observe(viewLifecycleOwner, Observer {
                 binding.movieListAdapter = MovieListAdapter(it, this)
             })
-            MovieTabs.TAB_TOP_RATED.tabId -> viewModel.topRatedMovieList.observe(viewLifecycleOwner, Observer {
+            MovieTabs.TAB_TOP_RATED.tabId -> movieListViewModel.topRatedMovieList.observe(viewLifecycleOwner, Observer {
                 binding.movieListAdapter = MovieListAdapter(it, this)
             })
         }
@@ -61,10 +62,10 @@ class MovieViewPagerFragment : Fragment(), MovieListItemClickListener {
 
     private fun getMovies(position: Int) {
         when (position) {
-            MovieTabs.TAB_POPULAR.tabId -> viewModel.fetchPopularMovieList()
-            MovieTabs.TAB_PLAYING.tabId -> viewModel.fetchPlayingMovieList()
-            MovieTabs.TAB_UPCOMING.tabId -> viewModel.fetchUpcomingMovieList()
-            MovieTabs.TAB_TOP_RATED.tabId -> viewModel.fetchTopRatedMovieList()
+            MovieTabs.TAB_POPULAR.tabId -> movieListViewModel.fetchPopularMovieList()
+            MovieTabs.TAB_PLAYING.tabId -> movieListViewModel.fetchPlayingMovieList()
+            MovieTabs.TAB_UPCOMING.tabId -> movieListViewModel.fetchUpcomingMovieList()
+            MovieTabs.TAB_TOP_RATED.tabId -> movieListViewModel.fetchTopRatedMovieList()
         }
     }
 

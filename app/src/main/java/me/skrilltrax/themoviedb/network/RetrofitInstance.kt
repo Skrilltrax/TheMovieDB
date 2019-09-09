@@ -24,7 +24,7 @@ object RetrofitInstance {
 
     private fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
         Timber.tag("Logging")
-        val httpLoggingInterceptor = HttpLoggingInterceptor { message -> Timber.i(message) }
+        val httpLoggingInterceptor = HttpLoggingInterceptor() //TODO: Use timber implementation
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         return httpLoggingInterceptor
     }

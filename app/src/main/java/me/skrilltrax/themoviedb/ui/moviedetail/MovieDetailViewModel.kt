@@ -12,13 +12,12 @@ import me.skrilltrax.themoviedb.network.api.movie.MovieDetailRepository
 import timber.log.Timber
 
 @Suppress("UNCHECKED_CAST")
-class MovieDetailViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
+class MovieDetailViewModel(private val movieDetailRepository: MovieDetailRepository) : ViewModel() {
 
     private var movieDetailStatus: Boolean = false
     private var crewStatus: Boolean = false
     private var castStatus: Boolean = false
 
-    private val movieDetailRepository: MovieDetailRepository = MovieDetailRepository()
     private val _movieDetail: MutableLiveData<MovieDetailResponse> = MutableLiveData()
     private val _genres: MutableLiveData<List<GenresItem>> = MutableLiveData(listOf())
     private val _cast: MutableLiveData<List<CastItem>> = MutableLiveData(listOf())
@@ -98,8 +97,8 @@ class MovieDetailViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
     fun fetchRecommendations() {
         viewModelScope.launch {
             val recommendedVideos = movieDetailRepository.getRecommendations(movieId.value!!)
-            if (recommendations != null) {
-                _recommendations.postValue(recommendedVideos?.results as List<MovieResultsItem>)
+            if (null != recommendedVideos) {
+                _recommendations.postValue(recommendedVideos.results as List<MovieResultsItem>)
             }
         }
     }

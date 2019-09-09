@@ -6,13 +6,14 @@ import me.skrilltrax.themoviedb.model.movie.detail.MovieDetailResponse
 import me.skrilltrax.themoviedb.model.movie.lists.MovieListResponse
 import me.skrilltrax.themoviedb.model.movie.videos.MovieVideoResponse
 import me.skrilltrax.themoviedb.network.BaseRepository
+import okhttp3.OkHttpClient
 
-class MovieDetailRepository : BaseRepository() {
-
+class MovieDetailRepository(private val client: MovieApiInterface) : BaseRepository() {
+    
     suspend fun getMovieDetails(movieId: String): MovieDetailResponse? {
 
         return safeApiCall(
-            call = { MovieApiInterface.getClient().getMovieDetails(movieId, BuildConfig.API_KEY) },
+            call = { client.getMovieDetails(movieId, BuildConfig.API_KEY) },
             errorMessage = "Error fetching movie details"
         )
     }
@@ -20,7 +21,7 @@ class MovieDetailRepository : BaseRepository() {
     suspend fun getCastCrew(movieId: String): MovieCreditsResponse? {
 
         return safeApiCall(
-            call = { MovieApiInterface.getClient().getMovieCredits(movieId, BuildConfig.API_KEY) },
+            call = { client.getMovieCredits(movieId, BuildConfig.API_KEY) },
             errorMessage = "Error fetching movie credits"
         )
     }
@@ -28,7 +29,7 @@ class MovieDetailRepository : BaseRepository() {
     suspend fun getVideos(movieId: String): MovieVideoResponse? {
 
         return safeApiCall(
-            call = {MovieApiInterface.getClient().getMovieVideos(movieId, BuildConfig.API_KEY)},
+            call = {client.getMovieVideos(movieId, BuildConfig.API_KEY)},
             errorMessage = "Error fetching movie videos"
         )
     }
@@ -36,7 +37,7 @@ class MovieDetailRepository : BaseRepository() {
     suspend fun getRecommendations(movieId: String): MovieListResponse? {
 
         return safeApiCall(
-            call = {MovieApiInterface.getClient().getMovieRecommendations(movieId, BuildConfig.API_KEY)},
+            call = {client.getMovieRecommendations(movieId, BuildConfig.API_KEY)},
             errorMessage = "Error fetching recommendations"
         )
     }

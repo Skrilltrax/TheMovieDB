@@ -1,22 +1,15 @@
 package me.skrilltrax.themoviedb.network.api.movie
 
-import android.app.Application
-import androidx.room.Room
 import me.skrilltrax.themoviedb.BuildConfig
-//import me.skrilltrax.themoviedb.db.AppDatabase
 import me.skrilltrax.themoviedb.model.movie.lists.MovieListResponse
 import me.skrilltrax.themoviedb.network.BaseRepository
 
-class MovieListRepository(/*application: Application*/) : BaseRepository() {
-
-
-    init {
-    }
+class MovieListRepository(private val client: MovieApiInterface) : BaseRepository() {
 
     suspend fun getPopularMovieList(): MovieListResponse? {
 
         return safeApiCall(
-            call = { MovieApiInterface.getClient().getPopularMovies(BuildConfig.API_KEY) },
+            call = { client.getPopularMovies(BuildConfig.API_KEY) },
             errorMessage = "Error fetching popular movies"
         ).apply {
             this?.results?.forEach {
@@ -28,7 +21,7 @@ class MovieListRepository(/*application: Application*/) : BaseRepository() {
     suspend fun getUpcomingMovieList(): MovieListResponse? {
 
         return safeApiCall(
-            call = { MovieApiInterface.getClient().getUpcomingMovies(BuildConfig.API_KEY) },
+            call = { client.getUpcomingMovies(BuildConfig.API_KEY) },
             errorMessage = "Error fetching upcoming movies"
         ).apply {
             this?.results?.forEach {
@@ -40,7 +33,7 @@ class MovieListRepository(/*application: Application*/) : BaseRepository() {
     suspend fun getPlayingMovieList(): MovieListResponse? {
 
         return safeApiCall(
-            call = { MovieApiInterface.getClient().getNowPlayingMovies(BuildConfig.API_KEY) },
+            call = { client.getNowPlayingMovies(BuildConfig.API_KEY) },
             errorMessage = "Error fetching now playing movies"
         ).apply {
             this?.results?.forEach {
@@ -52,7 +45,7 @@ class MovieListRepository(/*application: Application*/) : BaseRepository() {
     suspend fun getTopRatedMovieList(): MovieListResponse? {
 
         return safeApiCall(
-            call = { MovieApiInterface.getClient().getTopRatedMovies(BuildConfig.API_KEY) },
+            call = { client.getTopRatedMovies(BuildConfig.API_KEY) },
             errorMessage = "Error fetching top rated movies"
         ).apply {
             this?.results?.forEach {
@@ -62,7 +55,6 @@ class MovieListRepository(/*application: Application*/) : BaseRepository() {
     }
 
     fun checkDB(listName: String) {
-
     }
 
 }

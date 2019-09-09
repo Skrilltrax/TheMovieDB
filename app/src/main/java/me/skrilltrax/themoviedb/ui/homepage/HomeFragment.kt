@@ -6,20 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import me.skrilltrax.themoviedb.adapter.ViewPagerAdapter
 import me.skrilltrax.themoviedb.constants.MovieTabs
 import me.skrilltrax.themoviedb.databinding.FragmentHomeBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 import java.lang.ref.WeakReference
 
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-    private val viewModel: MovieListViewModel by lazy {
-        ViewModelProviders.of(activity!!).get(MovieListViewModel::class.java)
-    }
+    private val movieListViewModel by viewModel<MovieListViewModel>()
     private lateinit var mainActivity: WeakReference<MainActivity>
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentHomeBinding.inflate(inflater)
         return binding.root
@@ -43,7 +42,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        viewModel.isLoading.observe(viewLifecycleOwner, Observer {
+        movieListViewModel.isLoading.observe(viewLifecycleOwner, Observer {
             if (it == false) {
                 if (mainActivity.get()?.dialog?.isShowing == true) {
                     mainActivity.get()?.hideLoading()

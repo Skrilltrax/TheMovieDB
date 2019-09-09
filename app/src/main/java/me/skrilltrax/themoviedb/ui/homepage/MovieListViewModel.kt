@@ -4,17 +4,17 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.launch
 import me.skrilltrax.themoviedb.model.movie.lists.MovieResultsItem
 import me.skrilltrax.themoviedb.network.api.movie.MovieListRepository
+import org.koin.core.context.GlobalContext.get
 import timber.log.Timber
 
 @Suppress("UNCHECKED_CAST")
-class MovieListViewModel : ViewModel() {
+class MovieListViewModel(private val movieListRepository: MovieListRepository) : ViewModel() {
 
     private var popularMovieStatus : Boolean = false
     private var playingMovieStatus : Boolean = false
     private var upcomingMovieStatus : Boolean = false
     private var topRatedMovieStatus : Boolean = false
 
-    private val movieListRepository: MovieListRepository = MovieListRepository()
     private val _popularMovieList : MutableLiveData<ArrayList<MovieResultsItem>> = MutableLiveData()
     private val _playingMovieList : MutableLiveData<ArrayList<MovieResultsItem>> = MutableLiveData()
     private val _upcomingMovieList : MutableLiveData<ArrayList<MovieResultsItem>> = MutableLiveData()

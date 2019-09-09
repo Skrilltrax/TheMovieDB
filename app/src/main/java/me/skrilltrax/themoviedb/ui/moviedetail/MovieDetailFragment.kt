@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import me.skrilltrax.themoviedb.R
@@ -26,21 +25,19 @@ import android.content.Intent
 import android.net.Uri
 import android.view.ViewTreeObserver
 import android.widget.ScrollView
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
-import androidx.core.view.doOnNextLayout
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.SavedStateViewModelFactory
 import me.skrilltrax.themoviedb.adapter.MovieRecommendationAdapter
 import me.skrilltrax.themoviedb.adapter.VideoAdapter
 import me.skrilltrax.themoviedb.interfaces.MovieListItemClickListener
 import me.skrilltrax.themoviedb.model.movie.lists.MovieResultsItem
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.lang.ref.WeakReference
 import kotlin.math.abs
 
 class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListItemClickListener {
-    private val viewModel: MovieDetailViewModel by viewModels(factoryProducer = { SavedStateViewModelFactory(this) })
+    private val movieDetailViewModel: MovieDetailViewModel by viewModel()
 
     private lateinit var movieId: String
 
@@ -74,11 +71,7 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListI
         movieDetailActivity.get()?.showLoading()
         observeScroll(view)
         setupObservers(viewLifecycleOwner)
-        viewModel.movieId.postValue(movieId)
-        viewModel.fetchMovieDetails()
-        viewModel.fetchCastAndCrew()
-        viewModel.fetchVideos()
-        viewModel.fetchRecommendations()
+        movieDetailViewModel.movieId.postValue(movieId)
     }
 
     private fun observeScroll(view: View) {
@@ -109,15 +102,22 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListI
 
     private fun setupObservers(viewLifecycleOwner: LifecycleOwner) {
 
-        viewModel.movieDetail.observe(viewLifecycleOwner, Observer {
+        movieDetailViewModel.movieId.observe(viewLifecycleOwner, Observer {
+            movieDetailViewModel.fetchMovieDetails()
+            movieDetailViewModel.fetchCastAndCrew()
+            movieDetailViewModel.fetchVideos()
+            movieDetailViewModel.fetchRecommendations()
+        })
+
+        movieDetailViewModel.movieDetail.observe(viewLifecycleOwner, Observer {
             binding.movieDetail = it
         })
 
-        viewModel.genres.observe(viewLifecycleOwner, Observer<List<GenresItem>> {
+        movieDetailViewModel.genres.observe(viewLifecycleOwner, Observer<List<GenresItem>> {
             binding.genreAdapter = MovieGenreAdapter(it)
         })
 
-        viewModel.cast.observe(viewLifecycleOwner, Observer<List<CastItem>> {
+        movieDetailViewModel.cast.observe(viewLifecycleOwner, Observer<List<CastItem>> {
             val castList: ArrayList<CastItem> = arrayListOf()
             for (castListItem in it) {
                 if (castListItem.profilePath != null) {
@@ -127,7 +127,7 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListI
             binding.castAdapter = CreditsAdapter(castList as List<CastItem>, CreditsType.CAST)
         })
 
-        viewModel.crew.observe(viewLifecycleOwner, Observer<List<CrewItem>> {
+        movieDetailViewModel.crew.observe(viewLifecycleOwner, Observer<List<CrewItem>> {
             val crewList: ArrayList<CrewItem> = arrayListOf()
             for (crewListItem in it) {
                 if (crewListItem.profilePath != null) {
@@ -138,16 +138,16 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListI
                 CreditsAdapter(crewList as List<CrewItem>, CreditsType.CREW)
         })
 
-        viewModel.videos.observe(viewLifecycleOwner, Observer {
+        movieDetailViewModel.videos.observe(viewLifecycleOwner, Observer {
             Timber.d("trailers : ${it.size}")
             binding.videoAdapter = VideoAdapter(it, this)
         })
 
-        viewModel.recommendations.observe(viewLifecycleOwner, Observer {
+        movieDetailViewModel.recommendations.observe(viewLifecycleOwner, Observer {
             binding.recommendationAdapter = MovieRecommendationAdapter(it, this)
         })
 
-        viewModel.isLoading.observe(viewLifecycleOwner, Observer {
+        movieDetailViewModel.isLoading.observe(viewLifecycleOwner, Observer {
             if (it == false) movieDetailActivity.get()?.hideLoading()
         })
     }
@@ -167,17 +167,20 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListI
 
     override fun onMovieItemClick(movieResultsItem: MovieResultsItem) {
         this.movieId = movieResultsItem.id.toString()
-        reloadFragment()
+        movieDetailActivity.get()?.showLoading()
+        movieDetailViewModel.movieId.postValue(movieId)
+        (binding.root as ScrollView).fullScroll(ScrollView.FOCUS_UP)
+//        reloadFragment()
     }
 
     private fun reloadFragment() {
         movieDetailActivity.get()?.showLoading()
         (binding.root as ScrollView).fullScroll(ScrollView.FOCUS_UP)
-        viewModel.movieId.postValue(movieId)
-        viewModel.fetchMovieDetails()
-        viewModel.fetchCastAndCrew()
-        viewModel.fetchVideos()
-        viewModel.fetchRecommendations()
+        movieDetailViewModel.movieId.postValue(movieId)
+        movieDetailViewModel.fetchMovieDetails()
+        movieDetailViewModel.fetchCastAndCrew()
+        movieDetailViewModel.fetchVideos()
+        movieDetailViewModel.fetchRecommendations()
     }
 
     override fun onDetach() {

@@ -14,7 +14,7 @@ import org.gradle.plugin.use.PluginDependencySpec
 object Versions {
   const val appcompat: String = "1.1.0"
 
-  const val constraintlayout: String = "2.0.0-beta2"
+  const val constraintlayout: String = "1.1.0"
 
   const val core_ktx: String = "1.2.0-alpha04"
 
