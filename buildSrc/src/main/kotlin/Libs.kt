@@ -19,7 +19,7 @@ object Libs {
       Versions.constraintlayout
 
   /**
-   * http://developer.android.com/tools/extras/support-library.html
+   * https://developer.android.com/jetpack/androidx
    */
   const val core_ktx: String = "androidx.core:core-ktx:" + Versions.core_ktx
 
@@ -47,6 +47,9 @@ object Libs {
   const val lifecycle_extensions: String = "androidx.lifecycle:lifecycle-extensions:" +
       Versions.lifecycle_extensions
 
+  /**
+   * https://developer.android.com/topic/libraries/architecture/index.html
+   */
   const val lifecycle_viewmodel_savedstate: String =
       "androidx.lifecycle:lifecycle-viewmodel-savedstate:" + Versions.lifecycle_viewmodel_savedstate
 
@@ -93,6 +96,9 @@ object Libs {
    */
   const val androidx_test_runner: String = "androidx.test:runner:" + Versions.androidx_test_runner
 
+  /**
+   * https://developer.android.com/jetpack/androidx
+   */
   const val viewpager2: String = "androidx.viewpager2:viewpager2:" + Versions.viewpager2
 
   /**
@@ -207,4 +213,11 @@ object Libs {
    */
   const val kotlin_stdlib_jdk7: String = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:" +
       Versions.org_jetbrains_kotlin
+
+  const val koin_android: String = "org.koin:koin-android:" + Versions.org_koin
+
+  const val koin_androidx_scope: String = "org.koin:koin-androidx-scope:" + Versions.org_koin
+
+  const val koin_androidx_viewmodel: String = "org.koin:koin-androidx-viewmodel:" +
+      Versions.org_koin
 }

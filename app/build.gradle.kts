@@ -45,39 +45,55 @@ dependencies {
     implementation(Libs.appcompat)
     implementation(Libs.core_ktx)
     implementation(Libs.constraintlayout)
-    //Timber
-    implementation(Libs.timber)
+
+    //Koin
+    implementation(Libs.koin_android)
+    implementation(Libs.koin_androidx_scope)
+    implementation(Libs.koin_androidx_viewmodel)
+
     //Retrofit
     implementation(Libs.retrofit)
     implementation(Libs.logging_interceptor)
     implementation(Libs.converter_gson)
-    //Material Components
-    implementation(Libs.material)
+
+    //Room
+    implementation(Libs.room_runtime)
+    kapt(Libs.room_compiler)
+    implementation(Libs.room_ktx)
+
+
     //Navigation
     implementation(Libs.navigation_fragment_ktx)
     implementation(Libs.navigation_ui)
+
     //Lifecycle
     implementation(Libs.lifecycle_extensions)
     implementation(Libs.lifecycle_viewmodel_savedstate)
-    //Gson
-    implementation(Libs.gson)
-    //Viewpager
-    implementation(Libs.viewpager2)
-    //Anko Commons
-    implementation(Libs.anko_commons)
+
     //Glide
     implementation(Libs.glide)
-    annotationProcessor(Libs.com_github_bumptech_glide_compiler)
+    kapt(Libs.com_github_bumptech_glide_compiler)
+
+    //Timber
+    implementation(Libs.timber)
+
+    //Material Components
+    implementation(Libs.material)
+
+    //Gson
+    implementation(Libs.gson)
+
+    //Viewpager
+    implementation(Libs.viewpager2)
+
+    //Anko Commons
+    implementation(Libs.anko_commons)
+
     //Lottie
     implementation(Libs.lottie)
+
     //Rating Bar
     implementation(Libs.library)
-    //Room
-    implementation(Libs.room_runtime)
-    kapt(Libs.room_compiler) // For Kotlin use kapt instead of annotationProcessor
-    // optional - Kotlin Extensions and Coroutines support for Room
-    implementation(Libs.room_ktx)
-
 
     testImplementation(Libs.junit)
     androidTestImplementation(Libs.androidx_test_runner)
