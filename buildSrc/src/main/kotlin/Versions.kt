@@ -14,11 +14,11 @@ import org.gradle.plugin.use.PluginDependencySpec
 object Versions {
   const val appcompat: String = "1.1.0"
 
-  const val constraintlayout: String = "1.1.0"
+  const val constraintlayout: String = "1.1.0" // available: "2.0.0-beta2"
 
   const val core_ktx: String = "1.2.0-alpha04"
 
-  const val androidx_databinding: String = "3.6.0-alpha10"
+  const val androidx_databinding: String = "3.6.0-alpha10" // available: "3.6.0-alpha11"
 
   const val lifecycle_extensions: String = "2.2.0-alpha04"
 
@@ -36,11 +36,12 @@ object Versions {
 
   const val lottie: String = "3.0.7"
 
-  const val aapt2: String = "3.6.0-alpha10-5720371"
+  const val aapt2: String = "3.6.0-alpha10-5720371" // available: "3.6.0-alpha11-5720371"
 
   const val com_android_tools_build_gradle: String = "3.6.0-alpha10"
+       // available: "3.6.0-alpha11"
 
-  const val lint_gradle: String = "26.6.0-alpha10"
+  const val lint_gradle: String = "26.6.0-alpha10" // available: "26.6.0-alpha11"
 
   const val com_github_bumptech_glide: String = "4.9.0"
 
@@ -50,13 +51,13 @@ object Versions {
 
   const val timber: String = "4.7.1"
 
-  const val logging_interceptor: String = "4.1.1"
+  const val leakcanary_android: String = "2.0-beta-3"
 
-  const val converter_gson: String = "2.6.1"
+  const val logging_interceptor: String = "4.1.1" // available: "4.2.0"
 
-  const val retrofit: String = "2.6.1"
+  const val com_squareup_retrofit2: String = "2.6.1"
 
-  const val de_fayard_buildsrcversions_gradle_plugin: String = "0.4.2"
+  const val de_fayard_buildsrcversions_gradle_plugin: String = "0.4.2" // available: "0.5.0"
 
   const val junit: String = "4.13-beta-3"
 

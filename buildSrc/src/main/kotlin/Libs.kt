@@ -149,6 +149,12 @@ object Libs {
   const val timber: String = "com.jakewharton.timber:timber:" + Versions.timber
 
   /**
+   * http://github.com/square/leakcanary/
+   */
+  const val leakcanary_android: String = "com.squareup.leakcanary:leakcanary-android:" +
+      Versions.leakcanary_android
+
+  /**
    * https://github.com/square/okhttp
    */
   const val logging_interceptor: String = "com.squareup.okhttp3:logging-interceptor:" +
@@ -158,12 +164,12 @@ object Libs {
    * https://github.com/square/retrofit/
    */
   const val converter_gson: String = "com.squareup.retrofit2:converter-gson:" +
-      Versions.converter_gson
+      Versions.com_squareup_retrofit2
 
   /**
    * https://github.com/square/retrofit/
    */
-  const val retrofit: String = "com.squareup.retrofit2:retrofit:" + Versions.retrofit
+  const val retrofit: String = "com.squareup.retrofit2:retrofit:" + Versions.com_squareup_retrofit2
 
   const val de_fayard_buildsrcversions_gradle_plugin: String =
       "de.fayard.buildSrcVersions:de.fayard.buildSrcVersions.gradle.plugin:" +

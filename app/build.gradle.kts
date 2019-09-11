@@ -100,6 +100,9 @@ dependencies {
     //Rating Bar
     implementation(Libs.library)
 
+    debugImplementation(Libs.leakcanary_android)
+
+
     testImplementation(Libs.junit)
     androidTestImplementation(Libs.androidx_test_runner)
     androidTestImplementation(Libs.espresso_core)
