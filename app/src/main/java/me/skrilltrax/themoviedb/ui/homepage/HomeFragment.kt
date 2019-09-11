@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import kotlinx.android.synthetic.main.collapsing_appbar_tabs.view.*
 import me.skrilltrax.themoviedb.adapter.ViewPagerAdapter
 import me.skrilltrax.themoviedb.constants.MovieTabs
 import me.skrilltrax.themoviedb.databinding.FragmentHomeBinding

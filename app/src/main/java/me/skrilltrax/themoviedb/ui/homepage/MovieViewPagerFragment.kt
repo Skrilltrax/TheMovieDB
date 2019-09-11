@@ -16,7 +16,6 @@ import me.skrilltrax.themoviedb.interfaces.MovieListItemClickListener
 import me.skrilltrax.themoviedb.model.movie.lists.MovieResultsItem
 import me.skrilltrax.themoviedb.ui.moviedetail.MovieDetailActivity
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 class MovieViewPagerFragment : Fragment(), MovieListItemClickListener {

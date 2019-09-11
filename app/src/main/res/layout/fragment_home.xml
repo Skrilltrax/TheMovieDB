@@ -23,16 +23,5 @@
             app:layout_anchorGravity="bottom"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        <!--    <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:listitem="@layout/item_movie"
-                    app:layout_anchor="@id/appBar"
-                    app:layout_anchorGravity="bottom"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            />-->
-
-
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

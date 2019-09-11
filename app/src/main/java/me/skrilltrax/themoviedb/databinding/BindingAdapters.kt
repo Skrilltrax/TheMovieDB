@@ -8,7 +8,6 @@ import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.FitCenter
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.bumptech.glide.request.RequestOptions
 import me.skrilltrax.themoviedb.R
 import me.skrilltrax.themoviedb.constants.Constants
 import me.skrilltrax.themoviedb.utils.YoutubeUtils
@@ -32,7 +31,7 @@ object BindingAdapters {
     @JvmStatic
     fun setPosterImage(view: ImageView, url: String?) {
         if (url != null) {
-            Glide.with(view.context!!)
+            Glide.with(view.context)
                 .load(Constants.POSTER_W500_IMAGE_PATH + url)
                 .transform(RoundedCorners(16))
                 .transition(DrawableTransitionOptions.withCrossFade())

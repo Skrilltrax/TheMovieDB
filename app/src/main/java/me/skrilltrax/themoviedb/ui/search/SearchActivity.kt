@@ -16,12 +16,14 @@ import me.skrilltrax.themoviedb.R
 import me.skrilltrax.themoviedb.interfaces.MovieListItemClickListener
 import me.skrilltrax.themoviedb.model.movie.lists.MovieResultsItem
 import me.skrilltrax.themoviedb.network.api.movie.MovieApiInterface
+import org.koin.android.ext.android.inject
 import retrofit2.HttpException
 
 class SearchActivity : AppCompatActivity(), MovieListItemClickListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var collapsingToolbar: CollapsingToolbarLayout
+    private val client: MovieApiInterface by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +50,7 @@ class SearchActivity : AppCompatActivity(), MovieListItemClickListener {
         val movieList: ArrayList<MovieResultsItem> = ArrayList()
         CoroutineScope(Dispatchers.IO).launch {
             try {
-                val movieResponse = MovieApiInterface.getClient().getPopularMovies(BuildConfig.API_KEY)
+                val movieResponse = client.getPopularMovies(BuildConfig.API_KEY)
                 if (movieResponse.isSuccessful) {
                     movieList.addAll(movieResponse.body()?.results as Collection<MovieResultsItem>)
                     withContext(Dispatchers.Main) {
