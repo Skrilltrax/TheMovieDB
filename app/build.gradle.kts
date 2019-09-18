@@ -10,13 +10,7 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
 }
 
-var apiKey: String? = System.getenv("TMDB_API_KEY")
-if (apiKey.isNullOrEmpty()) {
-    val secretsFile = rootProject.file("secrets.properties")
-    val secretsProperties = Properties()
-    secretsProperties.load(FileInputStream(secretsFile))
-    apiKey = secretsProperties.getProperty("API_KEY")
-}
+var apiKey: String = System.getenv("TMDB_API_KEY") ?: "YOUR_API_KEY"
 
 android {
     compileSdkVersion(29)
@@ -28,7 +22,7 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "API_KEY", apiKey?: "YOUR_API_KEY")
+        buildConfigField("String", "API_KEY", "\""+ apiKey + "\"")
 
     }
     compileOptions {
