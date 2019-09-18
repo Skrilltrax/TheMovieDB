@@ -4,8 +4,8 @@ TheMovieDB is an android app based on TMDB api.
 ## How to build  
 ```
 1. Clone the repo.  
-2. Create a file named secrets.properties in the root of project.  
-3. Add your api key. (eg. API_KEY="your-api-key")
+2. Open your .bash_profile (or .zprofile, if you use zsh).  
+3. Add your api key. (eg. export TMDB_API_KEY="your-api-key")
 ```
 
 ## Credits  
