@@ -18,13 +18,13 @@ object Versions {
 
   const val core_ktx: String = "1.2.0-alpha04"
 
-  const val androidx_databinding: String = "3.6.0-alpha10" // available: "3.6.0-alpha11"
+  const val androidx_databinding: String = "3.6.0-alpha12"
 
-  const val lifecycle_extensions: String = "2.2.0-alpha04"
+  const val lifecycle_extensions: String = "2.2.0-alpha05"
 
-  const val lifecycle_viewmodel_savedstate: String = "1.0.0-alpha04"
+  const val lifecycle_viewmodel_savedstate: String = "1.0.0-alpha05"
 
-  const val androidx_navigation: String = "2.2.0-alpha02"
+  const val androidx_navigation: String = "2.2.0-alpha03"
 
   const val androidx_room: String = "2.2.0-rc01"
 
@@ -36,14 +36,13 @@ object Versions {
 
   const val lottie: String = "3.0.7"
 
-  const val aapt2: String = "3.6.0-alpha10-5720371" // available: "3.6.0-alpha11-5720371"
+  const val aapt2: String = "3.6.0-alpha12-5836729"
 
-  const val com_android_tools_build_gradle: String = "3.6.0-alpha10"
-       // available: "3.6.0-alpha11"
+  const val com_android_tools_build_gradle: String = "3.6.0-alpha12"
 
-  const val lint_gradle: String = "26.6.0-alpha10" // available: "26.6.0-alpha11"
+  const val lint_gradle: String = "26.6.0-alpha12"
 
-  const val com_github_bumptech_glide: String = "4.9.0"
+  const val com_github_bumptech_glide: String = "4.10.0"
 
   const val material: String = "1.1.0-alpha10"
 
@@ -53,11 +52,11 @@ object Versions {
 
   const val leakcanary_android: String = "2.0-beta-3"
 
-  const val logging_interceptor: String = "4.1.1" // available: "4.2.0"
+  const val logging_interceptor: String = "4.2.0"
 
   const val com_squareup_retrofit2: String = "2.6.1"
 
-  const val de_fayard_buildsrcversions_gradle_plugin: String = "0.4.2" // available: "0.5.0"
+  const val de_fayard_buildsrcversions_gradle_plugin: String = "0.6.1"
 
   const val junit: String = "4.13-beta-3"
 
