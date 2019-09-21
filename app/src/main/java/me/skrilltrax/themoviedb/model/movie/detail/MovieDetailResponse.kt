@@ -20,7 +20,7 @@ data class MovieDetailResponse(
 	val backdropPath: String? = null,
 
     @field:SerializedName("revenue")
-	val revenue: Int? = null,
+	val revenue: Long? = null,
 
     @field:SerializedName("genres")
 	val genres: List<GenresItem?>? = null,
