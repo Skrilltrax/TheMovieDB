@@ -25,4 +25,19 @@ class MovieDetailActivity : BaseActivity() {
         }
     }
 
+    override fun onPause() {
+        if (dialog?.isShowing!!) {
+            dialog?.hide()
+        }
+        dialog?.dismiss()
+        super.onPause()
+    }
+
+    override fun onStop() {
+        if (dialog?.isShowing!!) {
+            dialog?.hide()
+        }
+        dialog?.dismiss()
+        super.onStop()
+    }
 }

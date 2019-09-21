@@ -28,6 +28,7 @@ import android.widget.ScrollView
 import androidx.core.view.ViewCompat
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import me.skrilltrax.themoviedb.adapter.MovieRecommendationAdapter
 import me.skrilltrax.themoviedb.adapter.VideoAdapter
 import me.skrilltrax.themoviedb.interfaces.MovieListItemClickListener
@@ -63,8 +64,8 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListI
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        ViewCompat.setOnApplyWindowInsetsListener(view) { view, insets ->
-            view.updatePadding(0, 0, 0, insets.systemWindowInsetBottom)
+        ViewCompat.setOnApplyWindowInsetsListener(view) { rootView, insets ->
+            rootView.updatePadding(0, 0, 0, insets.systemWindowInsetBottom)
             insets
         }
         movieDetailActivity = WeakReference(activity as MovieDetailActivity)
@@ -75,26 +76,31 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListI
     }
 
     private fun observeScroll(view: View) {
-        var oldScrollY = 0F
-        scrollChangedListener = ViewTreeObserver.OnScrollChangedListener {
-            if (activity != null) {
-                val scrollY = view.scrollY.toFloat()
-                if (scrollY <= 0) {
-                    SystemLayoutUtils.setStatusBarColor(activity!!, Color.TRANSPARENT)
-                    oldScrollY = 0F
-                } else if (scrollY > 0 && scrollY <= binding.movieHeader.root.height) {
-                    if (abs(scrollY - oldScrollY) > 30) {
-                        oldScrollY = scrollY
-                        SystemLayoutUtils.setStatusBarColor(
-                            activity!!,
-                            Color.argb(((scrollY / binding.movieHeader.root.height) * 255).toInt(), 25, 27, 27)
-                        )
-                        Timber.d("scrollY : ${((scrollY / binding.movieHeader.root.height) * 255).toInt()}")
-                    }
-                } else {
-                    SystemLayoutUtils.setStatusBarColor(activity!!, Color.argb(255, 25, 27, 27))
-                    oldScrollY = binding.movieHeader.root.height.toFloat()
-                }
+//        var oldScrollY = 0F
+//        scrollChangedListener = ViewTreeObserver.OnScrollChangedListener {
+//            if (activity != null) {
+//                val scrollY = view.scrollY.toFloat()
+//                if (scrollY <= 0) {
+//                    SystemLayoutUtils.setStatusBarColor(activity!!, Color.TRANSPARENT)
+//                    oldScrollY = 0F
+//                } else if (scrollY > 0 && scrollY <= binding.movieHeader.root.height) {
+//                    if (abs(scrollY - oldScrollY) > 30) {
+//                        oldScrollY = scrollY
+//                        SystemLayoutUtils.setStatusBarColor(
+//                            activity!!,
+//                            Color.argb(((scrollY / binding.movieHeader.root.height) * 255).toInt(), 25, 27, 27)
+//                        )
+//                        Timber.d("scrollY : ${((scrollY / binding.movieHeader.root.height) * 255).toInt()}")
+//                    }
+//                } else {
+//                    SystemLayoutUtils.setStatusBarColor(activity!!, Color.argb(255, 25, 27, 27))
+//                    oldScrollY = binding.movieHeader.root.height.toFloat()
+//                }
+//            }
+//        }
+        this.activity.let {
+            if (it is FragmentActivity) {
+                scrollChangedListener = SystemLayoutUtils.setStatusBarTint(it, view, binding.movieHeader.root)
             }
         }
         view.viewTreeObserver.addOnScrollChangedListener(scrollChangedListener)
@@ -185,13 +191,27 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListI
 
     override fun onDetach() {
         view?.viewTreeObserver?.removeOnScrollChangedListener(scrollChangedListener)
+        if (movieDetailActivity.get()?.dialog?.isShowing!!) {
+            movieDetailActivity.get()!!.dialog!!.hide()
+        }
+        movieDetailActivity.get()!!.dialog!!.dismiss()
         super.onDetach()
     }
 
-
     override fun onPause() {
-        movieDetailActivity.get()?.dialog?.dismiss()
+        if (movieDetailActivity.get()?.dialog?.isShowing!!) {
+            movieDetailActivity.get()!!.dialog!!.hide()
+        }
+        movieDetailActivity.get()!!.dialog!!.dismiss()
         super.onPause()
+    }
+
+    override fun onStop() {
+        if (movieDetailActivity.get()?.dialog?.isShowing!!) {
+            movieDetailActivity.get()!!.dialog!!.hide()
+        }
+        movieDetailActivity.get()!!.dialog!!.dismiss()
+        super.onStop()
     }
 
     companion object {

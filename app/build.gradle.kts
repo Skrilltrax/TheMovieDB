@@ -1,6 +1,4 @@
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
-import java.io.FileInputStream
-import java.util.*
 
 plugins {
     id("com.android.application")
@@ -22,7 +20,7 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "API_KEY", "\""+ apiKey + "\"")
+        buildConfigField("String", "API_KEY", "\"$apiKey\"")
 
     }
     compileOptions {
@@ -99,7 +97,6 @@ dependencies {
     implementation(Libs.library)
 
     debugImplementation(Libs.leakcanary_android)
-
 
     testImplementation(Libs.junit)
     androidTestImplementation(Libs.androidx_test_runner)
