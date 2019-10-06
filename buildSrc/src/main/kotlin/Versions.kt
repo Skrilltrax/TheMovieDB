@@ -44,19 +44,19 @@ object Versions {
 
   const val com_github_bumptech_glide: String = "4.10.0"
 
-  const val material: String = "1.1.0-alpha10"
+  const val material: String = "1.1.0-beta01"
 
-  const val gson: String = "2.8.5"
+  const val gson: String = "2.8.6"
 
   const val timber: String = "4.7.1"
 
   const val leakcanary_android: String = "2.0-beta-3"
 
-  const val logging_interceptor: String = "4.2.0"
+  const val logging_interceptor: String = "4.2.1"
 
-  const val com_squareup_retrofit2: String = "2.6.1"
+  const val com_squareup_retrofit2: String = "2.6.2"
 
-  const val de_fayard_buildsrcversions_gradle_plugin: String = "0.6.1"
+  const val de_fayard_buildsrcversions_gradle_plugin: String = "0.6.4"
 
   const val junit: String = "4.13-beta-3"
 
@@ -66,7 +66,7 @@ object Versions {
 
   const val org_jetbrains_kotlin: String = "1.3.50"
 
-  const val org_koin: String = "2.0.1"
+  const val org_koin: String = "2.1.0-alpha-1"
 
   /**
    *
@@ -75,7 +75,7 @@ object Versions {
    */
   const val gradleLatestVersion: String = "5.6.2"
 
-  const val gradleCurrentVersion: String = "5.5"
+  const val gradleCurrentVersion: String = "5.6.1"
 }
 
 /**
