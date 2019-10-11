@@ -2,16 +2,18 @@ package me.skrilltrax.themoviedb.ui.moviedetail
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import me.skrilltrax.themoviedb.R
 import me.skrilltrax.themoviedb.ui.BaseActivity
+import me.skrilltrax.themoviedb.utils.SystemLayoutUtils
 import timber.log.Timber
 
 class MovieDetailActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        SystemLayoutUtils.setNavigationBarColor(this, ContextCompat.getColor(this, R.color.background))
         setContentView(R.layout.activity_movie_detail)
-
         val movieId = intent.getStringExtra("movie_id") ?: null
         if (movieId != null) {
             Timber.d(movieId)

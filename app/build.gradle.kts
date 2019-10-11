@@ -37,6 +37,9 @@ android {
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
+    lintOptions {
+            isAbortOnError = false
+    }
 }
 
 dependencies {
