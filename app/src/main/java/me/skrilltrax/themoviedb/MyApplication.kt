@@ -2,6 +2,7 @@ package me.skrilltrax.themoviedb
 
 import android.app.Application
 import androidx.room.Room
+import com.facebook.stetho.Stetho
 import me.skrilltrax.themoviedb.di.appModule
 import me.skrilltrax.themoviedb.di.networkModule
 import me.skrilltrax.themoviedb.di.repositoryModule
@@ -22,6 +23,7 @@ class MyApplication : Application() {
             androidContext(this@MyApplication)
             modules(listOf(appModule, viewModelModule, repositoryModule, networkModule))
         }
+        Stetho.initializeWithDefaults(this)
         /*val db = Room.databaseBuilder(
             this,
             AppDatabase::class.java, "database-name"

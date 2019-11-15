@@ -1,6 +1,5 @@
 package me.skrilltrax.themoviedb.ui.moviedetail
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -28,36 +27,24 @@ import android.widget.ScrollView
 import androidx.core.view.ViewCompat
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.MutableLiveData
 import me.skrilltrax.themoviedb.adapter.MovieRecommendationAdapter
 import me.skrilltrax.themoviedb.adapter.VideoAdapter
 import me.skrilltrax.themoviedb.interfaces.MovieListItemClickListener
 import me.skrilltrax.themoviedb.model.movie.lists.MovieResultsItem
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.lang.ref.WeakReference
-import kotlin.math.abs
 
 class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListItemClickListener {
+
     private val movieDetailViewModel: MovieDetailViewModel by viewModel()
-
-    private lateinit var movieId: String
-
+    private val movieDetailActivity by lazy { requireActivity() as MovieDetailActivity }
+    private var movieId: MutableLiveData<String> = MutableLiveData("")
     private lateinit var binding: FragmentMovieDetailBinding
-
     private lateinit var scrollChangedListener: ViewTreeObserver.OnScrollChangedListener
 
-    private lateinit var movieDetailActivity: WeakReference<MovieDetailActivity>
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        SystemLayoutUtils.makeFullScreenHideNavigation(activity!!)
-//        SystemLayoutUtils.setStatusBarColor(activity!!, Color.TRANSPARENT)
-//        SystemLayoutUtils.setNavigationBarColor(
-//            activity!!,
-//            ContextCompat.getColor(activity!!, android.R.color.transparent)
-//        )
-        if (arguments != null) {
-            movieId = arguments!!.getString("movie_id", "")
-        }
+        SystemLayoutUtils.makeFullScreenHideNavigation(movieDetailActivity)
+        arguments?.let { movieId.postValue(it.getString("movie_id", "")) }
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_detail, container, false)
         return binding.root
     }
@@ -68,45 +55,20 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListI
             rootView.updatePadding(0, 0, 0, insets.systemWindowInsetBottom)
             insets
         }
-        movieDetailActivity = WeakReference(activity as MovieDetailActivity)
-        movieDetailActivity.get()?.showLoading()
+        movieDetailActivity.showLoading()
         observeScroll(view)
         setupObservers(viewLifecycleOwner)
-        movieDetailViewModel.movieId.postValue(movieId)
     }
 
     private fun observeScroll(view: View) {
-//        var oldScrollY = 0F
-//        scrollChangedListener = ViewTreeObserver.OnScrollChangedListener {
-//            if (activity != null) {
-//                val scrollY = view.scrollY.toFloat()
-//                if (scrollY <= 0) {
-//                    SystemLayoutUtils.setStatusBarColor(activity!!, Color.TRANSPARENT)
-//                    oldScrollY = 0F
-//                } else if (scrollY > 0 && scrollY <= binding.movieHeader.root.height) {
-//                    if (abs(scrollY - oldScrollY) > 30) {
-//                        oldScrollY = scrollY
-//                        SystemLayoutUtils.setStatusBarColor(
-//                            activity!!,
-//                            Color.argb(((scrollY / binding.movieHeader.root.height) * 255).toInt(), 25, 27, 27)
-//                        )
-//                        Timber.d("scrollY : ${((scrollY / binding.movieHeader.root.height) * 255).toInt()}")
-//                    }
-//                } else {
-//                    SystemLayoutUtils.setStatusBarColor(activity!!, Color.argb(255, 25, 27, 27))
-//                    oldScrollY = binding.movieHeader.root.height.toFloat()
-//                }
-//            }
-//        }
-        this.activity.let {
-            if (it is FragmentActivity) {
-                scrollChangedListener = SystemLayoutUtils.setStatusBarTint(it, view, binding.movieHeader.root)
-            }
-        }
+        scrollChangedListener = SystemLayoutUtils.setStatusBarTint(movieDetailActivity, view, binding.movieHeader.root)
         view.viewTreeObserver.addOnScrollChangedListener(scrollChangedListener)
     }
 
     private fun setupObservers(viewLifecycleOwner: LifecycleOwner) {
+        movieId.observe(viewLifecycleOwner, Observer {
+            movieDetailViewModel.movieId.postValue(it)
+        })
 
         movieDetailViewModel.movieId.observe(viewLifecycleOwner, Observer {
             movieDetailViewModel.fetchMovieDetails()
@@ -126,9 +88,7 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListI
         movieDetailViewModel.cast.observe(viewLifecycleOwner, Observer<List<CastItem>> {
             val castList: ArrayList<CastItem> = arrayListOf()
             for (castListItem in it) {
-                if (castListItem.profilePath != null) {
-                    castList.add(castListItem)
-                }
+                if (castListItem.profilePath != null) { castList.add(castListItem) }
             }
             binding.castAdapter = CreditsAdapter(castList as List<CastItem>, CreditsType.CAST)
         })
@@ -136,9 +96,7 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListI
         movieDetailViewModel.crew.observe(viewLifecycleOwner, Observer<List<CrewItem>> {
             val crewList: ArrayList<CrewItem> = arrayListOf()
             for (crewListItem in it) {
-                if (crewListItem.profilePath != null) {
-                    crewList.add(crewListItem)
-                }
+                if (crewListItem.profilePath != null) { crewList.add(crewListItem) }
             }
             binding.crewAdapter =
                 CreditsAdapter(crewList as List<CrewItem>, CreditsType.CREW)
@@ -154,7 +112,7 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListI
         })
 
         movieDetailViewModel.isLoading.observe(viewLifecycleOwner, Observer {
-            if (it == false) movieDetailActivity.get()?.hideLoading()
+            if (it == false) movieDetailActivity.hideLoading()
         })
     }
 
@@ -165,53 +123,30 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListI
             Uri.parse("http://www.youtube.com/watch?v=${videoResultsItem.key}")
         )
         try {
-            context?.startActivity(appIntent)
+            requireContext().startActivity(appIntent)
         } catch (ex: ActivityNotFoundException) {
-            context?.startActivity(webIntent)
+            requireContext().startActivity(webIntent)
         }
     }
 
     override fun onMovieItemClick(movieResultsItem: MovieResultsItem) {
-        this.movieId = movieResultsItem.id.toString()
-        movieDetailActivity.get()?.showLoading()
-        movieDetailViewModel.movieId.postValue(movieId)
+        movieDetailActivity.showLoading()
+        movieId.postValue(movieResultsItem.id.toString())
         (binding.root as ScrollView).fullScroll(ScrollView.FOCUS_UP)
-//        reloadFragment()
     }
 
-    private fun reloadFragment() {
-        movieDetailActivity.get()?.showLoading()
-        (binding.root as ScrollView).fullScroll(ScrollView.FOCUS_UP)
-        movieDetailViewModel.movieId.postValue(movieId)
-        movieDetailViewModel.fetchMovieDetails()
-        movieDetailViewModel.fetchCastAndCrew()
-        movieDetailViewModel.fetchVideos()
-        movieDetailViewModel.fetchRecommendations()
-    }
-
-    override fun onDetach() {
-        view?.viewTreeObserver?.removeOnScrollChangedListener(scrollChangedListener)
-        if (movieDetailActivity.get()?.dialog?.isShowing!!) {
-            movieDetailActivity.get()!!.dialog!!.hide()
-        }
-        movieDetailActivity.get()!!.dialog!!.dismiss()
-        super.onDetach()
+    override fun onResume() {
+        super.onResume()
+        view?.viewTreeObserver?.addOnScrollChangedListener(scrollChangedListener)
     }
 
     override fun onPause() {
-        if (movieDetailActivity.get()?.dialog?.isShowing!!) {
-            movieDetailActivity.get()!!.dialog!!.hide()
+        view?.viewTreeObserver?.removeOnScrollChangedListener(scrollChangedListener)
+        movieDetailActivity.dialog?.let {
+            if (it.isShowing) { it.hide() }
+            it.dismiss()
         }
-        movieDetailActivity.get()!!.dialog!!.dismiss()
         super.onPause()
-    }
-
-    override fun onStop() {
-        if (movieDetailActivity.get()?.dialog?.isShowing!!) {
-            movieDetailActivity.get()!!.dialog!!.hide()
-        }
-        movieDetailActivity.get()!!.dialog!!.dismiss()
-        super.onStop()
     }
 
     companion object {

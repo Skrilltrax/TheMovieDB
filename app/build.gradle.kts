@@ -99,6 +99,9 @@ dependencies {
     //Rating Bar
     implementation(Libs.library)
 
+    implementation("com.facebook.stetho:stetho:1.5.1")
+    implementation("com.facebook.stetho:stetho-okhttp3:1.5.1")
+
     debugImplementation(Libs.leakcanary_android)
 
     testImplementation(Libs.junit)
