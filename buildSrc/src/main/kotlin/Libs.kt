@@ -123,6 +123,29 @@ object Libs {
   const val lint_gradle: String = "com.android.tools.lint:lint-gradle:" + Versions.lint_gradle
 
   /**
+   * https://github.com/google/desugar_jdk_libs
+   */
+  const val desugar_jdk_libs: String = "com.android.tools:desugar_jdk_libs:" +
+      Versions.desugar_jdk_libs
+
+  /**
+   * http://r8.googlesource.com/r8
+   */
+  const val desugar_jdk_libs_configuration: String =
+      "com.android.tools:desugar_jdk_libs_configuration:" + Versions.desugar_jdk_libs_configuration
+
+  /**
+   * https://github.com/facebook/stetho
+   */
+  const val stetho_okhttp3: String = "com.facebook.stetho:stetho-okhttp3:" +
+      Versions.com_facebook_stetho
+
+  /**
+   * https://github.com/facebook/stetho
+   */
+  const val stetho: String = "com.facebook.stetho:stetho:" + Versions.com_facebook_stetho
+
+  /**
    * https://github.com/bumptech/glide
    */
   const val com_github_bumptech_glide_compiler: String = "com.github.bumptech.glide:compiler:" +
@@ -181,7 +204,7 @@ object Libs {
   const val junit: String = "junit:junit:" + Versions.junit
 
   /**
-   * https://github.com/DreaminginCodeZH/MaterialRatingBar
+   * https://github.com/zhanghai/MaterialRatingBar
    */
   const val library: String = "me.zhanghai.android.materialratingbar:library:" + Versions.library
 

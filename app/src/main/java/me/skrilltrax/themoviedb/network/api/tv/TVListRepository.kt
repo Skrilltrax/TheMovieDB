@@ -1,16 +1,17 @@
-package me.skrilltrax.themoviedb.network.api.movie
+package me.skrilltrax.themoviedb.network.api.tv
 
 import me.skrilltrax.themoviedb.BuildConfig
 import me.skrilltrax.themoviedb.model.movie.list.MovieListResponse
+import me.skrilltrax.themoviedb.model.tv.list.TVListResponse
 import me.skrilltrax.themoviedb.network.BaseRepository
 
-class MovieListRepository(private val client: MovieApiInterface) : BaseRepository() {
+class TVListRepository(private val client: TVApiInterface) : BaseRepository() {
 
-    suspend fun getPopularMovieList(): MovieListResponse? {
+    suspend fun getPopularShowsList(): TVListResponse? {
 
         return safeApiCall(
-            call = { client.getPopularMovies(BuildConfig.API_KEY) },
-            errorMessage = "Error fetching popular movies"
+            call = { client.getPopularShows(BuildConfig.API_KEY) },
+            errorMessage = "Error fetching popular shows"
         ).apply {
             this?.results?.forEach {
                 it?.type = "popular"
@@ -18,10 +19,10 @@ class MovieListRepository(private val client: MovieApiInterface) : BaseRepositor
         }
     }
 
-    suspend fun getUpcomingMovieList(): MovieListResponse? {
+    suspend fun getAiringShowsList(): TVListResponse? {
 
         return safeApiCall(
-            call = { client.getUpcomingMovies(BuildConfig.API_KEY) },
+            call = { client.getAiringShows(BuildConfig.API_KEY) },
             errorMessage = "Error fetching upcoming movies"
         ).apply {
             this?.results?.forEach {
@@ -30,10 +31,10 @@ class MovieListRepository(private val client: MovieApiInterface) : BaseRepositor
         }
     }
 
-    suspend fun getPlayingMovieList(): MovieListResponse? {
+    suspend fun getOnAirShowsList(): TVListResponse? {
 
         return safeApiCall(
-            call = { client.getNowPlayingMovies(BuildConfig.API_KEY) },
+            call = { client.getOnAirShows(BuildConfig.API_KEY) },
             errorMessage = "Error fetching now playing movies"
         ).apply {
             this?.results?.forEach {
@@ -42,10 +43,10 @@ class MovieListRepository(private val client: MovieApiInterface) : BaseRepositor
         }
     }
 
-    suspend fun getTopRatedMovieList(): MovieListResponse? {
+    suspend fun getTopRatedShowsList(): TVListResponse? {
 
         return safeApiCall(
-            call = { client.getTopRatedMovies(BuildConfig.API_KEY) },
+            call = { client.getTopRatedShows(BuildConfig.API_KEY) },
             errorMessage = "Error fetching top rated movies"
         ).apply {
             this?.results?.forEach {

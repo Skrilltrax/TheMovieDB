@@ -8,7 +8,7 @@ import me.skrilltrax.themoviedb.di.factory.StethoInterceptorFactory
 import me.skrilltrax.themoviedb.network.api.movie.MovieApiInterface
 import me.skrilltrax.themoviedb.network.api.movie.MovieDetailRepository
 import me.skrilltrax.themoviedb.network.api.movie.MovieListRepository
-import me.skrilltrax.themoviedb.ui.homepage.MovieListViewModel
+import me.skrilltrax.themoviedb.ui.homepage.movie.MovieListViewModel
 import me.skrilltrax.themoviedb.ui.moviedetail.MovieDetailViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module

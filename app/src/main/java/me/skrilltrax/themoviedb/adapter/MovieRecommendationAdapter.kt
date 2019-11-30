@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import me.skrilltrax.themoviedb.databinding.ItemMovieRecommendationBinding
 import me.skrilltrax.themoviedb.interfaces.MovieListItemClickListener
-import me.skrilltrax.themoviedb.model.movie.lists.MovieResultsItem
+import me.skrilltrax.themoviedb.model.movie.list.MovieResultsItem
 
 class MovieRecommendationAdapter(
     private val list: List<MovieResultsItem>,

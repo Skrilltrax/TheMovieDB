@@ -1,6 +1,6 @@
 package me.skrilltrax.themoviedb.constants
 
-enum class MovieTabs(val tabId: Int) {
+enum class Tabs(val tabId: Int) {
 
     TAB_POPULAR(0),
     TAB_PLAYING(1),
@@ -8,11 +8,10 @@ enum class MovieTabs(val tabId: Int) {
     TAB_TOP_RATED(3);
 
     companion object {
-
-        fun getMovieTabById(id: Int): MovieTabs? {
-            for (movieTab in values()) {
-                if (movieTab.tabId == id) {
-                    return movieTab
+        fun getTabById(id: Int): Tabs? {
+            for (tab in values()) {
+                if (tab.tabId == id) {
+                    return tab
                 }
             }
             return null

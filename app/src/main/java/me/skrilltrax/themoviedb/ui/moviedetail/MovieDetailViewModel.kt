@@ -6,7 +6,7 @@ import me.skrilltrax.themoviedb.model.movie.credits.CastItem
 import me.skrilltrax.themoviedb.model.movie.credits.CrewItem
 import me.skrilltrax.themoviedb.model.movie.detail.GenresItem
 import me.skrilltrax.themoviedb.model.movie.detail.MovieDetailResponse
-import me.skrilltrax.themoviedb.model.movie.lists.MovieResultsItem
+import me.skrilltrax.themoviedb.model.movie.list.MovieResultsItem
 import me.skrilltrax.themoviedb.model.movie.videos.VideoResultsItem
 import me.skrilltrax.themoviedb.network.api.movie.MovieDetailRepository
 import timber.log.Timber

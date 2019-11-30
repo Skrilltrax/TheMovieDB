@@ -31,7 +31,7 @@ import androidx.lifecycle.MutableLiveData
 import me.skrilltrax.themoviedb.adapter.MovieRecommendationAdapter
 import me.skrilltrax.themoviedb.adapter.VideoAdapter
 import me.skrilltrax.themoviedb.interfaces.MovieListItemClickListener
-import me.skrilltrax.themoviedb.model.movie.lists.MovieResultsItem
+import me.skrilltrax.themoviedb.model.movie.list.MovieResultsItem
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListItemClickListener {

@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import me.skrilltrax.themoviedb.databinding.ItemMovieBinding
 import me.skrilltrax.themoviedb.interfaces.MovieListItemClickListener
-import me.skrilltrax.themoviedb.model.movie.lists.MovieResultsItem
+import me.skrilltrax.themoviedb.model.movie.list.MovieResultsItem
 import timber.log.Timber
 
 class MovieListAdapter(private val movieList: List<MovieResultsItem>, val listener: MovieListItemClickListener) :
@@ -37,7 +37,6 @@ class MovieListAdapter(private val movieList: List<MovieResultsItem>, val listen
     }
 
     inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
         fun bind(movieResultsItem: MovieResultsItem) {
             Timber.d("InOnBind")
             Timber.d(movieResultsItem.title)

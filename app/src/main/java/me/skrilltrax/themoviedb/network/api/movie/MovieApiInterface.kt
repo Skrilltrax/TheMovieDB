@@ -2,7 +2,7 @@ package me.skrilltrax.themoviedb.network.api.movie
 
 import me.skrilltrax.themoviedb.model.movie.credits.MovieCreditsResponse
 import me.skrilltrax.themoviedb.model.movie.detail.MovieDetailResponse
-import me.skrilltrax.themoviedb.model.movie.lists.MovieListResponse
+import me.skrilltrax.themoviedb.model.movie.list.MovieListResponse
 import me.skrilltrax.themoviedb.model.movie.videos.MovieVideoResponse
 import me.skrilltrax.themoviedb.network.RetrofitInstance
 import retrofit2.Response

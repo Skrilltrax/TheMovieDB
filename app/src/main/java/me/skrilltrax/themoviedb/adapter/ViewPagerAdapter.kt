@@ -3,20 +3,20 @@ package me.skrilltrax.themoviedb.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import me.skrilltrax.themoviedb.constants.MovieTabs
-import me.skrilltrax.themoviedb.ui.homepage.MovieViewPagerFragment
+import me.skrilltrax.themoviedb.constants.Tabs
+import me.skrilltrax.themoviedb.ui.homepage.movie.MovieViewPagerFragment
 import timber.log.Timber
 
-class ViewPagerAdapter(fragmentManager: FragmentManager) :
+class ViewPagerAdapter(fragmentManager: FragmentManager, private var isMovieSelected: Boolean) :
     FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getItem(position: Int): Fragment {
-        val movieTab = MovieTabs.getMovieTabById(position)
+        val movieTab = Tabs.getTabById(position)
         return if (movieTab != null) {
             Timber.d("Tab ID : ${movieTab.tabId}")
             MovieViewPagerFragment.newInstance(movieTab.tabId)
         } else {
-            MovieViewPagerFragment.newInstance(MovieTabs.TAB_POPULAR.tabId)
+            MovieViewPagerFragment.newInstance(Tabs.TAB_POPULAR.tabId)
         }
     }
 
@@ -32,5 +32,9 @@ class ViewPagerAdapter(fragmentManager: FragmentManager) :
             3 -> "Top Rated"
             else -> null
         }
+    }
+
+    fun selectAdapterType(bool: Boolean) {
+        isMovieSelected = bool
     }
 }

@@ -1,4 +1,4 @@
-package me.skrilltrax.themoviedb.ui.homepage
+package me.skrilltrax.themoviedb.ui.homepage.tv
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,17 +10,17 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
 import me.skrilltrax.themoviedb.adapter.MovieListAdapter
 import me.skrilltrax.themoviedb.R
-import me.skrilltrax.themoviedb.constants.MovieTabs
+import me.skrilltrax.themoviedb.constants.Tabs
 import me.skrilltrax.themoviedb.databinding.FragmentCommonViewpagerBinding
 import me.skrilltrax.themoviedb.interfaces.MovieListItemClickListener
-import me.skrilltrax.themoviedb.model.movie.lists.MovieResultsItem
+import me.skrilltrax.themoviedb.model.movie.list.MovieResultsItem
 import me.skrilltrax.themoviedb.ui.moviedetail.MovieDetailActivity
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
 
-class MovieViewPagerFragment : Fragment(), MovieListItemClickListener {
+class TVViewPagerFragment : Fragment(), MovieListItemClickListener {
 
-    private val movieListViewModel by sharedViewModel<MovieListViewModel>(from = { parentFragment!! })
+    private val tvListViewModel by sharedViewModel<TVListViewModel>()
 
     private lateinit var binding: FragmentCommonViewpagerBinding
     private var fragmentType: Int? = null
@@ -44,16 +44,16 @@ class MovieViewPagerFragment : Fragment(), MovieListItemClickListener {
 
     private fun setupObservers(viewLifecycleOwner: LifecycleOwner, position: Int) {
         when (position) {
-            MovieTabs.TAB_POPULAR.tabId -> movieListViewModel.popularMovieList.observe(viewLifecycleOwner, Observer {
+            Tabs.TAB_POPULAR.tabId -> tvListViewModel.popularMovieList.observe(viewLifecycleOwner, Observer {
                 binding.movieListAdapter = MovieListAdapter(it, this)
             })
-            MovieTabs.TAB_PLAYING.tabId -> movieListViewModel.playingMovieList.observe(viewLifecycleOwner, Observer {
+            Tabs.TAB_PLAYING.tabId -> tvListViewModel.playingMovieList.observe(viewLifecycleOwner, Observer {
                 binding.movieListAdapter = MovieListAdapter(it, this)
             })
-            MovieTabs.TAB_UPCOMING.tabId -> movieListViewModel.upcomingMovieList.observe(viewLifecycleOwner, Observer {
+            Tabs.TAB_UPCOMING.tabId -> tvListViewModel.upcomingMovieList.observe(viewLifecycleOwner, Observer {
                 binding.movieListAdapter = MovieListAdapter(it, this)
             })
-            MovieTabs.TAB_TOP_RATED.tabId -> movieListViewModel.topRatedMovieList.observe(viewLifecycleOwner, Observer {
+            Tabs.TAB_TOP_RATED.tabId -> tvListViewModel.topRatedMovieList.observe(viewLifecycleOwner, Observer {
                 binding.movieListAdapter = MovieListAdapter(it, this)
             })
         }
@@ -61,23 +61,24 @@ class MovieViewPagerFragment : Fragment(), MovieListItemClickListener {
 
     private fun getMovies(position: Int) {
         when (position) {
-            MovieTabs.TAB_POPULAR.tabId -> movieListViewModel.fetchPopularMovieList()
-            MovieTabs.TAB_PLAYING.tabId -> movieListViewModel.fetchPlayingMovieList()
-            MovieTabs.TAB_UPCOMING.tabId -> movieListViewModel.fetchUpcomingMovieList()
-            MovieTabs.TAB_TOP_RATED.tabId -> movieListViewModel.fetchTopRatedMovieList()
+            Tabs.TAB_POPULAR.tabId -> tvListViewModel.fetchPopularMovieList()
+            Tabs.TAB_PLAYING.tabId -> tvListViewModel.fetchPlayingMovieList()
+            Tabs.TAB_UPCOMING.tabId -> tvListViewModel.fetchUpcomingMovieList()
+            Tabs.TAB_TOP_RATED.tabId -> tvListViewModel.fetchTopRatedMovieList()
         }
     }
 
-    override fun onMovieItemClick(movieResultsItem: MovieResultsItem) {
+    override fun onMovieItemClick(tvResultsItem: MovieResultsItem) {
         val intent = Intent(this.context, MovieDetailActivity::class.java)
-        intent.putExtra("movie_id", movieResultsItem.id.toString())
+        intent.putExtra("movie_id", tvResultsItem.id.toString())
         startActivity(intent)
     }
 
     companion object {
-        fun newInstance(fragmentType: Int): MovieViewPagerFragment {
+        fun newInstance(fragmentType: Int): TVViewPagerFragment {
             val bundle = Bundle()
-            val commonViewPagerFragment = MovieViewPagerFragment()
+            val commonViewPagerFragment =
+                TVViewPagerFragment()
 
             bundle.putInt("fragmentType", fragmentType)
             commonViewPagerFragment.arguments = bundle

@@ -14,7 +14,7 @@ import me.skrilltrax.themoviedb.BuildConfig
 import me.skrilltrax.themoviedb.adapter.MovieListAdapter
 import me.skrilltrax.themoviedb.R
 import me.skrilltrax.themoviedb.interfaces.MovieListItemClickListener
-import me.skrilltrax.themoviedb.model.movie.lists.MovieResultsItem
+import me.skrilltrax.themoviedb.model.movie.list.MovieResultsItem
 import me.skrilltrax.themoviedb.network.api.movie.MovieApiInterface
 import org.koin.android.ext.android.inject
 import retrofit2.HttpException

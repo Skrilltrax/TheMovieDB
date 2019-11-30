@@ -1,10 +1,9 @@
-package me.skrilltrax.themoviedb.model.movie.lists
+package me.skrilltrax.themoviedb.model.movie.list
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import me.skrilltrax.themoviedb.constants.MovieTabs
 
 @Entity
 data class MovieResultsItem(

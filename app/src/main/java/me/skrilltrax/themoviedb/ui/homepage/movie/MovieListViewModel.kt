@@ -1,10 +1,9 @@
-package me.skrilltrax.themoviedb.ui.homepage
+package me.skrilltrax.themoviedb.ui.homepage.movie
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
-import me.skrilltrax.themoviedb.model.movie.lists.MovieResultsItem
+import me.skrilltrax.themoviedb.model.movie.list.MovieResultsItem
 import me.skrilltrax.themoviedb.network.api.movie.MovieListRepository
-import org.koin.core.context.GlobalContext.get
 import timber.log.Timber
 
 @Suppress("UNCHECKED_CAST")

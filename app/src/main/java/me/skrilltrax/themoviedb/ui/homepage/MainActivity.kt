@@ -1,9 +1,8 @@
 package me.skrilltrax.themoviedb.ui.homepage
 
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.MutableLiveData
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import me.skrilltrax.themoviedb.R
 import me.skrilltrax.themoviedb.ui.BaseActivity
@@ -12,6 +11,8 @@ import me.skrilltrax.themoviedb.utils.SystemLayoutUtils
 class MainActivity : BaseActivity() {
 
     private lateinit var bottomNav: BottomNavigationView
+    private var previousSelection: Int = 0
+    val isMovieSelected: MutableLiveData<Boolean> = MutableLiveData(true)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,32 +22,30 @@ class MainActivity : BaseActivity() {
             supportFragmentManager.beginTransaction()
                 .add(R.id.frame, HomeFragment.newInstance())
                 .commit()
+            previousSelection = R.id.movie
         }
-
         bottomNav = findViewById(R.id.bottomNavigationView)
         bottomNav.setOnNavigationItemSelectedListener {
-            when (it.itemId) {
-                R.id.movie -> {
-                    it.isChecked = true
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        it.iconTintList = ContextCompat.getColorStateList(this, R.color.colorAccent)
+            if (it.itemId != previousSelection) {
+                when (it.itemId) {
+                    R.id.movie -> {
+                        it.isChecked = true
+                        previousSelection = it.itemId
+                        isMovieSelected.postValue(true)
                     }
-                }
-                R.id.tv -> {
-                    it.isChecked = true
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        it.iconTintList = ContextCompat.getColorStateList(this, R.color.colorGreen)
+                    R.id.tv -> {
+                        it.isChecked = true
+                        previousSelection = it.itemId
+                        isMovieSelected.postValue(false)
                     }
-                }
-                R.id.profile -> {
-                    it.isChecked = true
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        it.iconTintList = ContextCompat.getColorStateList(this, R.color.colorBlue)
+                    R.id.profile -> {
+                        it.isChecked = true
+                        previousSelection = it.itemId
                     }
                 }
             }
-            false
-        }
+                false
+            }
     }
 
     override fun onPause() {
