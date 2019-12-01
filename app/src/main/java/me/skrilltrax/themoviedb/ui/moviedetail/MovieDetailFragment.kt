@@ -24,27 +24,47 @@ import android.content.Intent
 import android.net.Uri
 import android.view.ViewTreeObserver
 import android.widget.ScrollView
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.addCallback
 import androidx.core.view.ViewCompat
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import me.skrilltrax.themoviedb.adapter.RecommendationAdapter
 import me.skrilltrax.themoviedb.adapter.VideoAdapter
 import me.skrilltrax.themoviedb.interfaces.ListItemClickListener
 import me.skrilltrax.themoviedb.model.list.ListResultItem
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemClickListener {
 
     private val movieDetailViewModel: MovieDetailViewModel by viewModel()
     private val movieDetailActivity by lazy { requireActivity() as MovieDetailActivity }
     private var movieId: MutableLiveData<String> = MutableLiveData("")
+    private lateinit var movieStack: Stack<String>
     private lateinit var binding: FragmentMovieDetailBinding
     private lateinit var scrollChangedListener: ViewTreeObserver.OnScrollChangedListener
+    private lateinit var callback: OnBackPressedCallback
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         SystemLayoutUtils.makeFullScreenHideNavigation(movieDetailActivity)
         arguments?.let { movieId.postValue(it.getString("movie_id", "")) }
+        movieStack = Stack()
+        movieStack.push(movieId.value)
+        callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+            movieId.postValue(movieStack.pop())
+            isEnabled = movieStack.size > 1
+            movieDetailActivity.showLoading()
+            (binding.root as ScrollView).fullScroll(ScrollView.FOCUS_UP)
+        }
+        callback.isEnabled = false
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_detail, container, false)
         return binding.root
     }
@@ -112,7 +132,12 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemCl
         })
 
         movieDetailViewModel.isLoading.observe(viewLifecycleOwner, Observer {
-            if (it == false) movieDetailActivity.hideLoading()
+            if (it == false) lifecycleScope.launch(Dispatchers.IO) {
+                Thread.sleep(500)
+                withContext(Dispatchers.Main) {
+                    movieDetailActivity.hideLoading()
+                }
+            }
         })
     }
 
@@ -133,6 +158,8 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemCl
         movieDetailActivity.showLoading()
         movieId.postValue(resultsItem.id.toString())
         (binding.root as ScrollView).fullScroll(ScrollView.FOCUS_UP)
+        movieStack.push(movieId.value)
+        callback.isEnabled = true
     }
 
     override fun onResume() {
@@ -148,6 +175,8 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemCl
         }
         super.onPause()
     }
+
+
 
     companion object {
 
