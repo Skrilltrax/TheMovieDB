@@ -3,38 +3,41 @@ package me.skrilltrax.themoviedb.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import me.skrilltrax.themoviedb.constants.Tabs
 import me.skrilltrax.themoviedb.ui.homepage.movie.MovieViewPagerFragment
+import me.skrilltrax.themoviedb.ui.homepage.tv.TVViewPagerFragment
 import timber.log.Timber
 
-class ViewPagerAdapter(fragmentManager: FragmentManager, private var isMovieSelected: Boolean) :
-    FragmentPagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class ViewPagerAdapter(private val fragment: Fragment, private var isMovieSelected: Boolean) :
+    FragmentStateAdapter(fragment) {
 
-    override fun getItem(position: Int): Fragment {
-        val movieTab = Tabs.getTabById(position)
-        return if (movieTab != null) {
-            Timber.d("Tab ID : ${movieTab.tabId}")
-            MovieViewPagerFragment.newInstance(movieTab.tabId)
+    override fun createFragment(position: Int): Fragment {
+        val tab = Tabs.getTabById(position)
+        return if (tab != null) {
+            Timber.d("Tab ID : ${tab.tabId}, isMovieSelected: $isMovieSelected")
+            if (isMovieSelected) {
+                MovieViewPagerFragment.newInstance(tab.tabId)
+            } else {
+                TVViewPagerFragment.newInstance(tab.tabId)
+            }
         } else {
-            MovieViewPagerFragment.newInstance(Tabs.TAB_POPULAR.tabId)
+            if (isMovieSelected) {
+                MovieViewPagerFragment.newInstance(Tabs.TAB_POPULAR.tabId)
+            } else {
+                TVViewPagerFragment.newInstance(Tabs.TAB_POPULAR.tabId)
+            }
         }
     }
 
-    override fun getCount(): Int {
+    override fun getItemCount(): Int {
         return 4
     }
 
-    override fun getPageTitle(position: Int): CharSequence? {
-        return when (position) {
-            0 -> "Popular"
-            1 -> "Now Playing"
-            2 -> "Upcoming"
-            3 -> "Top Rated"
-            else -> null
-        }
-    }
-
-    fun selectAdapterType(bool: Boolean) {
-        isMovieSelected = bool
+    fun clearAll() {
+        for (i in 0 until fragment.childFragmentManager.backStackEntryCount)
+            fragment.childFragmentManager.beginTransaction().remove(fragment.childFragmentManager.fragments.last()).commit()
+        fragment.childFragmentManager.fragments.clear()
     }
 }

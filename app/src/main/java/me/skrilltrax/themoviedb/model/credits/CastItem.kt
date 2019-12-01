@@ -1,4 +1,4 @@
-package me.skrilltrax.themoviedb.model.movie.credits
+package me.skrilltrax.themoviedb.model.credits
 
 import com.google.gson.annotations.SerializedName
 

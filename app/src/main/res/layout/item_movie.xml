@@ -6,7 +6,10 @@
     <data>
         <variable
             name="movieData"
-            type="me.skrilltrax.themoviedb.model.movie.list.MovieResultsItem" />
+            type="me.skrilltrax.themoviedb.model.list.ListResultItem" />
+        <variable
+            name="isMovie"
+            type="Boolean" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

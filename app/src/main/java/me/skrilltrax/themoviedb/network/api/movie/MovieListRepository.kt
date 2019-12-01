@@ -1,12 +1,12 @@
 package me.skrilltrax.themoviedb.network.api.movie
 
 import me.skrilltrax.themoviedb.BuildConfig
-import me.skrilltrax.themoviedb.model.movie.list.MovieListResponse
+import me.skrilltrax.themoviedb.model.list.ListResponse
 import me.skrilltrax.themoviedb.network.BaseRepository
 
 class MovieListRepository(private val client: MovieApiInterface) : BaseRepository() {
 
-    suspend fun getPopularMovieList(): MovieListResponse? {
+    suspend fun getPopularMovieList(): ListResponse? {
 
         return safeApiCall(
             call = { client.getPopularMovies(BuildConfig.API_KEY) },
@@ -18,7 +18,7 @@ class MovieListRepository(private val client: MovieApiInterface) : BaseRepositor
         }
     }
 
-    suspend fun getUpcomingMovieList(): MovieListResponse? {
+    suspend fun getUpcomingMovieList(): ListResponse? {
 
         return safeApiCall(
             call = { client.getUpcomingMovies(BuildConfig.API_KEY) },
@@ -30,7 +30,7 @@ class MovieListRepository(private val client: MovieApiInterface) : BaseRepositor
         }
     }
 
-    suspend fun getPlayingMovieList(): MovieListResponse? {
+    suspend fun getPlayingMovieList(): ListResponse? {
 
         return safeApiCall(
             call = { client.getNowPlayingMovies(BuildConfig.API_KEY) },
@@ -42,7 +42,7 @@ class MovieListRepository(private val client: MovieApiInterface) : BaseRepositor
         }
     }
 
-    suspend fun getTopRatedMovieList(): MovieListResponse? {
+    suspend fun getTopRatedMovieList(): ListResponse? {
 
         return safeApiCall(
             call = { client.getTopRatedMovies(BuildConfig.API_KEY) },

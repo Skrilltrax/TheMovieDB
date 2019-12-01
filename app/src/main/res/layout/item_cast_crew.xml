@@ -7,10 +7,10 @@
         <import type="me.skrilltrax.themoviedb.constants.CreditsType"/>
         <variable
             name="castData"
-            type="me.skrilltrax.themoviedb.model.movie.credits.CastItem" />
+            type="me.skrilltrax.themoviedb.model.credits.CastItem" />
         <variable
             name="crewData"
-            type="me.skrilltrax.themoviedb.model.movie.credits.CrewItem" />
+            type="me.skrilltrax.themoviedb.model.credits.CrewItem" />
         <variable
             name="creditsType"
             type="me.skrilltrax.themoviedb.constants.CreditsType" />

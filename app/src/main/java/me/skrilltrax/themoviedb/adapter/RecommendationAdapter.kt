@@ -6,12 +6,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import me.skrilltrax.themoviedb.databinding.ItemMovieRecommendationBinding
 import me.skrilltrax.themoviedb.interfaces.MovieListItemClickListener
-import me.skrilltrax.themoviedb.model.movie.list.MovieResultsItem
+import me.skrilltrax.themoviedb.model.list.ListResultItem
 
-class MovieRecommendationAdapter(
-    private val list: List<MovieResultsItem>,
+class RecommendationAdapter(
+    private val list: List<ListResultItem>,
     private val listener: MovieListItemClickListener
-) : RecyclerView.Adapter<MovieRecommendationAdapter.MovieRecommendationViewHolder>() {
+) : RecyclerView.Adapter<RecommendationAdapter.MovieRecommendationViewHolder>() {
 
     private lateinit var binding: ItemMovieRecommendationBinding
 
@@ -39,7 +39,7 @@ class MovieRecommendationAdapter(
 
     inner class MovieRecommendationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(movieResultsItem: MovieResultsItem) {
+        fun bind(movieResultsItem: ListResultItem) {
             binding.movieData = movieResultsItem
             itemView.setOnClickListener {
                 listener.onMovieItemClick(movieResultsItem)

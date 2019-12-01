@@ -1,4 +1,4 @@
-package me.skrilltrax.themoviedb.model.movie.list
+package me.skrilltrax.themoviedb.model.list
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 @Entity
-data class MovieResultsItem(
+data class ListResultItem(
 
 	@PrimaryKey
 	@field:SerializedName("id")
@@ -63,6 +63,22 @@ data class MovieResultsItem(
 	@ColumnInfo(name = "vote_count")
 	@field:SerializedName("vote_count")
 	val voteCount: Int? = null,
+
+	@ColumnInfo(name = "first_air_date")
+	@field:SerializedName("first_air_date")
+	val firstAirDate: String? = null,
+
+	@ColumnInfo(name = "origin_country")
+	@field:SerializedName("origin_country")
+	val originCountry: List<String?>? = null,
+
+	@ColumnInfo(name = "original_name")
+	@field:SerializedName("original_name")
+	val originalName: String? = null,
+
+	@ColumnInfo(name = "name")
+	@field:SerializedName("name")
+	val name: String? = null,
 
 	@ColumnInfo(name = "type")
 	var type: String? = null

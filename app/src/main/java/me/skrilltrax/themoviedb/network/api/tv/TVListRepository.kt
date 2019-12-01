@@ -1,13 +1,12 @@
 package me.skrilltrax.themoviedb.network.api.tv
 
 import me.skrilltrax.themoviedb.BuildConfig
-import me.skrilltrax.themoviedb.model.movie.list.MovieListResponse
-import me.skrilltrax.themoviedb.model.tv.list.TVListResponse
+import me.skrilltrax.themoviedb.model.list.ListResponse
 import me.skrilltrax.themoviedb.network.BaseRepository
 
 class TVListRepository(private val client: TVApiInterface) : BaseRepository() {
 
-    suspend fun getPopularShowsList(): TVListResponse? {
+    suspend fun getPopularShowsList(): ListResponse? {
 
         return safeApiCall(
             call = { client.getPopularShows(BuildConfig.API_KEY) },
@@ -19,7 +18,7 @@ class TVListRepository(private val client: TVApiInterface) : BaseRepository() {
         }
     }
 
-    suspend fun getAiringShowsList(): TVListResponse? {
+    suspend fun getAiringShowsList(): ListResponse? {
 
         return safeApiCall(
             call = { client.getAiringShows(BuildConfig.API_KEY) },
@@ -31,7 +30,7 @@ class TVListRepository(private val client: TVApiInterface) : BaseRepository() {
         }
     }
 
-    suspend fun getOnAirShowsList(): TVListResponse? {
+    suspend fun getOnAirShowsList(): ListResponse? {
 
         return safeApiCall(
             call = { client.getOnAirShows(BuildConfig.API_KEY) },
@@ -43,7 +42,7 @@ class TVListRepository(private val client: TVApiInterface) : BaseRepository() {
         }
     }
 
-    suspend fun getTopRatedShowsList(): TVListResponse? {
+    suspend fun getTopRatedShowsList(): ListResponse? {
 
         return safeApiCall(
             call = { client.getTopRatedShows(BuildConfig.API_KEY) },

@@ -1,10 +1,10 @@
 package me.skrilltrax.themoviedb.network.api.movie
 
 import me.skrilltrax.themoviedb.BuildConfig
-import me.skrilltrax.themoviedb.model.movie.credits.MovieCreditsResponse
+import me.skrilltrax.themoviedb.model.credits.CreditsResponse
 import me.skrilltrax.themoviedb.model.movie.detail.MovieDetailResponse
-import me.skrilltrax.themoviedb.model.movie.list.MovieListResponse
-import me.skrilltrax.themoviedb.model.movie.videos.MovieVideoResponse
+import me.skrilltrax.themoviedb.model.list.ListResponse
+import me.skrilltrax.themoviedb.model.videos.VideoResponse
 import me.skrilltrax.themoviedb.network.BaseRepository
 
 class MovieDetailRepository(private val client: MovieApiInterface) : BaseRepository() {
@@ -17,7 +17,7 @@ class MovieDetailRepository(private val client: MovieApiInterface) : BaseReposit
         )
     }
 
-    suspend fun getCastCrew(movieId: String): MovieCreditsResponse? {
+    suspend fun getCastCrew(movieId: String): CreditsResponse? {
 
         return safeApiCall(
             call = { client.getMovieCredits(movieId, BuildConfig.API_KEY) },
@@ -25,7 +25,7 @@ class MovieDetailRepository(private val client: MovieApiInterface) : BaseReposit
         )
     }
 
-    suspend fun getVideos(movieId: String): MovieVideoResponse? {
+    suspend fun getVideos(movieId: String): VideoResponse? {
 
         return safeApiCall(
             call = {client.getMovieVideos(movieId, BuildConfig.API_KEY)},
@@ -33,7 +33,7 @@ class MovieDetailRepository(private val client: MovieApiInterface) : BaseReposit
         )
     }
 
-    suspend fun getRecommendations(movieId: String): MovieListResponse? {
+    suspend fun getRecommendations(movieId: String): ListResponse? {
 
         return safeApiCall(
             call = {client.getMovieRecommendations(movieId, BuildConfig.API_KEY)},

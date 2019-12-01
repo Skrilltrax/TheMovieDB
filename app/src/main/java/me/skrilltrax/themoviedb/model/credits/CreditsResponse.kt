@@ -1,8 +1,8 @@
-package me.skrilltrax.themoviedb.model.movie.credits
+package me.skrilltrax.themoviedb.model.credits
 
 import com.google.gson.annotations.SerializedName
 
-data class MovieCreditsResponse(
+data class CreditsResponse(
 
 	@field:SerializedName("cast")
 	val cast: List<CastItem?>? = null,

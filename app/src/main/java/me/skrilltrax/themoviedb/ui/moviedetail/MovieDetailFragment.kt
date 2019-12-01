@@ -10,14 +10,14 @@ import androidx.lifecycle.Observer
 import me.skrilltrax.themoviedb.R
 import me.skrilltrax.themoviedb.utils.SystemLayoutUtils
 import me.skrilltrax.themoviedb.adapter.CreditsAdapter
-import me.skrilltrax.themoviedb.adapter.MovieGenreAdapter
+import me.skrilltrax.themoviedb.adapter.GenreAdapter
 import me.skrilltrax.themoviedb.constants.CreditsType
 import me.skrilltrax.themoviedb.databinding.FragmentMovieDetailBinding
 import me.skrilltrax.themoviedb.interfaces.MovieDetailItemClickListener
-import me.skrilltrax.themoviedb.model.movie.credits.CastItem
-import me.skrilltrax.themoviedb.model.movie.credits.CrewItem
+import me.skrilltrax.themoviedb.model.credits.CastItem
+import me.skrilltrax.themoviedb.model.credits.CrewItem
 import me.skrilltrax.themoviedb.model.movie.detail.GenresItem
-import me.skrilltrax.themoviedb.model.movie.videos.VideoResultsItem
+import me.skrilltrax.themoviedb.model.videos.VideoResultsItem
 import timber.log.Timber
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -28,10 +28,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
-import me.skrilltrax.themoviedb.adapter.MovieRecommendationAdapter
+import me.skrilltrax.themoviedb.adapter.RecommendationAdapter
 import me.skrilltrax.themoviedb.adapter.VideoAdapter
 import me.skrilltrax.themoviedb.interfaces.MovieListItemClickListener
-import me.skrilltrax.themoviedb.model.movie.list.MovieResultsItem
+import me.skrilltrax.themoviedb.model.list.ListResultItem
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListItemClickListener {
@@ -82,7 +82,7 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListI
         })
 
         movieDetailViewModel.genres.observe(viewLifecycleOwner, Observer<List<GenresItem>> {
-            binding.genreAdapter = MovieGenreAdapter(it)
+            binding.genreAdapter = GenreAdapter(it)
         })
 
         movieDetailViewModel.cast.observe(viewLifecycleOwner, Observer<List<CastItem>> {
@@ -108,7 +108,7 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListI
         })
 
         movieDetailViewModel.recommendations.observe(viewLifecycleOwner, Observer {
-            binding.recommendationAdapter = MovieRecommendationAdapter(it, this)
+            binding.recommendationAdapter = RecommendationAdapter(it, this)
         })
 
         movieDetailViewModel.isLoading.observe(viewLifecycleOwner, Observer {
@@ -129,7 +129,7 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListI
         }
     }
 
-    override fun onMovieItemClick(movieResultsItem: MovieResultsItem) {
+    override fun onMovieItemClick(movieResultsItem: ListResultItem) {
         movieDetailActivity.showLoading()
         movieId.postValue(movieResultsItem.id.toString())
         (binding.root as ScrollView).fullScroll(ScrollView.FOCUS_UP)

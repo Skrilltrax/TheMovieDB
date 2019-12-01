@@ -1,4 +1,4 @@
-package me.skrilltrax.themoviedb.model.movie.videos
+package me.skrilltrax.themoviedb.model.videos
 
 import com.google.gson.annotations.SerializedName
 

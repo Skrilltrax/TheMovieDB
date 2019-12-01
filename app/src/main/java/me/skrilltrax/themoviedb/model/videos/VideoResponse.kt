@@ -1,8 +1,8 @@
-package me.skrilltrax.themoviedb.model.movie.videos
+package me.skrilltrax.themoviedb.model.videos
 
 import com.google.gson.annotations.SerializedName
 
-data class MovieVideoResponse(
+data class VideoResponse(
 
 	@field:SerializedName("id")
 	val id: Int? = null,

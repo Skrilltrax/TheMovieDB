@@ -4,8 +4,8 @@
 
     <data>
         <variable
-            name="movieListAdapter"
-            type="me.skrilltrax.themoviedb.adapter.MovieListAdapter" />
+            name="listAdapter"
+            type="me.skrilltrax.themoviedb.adapter.ListAdapter" />
     </data>
 
     <LinearLayout
@@ -20,7 +20,7 @@
             android:paddingBottom="8dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:orientation="vertical"
-            android:adapter="@{movieListAdapter}"
+            android:adapter="@{listAdapter}"
             android:background="@color/background" />
 
     </LinearLayout>

@@ -22,7 +22,7 @@
 
         <variable
             name="genreAdapter"
-            type="me.skrilltrax.themoviedb.adapter.MovieGenreAdapter" />
+            type="me.skrilltrax.themoviedb.adapter.GenreAdapter" />
 
         <variable
             name="videoAdapter"
@@ -30,7 +30,7 @@
 
         <variable
             name="recommendationAdapter"
-            type="me.skrilltrax.themoviedb.adapter.MovieRecommendationAdapter" />
+            type="me.skrilltrax.themoviedb.adapter.RecommendationAdapter" />
     </data>
 
     <ScrollView
