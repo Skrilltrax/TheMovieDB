@@ -13,13 +13,13 @@ import kotlinx.coroutines.withContext
 import me.skrilltrax.themoviedb.BuildConfig
 import me.skrilltrax.themoviedb.adapter.ListAdapter
 import me.skrilltrax.themoviedb.R
-import me.skrilltrax.themoviedb.interfaces.MovieListItemClickListener
+import me.skrilltrax.themoviedb.interfaces.ListItemClickListener
 import me.skrilltrax.themoviedb.model.list.ListResultItem
 import me.skrilltrax.themoviedb.network.api.movie.MovieApiInterface
 import org.koin.android.ext.android.inject
 import retrofit2.HttpException
 
-class SearchActivity : AppCompatActivity(), MovieListItemClickListener {
+class SearchActivity : AppCompatActivity(), ListItemClickListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var collapsingToolbar: CollapsingToolbarLayout
@@ -42,7 +42,7 @@ class SearchActivity : AppCompatActivity(), MovieListItemClickListener {
     private fun setupRecyclerView() {
         recyclerView.apply {
             layoutManager = LinearLayoutManager(this@SearchActivity, RecyclerView.VERTICAL, false)
-            adapter = ListAdapter(listOf(), this@SearchActivity)
+            adapter = ListAdapter(listOf(), this@SearchActivity, true)
         }
     }
 
@@ -55,7 +55,7 @@ class SearchActivity : AppCompatActivity(), MovieListItemClickListener {
                     movieList.addAll(movieResponse.body()?.results as Collection<ListResultItem>)
                     withContext(Dispatchers.Main) {
                         recyclerView.adapter =
-                            ListAdapter(movieList, this@SearchActivity)
+                            ListAdapter(movieList, this@SearchActivity, true)
                         (recyclerView.adapter as ListAdapter).notifyDataSetChanged()
 //                            hideLoading()
                     }
@@ -81,7 +81,7 @@ class SearchActivity : AppCompatActivity(), MovieListItemClickListener {
         }
     }
 
-    override fun onMovieItemClick(movieResultsItem: ListResultItem) {
+    override fun onItemClick(resultsItem: ListResultItem) {
 
     }
 }

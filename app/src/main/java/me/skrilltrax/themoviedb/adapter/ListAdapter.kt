@@ -4,19 +4,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import me.skrilltrax.themoviedb.databinding.ItemMovieBinding
-import me.skrilltrax.themoviedb.interfaces.MovieListItemClickListener
+import me.skrilltrax.themoviedb.databinding.ItemListBinding
+import me.skrilltrax.themoviedb.interfaces.ListItemClickListener
 import me.skrilltrax.themoviedb.model.list.ListResultItem
-import timber.log.Timber
 
-class ListAdapter(private val list: List<ListResultItem>, val listener: MovieListItemClickListener) :
+class ListAdapter(private val list: List<ListResultItem>, val listener: ListItemClickListener, val isMovieSelected: Boolean) :
     RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
 
-    private lateinit var binding: ItemMovieBinding
+    private lateinit var binding: ItemListBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        binding = ItemMovieBinding.inflate(inflater, parent, false)
+        binding = ItemListBinding.inflate(inflater, parent, false)
         return ListViewHolder(binding.root)
     }
 
@@ -39,9 +38,10 @@ class ListAdapter(private val list: List<ListResultItem>, val listener: MovieLis
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(resultsItem: ListResultItem) {
             itemView.setOnClickListener {
-                listener.onMovieItemClick(resultsItem)
+                listener.onItemClick(resultsItem)
             }
-            binding.movieData = resultsItem
+            binding.data = resultsItem
+            binding.isMovie = isMovieSelected
         }
     }
 }

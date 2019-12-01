@@ -5,12 +5,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import me.skrilltrax.themoviedb.databinding.ItemMovieRecommendationBinding
-import me.skrilltrax.themoviedb.interfaces.MovieListItemClickListener
+import me.skrilltrax.themoviedb.interfaces.ListItemClickListener
 import me.skrilltrax.themoviedb.model.list.ListResultItem
 
 class RecommendationAdapter(
     private val list: List<ListResultItem>,
-    private val listener: MovieListItemClickListener
+    private val listener: ListItemClickListener
 ) : RecyclerView.Adapter<RecommendationAdapter.MovieRecommendationViewHolder>() {
 
     private lateinit var binding: ItemMovieRecommendationBinding
@@ -42,7 +42,7 @@ class RecommendationAdapter(
         fun bind(movieResultsItem: ListResultItem) {
             binding.movieData = movieResultsItem
             itemView.setOnClickListener {
-                listener.onMovieItemClick(movieResultsItem)
+                listener.onItemClick(movieResultsItem)
             }
         }
 

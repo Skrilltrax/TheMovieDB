@@ -30,11 +30,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.MutableLiveData
 import me.skrilltrax.themoviedb.adapter.RecommendationAdapter
 import me.skrilltrax.themoviedb.adapter.VideoAdapter
-import me.skrilltrax.themoviedb.interfaces.MovieListItemClickListener
+import me.skrilltrax.themoviedb.interfaces.ListItemClickListener
 import me.skrilltrax.themoviedb.model.list.ListResultItem
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListItemClickListener {
+class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemClickListener {
 
     private val movieDetailViewModel: MovieDetailViewModel by viewModel()
     private val movieDetailActivity by lazy { requireActivity() as MovieDetailActivity }
@@ -129,9 +129,9 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, MovieListI
         }
     }
 
-    override fun onMovieItemClick(movieResultsItem: ListResultItem) {
+    override fun onItemClick(resultsItem: ListResultItem) {
         movieDetailActivity.showLoading()
-        movieId.postValue(movieResultsItem.id.toString())
+        movieId.postValue(resultsItem.id.toString())
         (binding.root as ScrollView).fullScroll(ScrollView.FOCUS_UP)
     }
 

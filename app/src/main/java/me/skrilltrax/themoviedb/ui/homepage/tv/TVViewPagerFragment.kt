@@ -12,13 +12,13 @@ import me.skrilltrax.themoviedb.adapter.ListAdapter
 import me.skrilltrax.themoviedb.R
 import me.skrilltrax.themoviedb.constants.Tabs
 import me.skrilltrax.themoviedb.databinding.FragmentCommonViewpagerBinding
-import me.skrilltrax.themoviedb.interfaces.MovieListItemClickListener
+import me.skrilltrax.themoviedb.interfaces.ListItemClickListener
 import me.skrilltrax.themoviedb.model.list.ListResultItem
 import me.skrilltrax.themoviedb.ui.moviedetail.MovieDetailActivity
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
 
-class TVViewPagerFragment : Fragment(), MovieListItemClickListener {
+class TVViewPagerFragment : Fragment(), ListItemClickListener {
 
     private val tvListViewModel by sharedViewModel<TVListViewModel>()
 
@@ -44,16 +44,16 @@ class TVViewPagerFragment : Fragment(), MovieListItemClickListener {
     private fun setupObservers(viewLifecycleOwner: LifecycleOwner, position: Int) {
         when (position) {
             Tabs.TAB_POPULAR.tabId -> tvListViewModel.popularShowsList.observe(viewLifecycleOwner, Observer {
-                binding.listAdapter = ListAdapter(it, this)
+                binding.listAdapter = ListAdapter(it, this, false)
             })
             Tabs.TAB_PLAYING.tabId -> tvListViewModel.playingShowsList.observe(viewLifecycleOwner, Observer {
-                binding.listAdapter = ListAdapter(it, this)
+                binding.listAdapter = ListAdapter(it, this, false)
             })
             Tabs.TAB_UPCOMING.tabId -> tvListViewModel.upcomingShowsList.observe(viewLifecycleOwner, Observer {
-                binding.listAdapter = ListAdapter(it, this)
+                binding.listAdapter = ListAdapter(it, this, false)
             })
             Tabs.TAB_TOP_RATED.tabId -> tvListViewModel.topRatedShowsList.observe(viewLifecycleOwner, Observer {
-                binding.listAdapter = ListAdapter(it, this)
+                binding.listAdapter = ListAdapter(it, this, false)
             })
         }
     }
@@ -67,7 +67,7 @@ class TVViewPagerFragment : Fragment(), MovieListItemClickListener {
         }
     }
 
-    override fun onMovieItemClick(tvResultsItem: ListResultItem) {
+    override fun onItemClick(tvResultsItem: ListResultItem) {
         val intent = Intent(this.context, MovieDetailActivity::class.java)
         intent.putExtra("movie_id", tvResultsItem.id.toString())
         startActivity(intent)
