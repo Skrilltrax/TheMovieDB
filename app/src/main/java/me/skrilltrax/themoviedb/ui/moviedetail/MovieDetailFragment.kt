@@ -176,10 +176,7 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemCl
         super.onPause()
     }
 
-
-
     companion object {
-
         fun newInstance(id: String): MovieDetailFragment {
             return MovieDetailFragment().also {
                 val bundle = Bundle()

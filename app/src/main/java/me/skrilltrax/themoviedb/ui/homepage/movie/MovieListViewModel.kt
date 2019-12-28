@@ -2,6 +2,7 @@ package me.skrilltrax.themoviedb.ui.homepage.movie
 
 import androidx.lifecycle.*
 import kotlinx.coroutines.launch
+import me.skrilltrax.themoviedb.constants.Tabs
 import me.skrilltrax.themoviedb.model.list.ListResultItem
 import me.skrilltrax.themoviedb.network.api.movie.MovieListRepository
 import timber.log.Timber
@@ -32,6 +33,13 @@ class MovieListViewModel(private val movieListRepository: MovieListRepository) :
 
     val topRatedMovieList : LiveData<ArrayList<ListResultItem>>
         get() = _topRatedMovieList
+
+    init {
+        fetchPopularMovieList()
+        fetchPlayingMovieList()
+        fetchUpcomingMovieList()
+        fetchTopRatedMovieList()
+    }
 
     fun fetchPopularMovieList() {
         if(!popularMovieStatus) {

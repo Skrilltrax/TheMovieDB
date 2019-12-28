@@ -9,7 +9,6 @@ import me.skrilltrax.themoviedb.ui.BaseActivity
 import me.skrilltrax.themoviedb.utils.SystemLayoutUtils
 
 class MainActivity : BaseActivity() {
-
     private lateinit var bottomNav: BottomNavigationView
     private var previousSelection: Int = 0
     val isMovieSelected: MutableLiveData<Boolean> = MutableLiveData(true)
@@ -44,8 +43,8 @@ class MainActivity : BaseActivity() {
                     }
                 }
             }
-                false
-            }
+            false
+        }
     }
 
     override fun onPause() {

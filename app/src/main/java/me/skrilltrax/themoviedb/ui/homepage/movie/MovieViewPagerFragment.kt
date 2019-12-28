@@ -39,7 +39,6 @@ class MovieViewPagerFragment : Fragment(), ListItemClickListener {
         super.onViewCreated(view, savedInstanceState)
         Timber.d("Config Changed")
         setupObservers(viewLifecycleOwner, fragmentType ?: 0)
-        getMovies(fragmentType ?: 0)
     }
 
     private fun setupObservers(viewLifecycleOwner: LifecycleOwner, position: Int) {
@@ -56,15 +55,6 @@ class MovieViewPagerFragment : Fragment(), ListItemClickListener {
             Tabs.TAB_TOP_RATED.tabId -> movieListViewModel.topRatedMovieList.observe(viewLifecycleOwner, Observer {
                 binding.listAdapter = ListAdapter(it, this, true)
             })
-        }
-    }
-
-    private fun getMovies(position: Int) {
-        when (position) {
-            Tabs.TAB_POPULAR.tabId -> movieListViewModel.fetchPopularMovieList()
-            Tabs.TAB_PLAYING.tabId -> movieListViewModel.fetchPlayingMovieList()
-            Tabs.TAB_UPCOMING.tabId -> movieListViewModel.fetchUpcomingMovieList()
-            Tabs.TAB_TOP_RATED.tabId -> movieListViewModel.fetchTopRatedMovieList()
         }
     }
 
