@@ -50,57 +50,57 @@ dependencies {
     implementation(Libs.core_ktx)
     implementation(Libs.constraintlayout)
 
-    //Koin
+    // Koin
     implementation(Libs.koin_android)
     implementation(Libs.koin_androidx_scope)
     implementation(Libs.koin_androidx_viewmodel)
 
-    //Retrofit
+    // Retrofit
     implementation(Libs.retrofit)
     implementation(Libs.logging_interceptor)
     implementation(Libs.converter_gson)
 
-    //Room
+    // Room
     implementation(Libs.room_runtime)
     kapt(Libs.room_compiler)
     implementation(Libs.room_ktx)
 
-
-    //Navigation
+    // Navigation
     implementation(Libs.navigation_fragment_ktx)
     implementation(Libs.navigation_ui)
 
-    //Lifecycle
+    // Lifecycle
     implementation(Libs.lifecycle_extensions)
     implementation(Libs.lifecycle_viewmodel_savedstate)
 
-    //Glide
+    // Glide
     implementation(Libs.glide)
     kapt(Libs.com_github_bumptech_glide_compiler)
 
-    //Timber
+    // Timber
     implementation(Libs.timber)
 
-    //Material Components
+    // Material Components
     implementation(Libs.material)
 
-    //Gson
+    // Gson
     implementation(Libs.gson)
 
-    //Viewpager
+    // Viewpager
     implementation(Libs.viewpager2)
 
-    //Anko Commons
+    // Anko Commons
     implementation(Libs.anko_commons)
 
-    //Lottie
+    // Lottie
     implementation(Libs.lottie)
 
-    //Rating Bar
+    // Rating Bar
     implementation(Libs.library)
 
-    implementation("com.facebook.stetho:stetho:1.5.1")
-    implementation("com.facebook.stetho:stetho-okhttp3:1.5.1")
+    // Stetho
+    implementation(Libs.stetho)
+    implementation(Libs.stetho_okhttp3)
 
     debugImplementation(Libs.leakcanary_android)
 
