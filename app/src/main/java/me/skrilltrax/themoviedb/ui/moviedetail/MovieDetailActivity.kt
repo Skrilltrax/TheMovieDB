@@ -1,7 +1,6 @@
 package me.skrilltrax.themoviedb.ui.moviedetail
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import me.skrilltrax.themoviedb.R
 import me.skrilltrax.themoviedb.ui.BaseActivity
@@ -22,8 +21,7 @@ class MovieDetailActivity : BaseActivity() {
                     .add(R.id.frame, MovieDetailFragment.newInstance(movieId), "FRAGMENT_MOVIE_DETAIL")
                     .commit()
             }
-        }
-        else {
+        } else {
         }
     }
 

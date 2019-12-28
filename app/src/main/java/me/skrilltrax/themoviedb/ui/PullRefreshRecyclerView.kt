@@ -1,4 +1,4 @@
-///*
+// /*
 // * Copyright (C) 2013 The Android Open Source Project
 // *
 // * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,25 +13,25 @@
 // * See the License for the specific language governing permissions and
 // * limitations under the License.
 // */
-//package me.skrilltrax.themoviedb.ui
+// package me.skrilltrax.themoviedb.ui
 //
-//import android.content.Context
-//import android.graphics.Canvas
-//import android.util.AttributeSet
-//import android.view.MotionEvent
-//import android.view.View
-//import android.view.ViewConfiguration
-//import android.view.ViewGroup
-//import android.view.animation.AccelerateInterpolator
-//import android.view.animation.Animation
-//import android.view.animation.Animation.AnimationListener
-//import android.view.animation.DecelerateInterpolator
-//import android.view.animation.Transformation
-//import android.widget.AbsListView
+// import android.content.Context
+// import android.graphics.Canvas
+// import android.util.AttributeSet
+// import android.view.MotionEvent
+// import android.view.View
+// import android.view.ViewConfiguration
+// import android.view.ViewGroup
+// import android.view.animation.AccelerateInterpolator
+// import android.view.animation.Animation
+// import android.view.animation.Animation.AnimationListener
+// import android.view.animation.DecelerateInterpolator
+// import android.view.animation.Transformation
+// import android.widget.AbsListView
 //
-//import androidx.core.view.ViewCompat
+// import androidx.core.view.ViewCompat
 //
-///**
+// /**
 // * The SwipeRefreshLayout should be used whenever the user can refresh the
 // * contents of a view via a vertical swipe gesture. The activity that
 // * instantiates this view should add an OnRefreshListener to be notified
@@ -52,14 +52,14 @@
 // * provide accessibility events; instead, a menu item must be provided to allow
 // * refresh of the content wherever this gesture is used.
 // */
-//class SwipeRefreshLayout
-///**
+// class SwipeRefreshLayout
+// /**
 // * Constructor that is called when inflating SwipeRefreshLayout from XML.
 // * @param context
 // * @param attr
 // */
-//@JvmOverloads constructor(context: Context, attr: AttributeSet? = null) : ViewGroup(context, attr) {
-////    private val mProgressBar: SwipeProgressBar? //the thing that shows progress is going
+// @JvmOverloads constructor(context: Context, attr: AttributeSet? = null) : ViewGroup(context, attr) {
+// //    private val mProgressBar: SwipeProgressBar? //the thing that shows progress is going
 //    private var mTarget: View? = null //the content that gets pulled down
 //    private var mOriginalOffsetTop: Int = 0
 //    private var mListener: OnRefreshListener? = null
@@ -118,7 +118,7 @@
 //    private val mShrinkTrigger = object : Animation() {
 //        public override fun applyTransformation(interpolatedTime: Float, t: Transformation) {
 //            val percent = mFromPercentage + (0 - mFromPercentage) * interpolatedTime
-////            mProgressBar!!.setTriggerPercentage(percent)
+// //            mProgressBar!!.setTriggerPercentage(percent)
 //        }
 //    }
 //    private val mReturnToStartPositionListener = object : BaseAnimationListener() {
@@ -165,7 +165,7 @@
 //            android.R.integer.config_mediumAnimTime
 //        )
 //        setWillNotDraw(false)
-////        mProgressBar = SwipeProgressBar(this)
+// //        mProgressBar = SwipeProgressBar(this)
 //        val metrics = resources.displayMetrics
 //        mProgressBarHeight = (metrics.density * PROGRESS_BAR_HEIGHT).toInt()
 //        mDecelerateInterpolator = DecelerateInterpolator(DECELERATE_INTERPOLATION_FACTOR)
@@ -209,7 +209,7 @@
 //            return
 //        }
 //        mCurrPercentage = percent
-////        mProgressBar!!.setTriggerPercentage(percent)
+// //        mProgressBar!!.setTriggerPercentage(percent)
 //    }
 //
 //    /**
@@ -229,7 +229,7 @@
 //        val color2 = res.getColor(colorRes2)
 //        val color3 = res.getColor(colorRes3)
 //        val color4 = res.getColor(colorRes4)
-////        mProgressBar!!.setColorScheme(color1, color2, color3, color4)
+// //        mProgressBar!!.setColorScheme(color1, color2, color3, color4)
 //    }
 //
 //    private fun ensureTarget() {
@@ -252,13 +252,13 @@
 //
 //    override fun draw(canvas: Canvas) {
 //        super.draw(canvas)
-////        mProgressBar!!.draw(canvas)
+// //        mProgressBar!!.draw(canvas)
 //    }
 //
 //    override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
 //        val width = measuredWidth
 //        val height = measuredHeight
-////        mProgressBar!!.setBounds(0, 0, width, mProgressBarHeight)
+// //        mProgressBar!!.setBounds(0, 0, width, mProgressBarHeight)
 //        if (childCount == 0) {
 //            return
 //        }
@@ -428,8 +428,8 @@
 //        private const val MAX_SWIPE_DISTANCE_FACTOR = .6f
 //        private const val REFRESH_TRIGGER_DISTANCE = 120
 //    }
-//}
-///**
+// }
+// /**
 // * Simple constructor to use when creating a SwipeRefreshLayout from code.
 // * @param context
 // */

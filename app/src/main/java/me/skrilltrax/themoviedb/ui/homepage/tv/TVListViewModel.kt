@@ -12,28 +12,28 @@ import timber.log.Timber
 @Suppress("UNCHECKED_CAST")
 class TVListViewModel(private val tvListRepository: TVListRepository) : ViewModel() {
 
-    private var popularShowsStatus : Boolean = false
-    private var playingShowsStatus : Boolean = false
-    private var upcomingShowsStatus : Boolean = false
-    private var topRatedShowsStatus : Boolean = false
+    private var popularShowsStatus: Boolean = false
+    private var playingShowsStatus: Boolean = false
+    private var upcomingShowsStatus: Boolean = false
+    private var topRatedShowsStatus: Boolean = false
 
-    private val _popularShowsList : MutableLiveData<ArrayList<ListResultItem>> = MutableLiveData()
-    private val _playingShowsList : MutableLiveData<ArrayList<ListResultItem>> = MutableLiveData()
-    private val _upcomingShowsList : MutableLiveData<ArrayList<ListResultItem>> = MutableLiveData()
-    private val _topRatedShowsList : MutableLiveData<ArrayList<ListResultItem>> = MutableLiveData()
+    private val _popularShowsList: MutableLiveData<ArrayList<ListResultItem>> = MutableLiveData()
+    private val _playingShowsList: MutableLiveData<ArrayList<ListResultItem>> = MutableLiveData()
+    private val _upcomingShowsList: MutableLiveData<ArrayList<ListResultItem>> = MutableLiveData()
+    private val _topRatedShowsList: MutableLiveData<ArrayList<ListResultItem>> = MutableLiveData()
 
     val isLoading: MutableLiveData<Boolean> = MutableLiveData(true)
 
-    val popularShowsList : LiveData<ArrayList<ListResultItem>>
+    val popularShowsList: LiveData<ArrayList<ListResultItem>>
         get() = _popularShowsList
 
-    val playingShowsList : LiveData<ArrayList<ListResultItem>>
+    val playingShowsList: LiveData<ArrayList<ListResultItem>>
         get() = _playingShowsList
 
-    val upcomingShowsList : LiveData<ArrayList<ListResultItem>>
+    val upcomingShowsList: LiveData<ArrayList<ListResultItem>>
         get() = _upcomingShowsList
 
-    val topRatedShowsList : LiveData<ArrayList<ListResultItem>>
+    val topRatedShowsList: LiveData<ArrayList<ListResultItem>>
         get() = _topRatedShowsList
 
     fun fetchPopularShowsList() {

@@ -11,8 +11,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.skrilltrax.themoviedb.BuildConfig
-import me.skrilltrax.themoviedb.adapter.ListAdapter
 import me.skrilltrax.themoviedb.R
+import me.skrilltrax.themoviedb.adapter.ListAdapter
 import me.skrilltrax.themoviedb.interfaces.ListItemClickListener
 import me.skrilltrax.themoviedb.model.list.ListResultItem
 import me.skrilltrax.themoviedb.network.api.movie.MovieApiInterface
@@ -71,7 +71,6 @@ class SearchActivity : AppCompatActivity(), ListItemClickListener {
                     //                    hideLoading()
                 }
                 e.printStackTrace()
-
             } catch (e: Throwable) {
                 withContext(Dispatchers.Main) {
                     //                    hideLoading()
@@ -82,6 +81,5 @@ class SearchActivity : AppCompatActivity(), ListItemClickListener {
     }
 
     override fun onItemClick(resultsItem: ListResultItem) {
-
     }
 }

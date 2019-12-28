@@ -7,9 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.*
-import me.skrilltrax.themoviedb.adapter.ListAdapter
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import me.skrilltrax.themoviedb.R
+import me.skrilltrax.themoviedb.adapter.ListAdapter
 import me.skrilltrax.themoviedb.constants.Tabs
 import me.skrilltrax.themoviedb.databinding.FragmentCommonViewpagerBinding
 import me.skrilltrax.themoviedb.interfaces.ListItemClickListener

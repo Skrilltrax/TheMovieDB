@@ -1,8 +1,8 @@
 package me.skrilltrax.themoviedb.network
 
+import java.io.IOException
 import retrofit2.Response
 import timber.log.Timber
-import java.io.IOException
 
 open class BaseRepository {
 
@@ -20,7 +20,6 @@ open class BaseRepository {
         }
 
         return data
-
     }
 
     private suspend fun <T : Any> safeApiResult(call: suspend () -> Response<T>, errorMessage: String): Result<T> {

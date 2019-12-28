@@ -53,5 +53,4 @@ class TVListRepository(private val client: TVApiInterface) : BaseRepository() {
             }
         }
     }
-
 }

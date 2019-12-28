@@ -53,5 +53,4 @@ class MovieListRepository(private val client: MovieApiInterface) : BaseRepositor
             }
         }
     }
-
 }

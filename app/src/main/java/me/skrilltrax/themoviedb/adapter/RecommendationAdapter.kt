@@ -45,6 +45,5 @@ class RecommendationAdapter(
                 listener.onItemClick(movieResultsItem)
             }
         }
-
     }
 }

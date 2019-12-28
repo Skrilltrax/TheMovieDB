@@ -1,7 +1,6 @@
 package me.skrilltrax.themoviedb.databinding
 
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
@@ -67,6 +66,6 @@ object BindingAdapters {
     @BindingAdapter("rating")
     @JvmStatic
     fun setRating(view: MaterialRatingBar, rating: Double) {
-        view.rating = rating.toFloat()/2
+        view.rating = rating.toFloat() / 2
     }
 }

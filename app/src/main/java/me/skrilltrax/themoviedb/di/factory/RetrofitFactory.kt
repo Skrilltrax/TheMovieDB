@@ -5,7 +5,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitFactory {
-    inline fun <reified T> createWebService(okHttpClient: OkHttpClient, url: String) : T {
+    inline fun <reified T> createWebService(okHttpClient: OkHttpClient, url: String): T {
         return Retrofit.Builder()
             .baseUrl(url)
             .client(okHttpClient)

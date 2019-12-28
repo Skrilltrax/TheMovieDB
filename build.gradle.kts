@@ -5,7 +5,6 @@ buildscript {
         google()
         jcenter()
         maven("https://dl.bintray.com/kotlin/kotlin-eap")
-
     }
     dependencies {
         classpath(Libs.com_android_tools_build_gradle)
@@ -16,10 +15,22 @@ buildscript {
 
 plugins {
     id("de.fayard.buildSrcVersions") version "0.4.2"
+    id("com.diffplug.gradle.spotless") version "3.26.1"
+}
+
+spotless {
+    kotlin {
+        target("**/*.kt")
+        ktlint()
+    }
+    kotlinGradle {
+        target("*.gradle.kts", "additionalScripts/*.gradle.kts")
+        ktlint()
+    }
 }
 
 buildSrcVersions {
-    indent = "  "
+    indent = "    "
     renameLibs = "Libs"
     renameVersions = "Versions"
     rejectedVersionKeywords("cr", "m", "preview", "eap")
@@ -34,6 +45,6 @@ allprojects {
     }
 }
 
-task<Delete>("clean"){
+/*task<Delete>("clean"){
     delete(rootProject.buildDir)
-}
+}*/

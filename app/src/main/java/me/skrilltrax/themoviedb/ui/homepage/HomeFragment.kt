@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import me.skrilltrax.themoviedb.adapter.ViewPagerAdapter
@@ -71,7 +70,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupTabLayout() {
-        binding.appBar.tabLayout.getTabAt(Tabs.TAB_POPULAR.tabId)?.select() //Select first tab of viewpager
+        binding.appBar.tabLayout.getTabAt(Tabs.TAB_POPULAR.tabId)?.select() // Select first tab of viewpager
         TabLayoutMediator(binding.appBar.tabLayout, binding.viewPager) { tab, position ->
             tab.text = when (position) {
                 0 -> "Popular"

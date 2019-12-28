@@ -1,8 +1,10 @@
 package me.skrilltrax.themoviedb.ui.homepage.movie
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import me.skrilltrax.themoviedb.constants.Tabs
 import me.skrilltrax.themoviedb.model.list.ListResultItem
 import me.skrilltrax.themoviedb.network.api.movie.MovieListRepository
 import timber.log.Timber
@@ -10,28 +12,28 @@ import timber.log.Timber
 @Suppress("UNCHECKED_CAST")
 class MovieListViewModel(private val movieListRepository: MovieListRepository) : ViewModel() {
 
-    private var popularMovieStatus : Boolean = false
-    private var playingMovieStatus : Boolean = false
-    private var upcomingMovieStatus : Boolean = false
-    private var topRatedMovieStatus : Boolean = false
+    private var popularMovieStatus: Boolean = false
+    private var playingMovieStatus: Boolean = false
+    private var upcomingMovieStatus: Boolean = false
+    private var topRatedMovieStatus: Boolean = false
 
-    private val _popularMovieList : MutableLiveData<ArrayList<ListResultItem>> = MutableLiveData()
-    private val _playingMovieList : MutableLiveData<ArrayList<ListResultItem>> = MutableLiveData()
-    private val _upcomingMovieList : MutableLiveData<ArrayList<ListResultItem>> = MutableLiveData()
-    private val _topRatedMovieList : MutableLiveData<ArrayList<ListResultItem>> = MutableLiveData()
+    private val _popularMovieList: MutableLiveData<ArrayList<ListResultItem>> = MutableLiveData()
+    private val _playingMovieList: MutableLiveData<ArrayList<ListResultItem>> = MutableLiveData()
+    private val _upcomingMovieList: MutableLiveData<ArrayList<ListResultItem>> = MutableLiveData()
+    private val _topRatedMovieList: MutableLiveData<ArrayList<ListResultItem>> = MutableLiveData()
 
     val isLoading: MutableLiveData<Boolean> = MutableLiveData(true)
 
-    val popularMovieList : LiveData<ArrayList<ListResultItem>>
+    val popularMovieList: LiveData<ArrayList<ListResultItem>>
         get() = _popularMovieList
 
-    val playingMovieList : LiveData<ArrayList<ListResultItem>>
+    val playingMovieList: LiveData<ArrayList<ListResultItem>>
         get() = _playingMovieList
 
-    val upcomingMovieList : LiveData<ArrayList<ListResultItem>>
+    val upcomingMovieList: LiveData<ArrayList<ListResultItem>>
         get() = _upcomingMovieList
 
-    val topRatedMovieList : LiveData<ArrayList<ListResultItem>>
+    val topRatedMovieList: LiveData<ArrayList<ListResultItem>>
         get() = _topRatedMovieList
 
     init {
@@ -42,7 +44,7 @@ class MovieListViewModel(private val movieListRepository: MovieListRepository) :
     }
 
     fun fetchPopularMovieList() {
-        if(!popularMovieStatus) {
+        if (!popularMovieStatus) {
             viewModelScope.launch {
                 val popularList = movieListRepository.getPopularMovieList()
                 if (popularList != null) {

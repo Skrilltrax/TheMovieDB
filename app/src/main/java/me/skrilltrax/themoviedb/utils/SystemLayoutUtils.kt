@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewTreeObserver
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
-import timber.log.Timber
 import kotlin.math.abs
 
 object SystemLayoutUtils {
@@ -50,7 +49,7 @@ object SystemLayoutUtils {
         activity.window.navigationBarColor = color
     }
 
-    fun setStatusBarTint(activity: FragmentActivity, rootView: View, customView: View) : ViewTreeObserver.OnScrollChangedListener{
+    fun setStatusBarTint(activity: FragmentActivity, rootView: View, customView: View): ViewTreeObserver.OnScrollChangedListener {
         var oldScrollY = 0F
         return ViewTreeObserver.OnScrollChangedListener {
                 val scrollY = rootView.scrollY.toFloat()

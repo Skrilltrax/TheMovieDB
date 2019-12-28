@@ -55,4 +55,3 @@ class MainActivity : BaseActivity() {
         super.onPause()
     }
 }
-

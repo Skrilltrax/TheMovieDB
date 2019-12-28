@@ -1,12 +1,15 @@
 package me.skrilltrax.themoviedb.ui.moviedetail
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import me.skrilltrax.themoviedb.model.credits.CastItem
 import me.skrilltrax.themoviedb.model.credits.CrewItem
+import me.skrilltrax.themoviedb.model.list.ListResultItem
 import me.skrilltrax.themoviedb.model.movie.detail.GenresItem
 import me.skrilltrax.themoviedb.model.movie.detail.MovieDetailResponse
-import me.skrilltrax.themoviedb.model.list.ListResultItem
 import me.skrilltrax.themoviedb.model.videos.VideoResultsItem
 import me.skrilltrax.themoviedb.network.api.movie.MovieDetailRepository
 import timber.log.Timber
@@ -108,7 +111,7 @@ class MovieDetailViewModel(private val movieDetailRepository: MovieDetailReposit
         val extraList: ArrayList<VideoResultsItem> = arrayListOf()
         if (videos.value != null) {
             for (video in videos.value!!) {
-                if (video.type?.contains("trailer",true)!!) {
+                if (video.type?.contains("trailer", true)!!) {
                     trailerList.add(video)
                 } else {
                     extraList.add(video)
