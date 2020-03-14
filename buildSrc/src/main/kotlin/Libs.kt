@@ -152,7 +152,7 @@ object Libs {
             Versions.com_github_bumptech_glide
 
     /**
-     * http://developer.android.com/tools/extras/support-library.html
+     * https://github.com/material-components/material-components-android
      */
     const val material: String = "com.google.android.material:material:" + Versions.material
 
@@ -173,7 +173,7 @@ object Libs {
             Versions.leakcanary_android
 
     /**
-     * https://github.com/square/okhttp
+     * https://square.github.io/okhttp/
      */
     const val logging_interceptor: String = "com.squareup.okhttp3:logging-interceptor:" +
             Versions.logging_interceptor
