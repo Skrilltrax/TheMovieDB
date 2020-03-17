@@ -7,6 +7,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import me.skrilltrax.themoviedb.R
 import me.skrilltrax.themoviedb.ui.BaseActivity
 import me.skrilltrax.themoviedb.utils.SystemLayoutUtils
+import me.skrilltrax.themoviedb.utils.SystemLayoutUtils.setNavigationBarColor
 
 class MainActivity : BaseActivity() {
     private lateinit var bottomNav: BottomNavigationView
@@ -15,7 +16,7 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        SystemLayoutUtils.setNavigationBarColor(this, ContextCompat.getColor(this, R.color.background))
+        setNavigationBarColor(ContextCompat.getColor(this, R.color.background))
         setContentView(R.layout.activity_main)
         if (supportFragmentManager.backStackEntryCount == 0 && savedInstanceState == null) {
             supportFragmentManager.beginTransaction()

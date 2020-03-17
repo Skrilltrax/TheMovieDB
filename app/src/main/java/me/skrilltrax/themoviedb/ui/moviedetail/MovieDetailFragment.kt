@@ -22,6 +22,7 @@ import androidx.lifecycle.lifecycleScope
 import java.util.Stack
 import kotlin.collections.ArrayList
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.skrilltrax.themoviedb.R
@@ -38,7 +39,8 @@ import me.skrilltrax.themoviedb.model.credits.CrewItem
 import me.skrilltrax.themoviedb.model.list.ListResultItem
 import me.skrilltrax.themoviedb.model.movie.detail.GenresItem
 import me.skrilltrax.themoviedb.model.videos.VideoResultsItem
-import me.skrilltrax.themoviedb.utils.SystemLayoutUtils
+import me.skrilltrax.themoviedb.utils.SystemLayoutUtils.makeFullScreenHideNavigation
+import me.skrilltrax.themoviedb.utils.SystemLayoutUtils.setStatusBarTint
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -53,7 +55,7 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemCl
     private lateinit var callback: OnBackPressedCallback
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        SystemLayoutUtils.makeFullScreenHideNavigation(movieDetailActivity)
+        makeFullScreenHideNavigation()
         arguments?.let { movieId.postValue(it.getString("movie_id", "")) }
         movieStack = Stack()
         movieStack.push(movieId.value)
@@ -80,7 +82,7 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemCl
     }
 
     private fun observeScroll(view: View) {
-        scrollChangedListener = SystemLayoutUtils.setStatusBarTint(movieDetailActivity, view, binding.movieHeader.root)
+        scrollChangedListener = setStatusBarTint(view, binding.movieHeader.root)
         view.viewTreeObserver.addOnScrollChangedListener(scrollChangedListener)
     }
 
@@ -132,7 +134,7 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemCl
 
         movieDetailViewModel.isLoading.observe(viewLifecycleOwner, Observer {
             if (it == false) lifecycleScope.launch(Dispatchers.IO) {
-                Thread.sleep(500)
+                delay(300)
                 withContext(Dispatchers.Main) {
                     movieDetailActivity.hideLoading()
                 }
