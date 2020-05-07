@@ -1,4 +1,6 @@
 import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
+import java.util.Properties
+import java.io.FileInputStream
 
 plugins {
     id("com.android.application")
@@ -8,7 +10,13 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
 }
 
-var apiKey: String = System.getenv("TMDB_API_KEY") ?: "YOUR_API_KEY"
+var apiKey = ""
+if (apiKey.isNullOrEmpty()) {
+    val secretsFile = rootProject.file("secrets.properties")
+    val secretsProperties = Properties()
+    secretsProperties.load(FileInputStream(secretsFile))
+    apiKey = secretsProperties.getProperty("API_KEY")
+}
 
 android {
     buildFeatures.viewBinding = true;
@@ -20,7 +28,7 @@ android {
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "API_KEY", "\"$apiKey\"")
+        buildConfigField("String", "API_KEY", apiKey?: "YOUR_API_KEY")
 
     }
     compileOptions {
