@@ -11,8 +11,8 @@ plugins {
 var apiKey: String = System.getenv("TMDB_API_KEY") ?: "YOUR_API_KEY"
 
 android {
+    buildFeatures.viewBinding = true;
     compileSdkVersion(29)
-    dataBinding.isEnabled = true
     defaultConfig {
         applicationId = "me.skrilltrax.themoviedb"
         minSdkVersion(21)

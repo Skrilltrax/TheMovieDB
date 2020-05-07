@@ -18,7 +18,7 @@ object Versions {
 
     const val core_ktx: String = "1.3.0-alpha02"
 
-    const val androidx_databinding: String = "4.1.0-alpha02"
+    const val androidx_databinding: String = "4.1.0-alpha05"
 
     const val lifecycle_extensions: String = "2.2.0"
 
@@ -38,7 +38,7 @@ object Versions {
 
     const val aapt2: String = "4.1.0-alpha02-6193524"
 
-    const val com_android_tools_build_gradle: String = "4.1.0-alpha04"
+    const val com_android_tools_build_gradle: String = "4.1.0-alpha05"
 
     const val lint_gradle: String = "27.1.0-alpha02"
 
@@ -79,7 +79,7 @@ object Versions {
      */
     const val gradleLatestVersion: String = "6.2.2"
 
-    const val gradleCurrentVersion: String = "6.1-milestone-2"
+    const val gradleCurrentVersion: String = "6.3-rc-1"
 }
 
 /**
