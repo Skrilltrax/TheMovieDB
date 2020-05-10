@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
-    <data>
-        <import type="me.skrilltrax.themoviedb.constants.CreditsType"/>
-        <variable
-            name="castData"
-            type="me.skrilltrax.themoviedb.model.credits.CastItem" />
-        <variable
-            name="crewData"
-            type="me.skrilltrax.themoviedb.model.credits.CrewItem" />
-        <variable
-            name="creditsType"
-            type="me.skrilltrax.themoviedb.constants.CreditsType" />
-    </data>
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:orientation="vertical"
@@ -26,15 +12,13 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            app:creditImageUrl="@{creditsType == CreditsType.CAST ? castData.profilePath : crewData.profilePath}"/>
+            android:layout_marginStart="8dp" />
 
         <TextView
             android:id="@+id/cast_crew_name"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@{creditsType == CreditsType.CAST ? castData.name : crewData.name}"
             android:textSize="13sp"
             android:textStyle="bold"
             android:textColor="@color/colorWhite"
@@ -50,7 +34,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginStart="8dp"
-            android:text="@{creditsType == CreditsType.CAST ? castData.character : crewData.job}"
             android:textColor="#8d8d8d"
             android:textSize="12sp"
             android:singleLine="true"

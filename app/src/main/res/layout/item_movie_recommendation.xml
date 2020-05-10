@@ -2,12 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <data>
-        <variable
-            name="movieData"
-            type="me.skrilltrax.themoviedb.model.list.ListResultItem" />
-    </data>
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,9 +11,7 @@
             android:id="@+id/movieImage"
             android:layout_width="100dp"
             android:layout_height="140dp"
-            android:layout_margin="10dp"
-            posterImageUrl="@{movieData.posterPath}"
-            />
+            android:layout_margin="10dp" />
 
     </LinearLayout>
 </layout>

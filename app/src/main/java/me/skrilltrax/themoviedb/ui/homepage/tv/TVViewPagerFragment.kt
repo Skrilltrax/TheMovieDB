@@ -5,11 +5,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import me.skrilltrax.themoviedb.R
 import me.skrilltrax.themoviedb.adapter.ListAdapter
 import me.skrilltrax.themoviedb.constants.Tabs
 import me.skrilltrax.themoviedb.databinding.FragmentCommonViewpagerBinding
@@ -26,13 +24,17 @@ class TVViewPagerFragment : Fragment(), ListItemClickListener {
     private lateinit var binding: FragmentCommonViewpagerBinding
     private var fragmentType: Int? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val args = arguments
         if (args != null) {
             fragmentType = args.getInt("fragmentType", 0)
             Timber.d(fragmentType.toString())
         }
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_common_viewpager, container, false)
+        binding = FragmentCommonViewpagerBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -44,18 +46,26 @@ class TVViewPagerFragment : Fragment(), ListItemClickListener {
 
     private fun setupObservers(viewLifecycleOwner: LifecycleOwner, position: Int) {
         when (position) {
-            Tabs.TAB_POPULAR.tabId -> tvListViewModel.popularShowsList.observe(viewLifecycleOwner, Observer {
-                binding.listAdapter = ListAdapter(it, this, false)
-            })
-            Tabs.TAB_PLAYING.tabId -> tvListViewModel.playingShowsList.observe(viewLifecycleOwner, Observer {
-                binding.listAdapter = ListAdapter(it, this, false)
-            })
-            Tabs.TAB_UPCOMING.tabId -> tvListViewModel.upcomingShowsList.observe(viewLifecycleOwner, Observer {
-                binding.listAdapter = ListAdapter(it, this, false)
-            })
-            Tabs.TAB_TOP_RATED.tabId -> tvListViewModel.topRatedShowsList.observe(viewLifecycleOwner, Observer {
-                binding.listAdapter = ListAdapter(it, this, false)
-            })
+            Tabs.TAB_POPULAR.tabId -> tvListViewModel.popularShowsList.observe(
+                viewLifecycleOwner,
+                Observer {
+                    binding.recyclerView.adapter = ListAdapter(it, this, false)
+                })
+            Tabs.TAB_PLAYING.tabId -> tvListViewModel.playingShowsList.observe(
+                viewLifecycleOwner,
+                Observer {
+                    binding.recyclerView.adapter = ListAdapter(it, this, false)
+                })
+            Tabs.TAB_UPCOMING.tabId -> tvListViewModel.upcomingShowsList.observe(
+                viewLifecycleOwner,
+                Observer {
+                    binding.recyclerView.adapter = ListAdapter(it, this, false)
+                })
+            Tabs.TAB_TOP_RATED.tabId -> tvListViewModel.topRatedShowsList.observe(
+                viewLifecycleOwner,
+                Observer {
+                    binding.recyclerView.adapter = ListAdapter(it, this, false)
+                })
         }
     }
 

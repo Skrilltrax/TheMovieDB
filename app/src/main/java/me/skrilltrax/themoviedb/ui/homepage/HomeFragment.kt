@@ -19,14 +19,19 @@ import timber.log.Timber
 class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
-    private val movieListViewModel by sharedViewModel<MovieListViewModel>()
-    private val tvListViewModel by sharedViewModel<TVListViewModel>()
     private lateinit var mainActivity: MainActivity
     private lateinit var movieAdapter: ViewPagerAdapter
     private lateinit var tvAdapter: ViewPagerAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentHomeBinding.inflate(inflater)
+    private val movieListViewModel by sharedViewModel<MovieListViewModel>()
+    private val tvListViewModel by sharedViewModel<TVListViewModel>()
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentHomeBinding.inflate(layoutInflater)
         movieAdapter = ViewPagerAdapter(this, true)
         tvAdapter = ViewPagerAdapter(this, false)
         return binding.root
@@ -70,7 +75,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupTabLayout() {
-        binding.appBar.tabLayout.getTabAt(Tabs.TAB_POPULAR.tabId)?.select() // Select first tab of viewpager
+        binding.appBar.tabLayout.getTabAt(Tabs.TAB_POPULAR.tabId)
+            ?.select() // Select first tab of viewpager
         TabLayoutMediator(binding.appBar.tabLayout, binding.viewPager) { tab, position ->
             tab.text = when (position) {
                 0 -> "Popular"
@@ -92,7 +98,11 @@ class HomeFragment : Fragment() {
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
 //            removeAllViews()
             offscreenPageLimit = 3
-            adapter = if (isMovieSelected) { movieAdapter } else { tvAdapter }
+            adapter = if (isMovieSelected) {
+                movieAdapter
+            } else {
+                tvAdapter
+            }
         }
     }
 
