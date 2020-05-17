@@ -80,26 +80,26 @@
         app:layout_constraintTop_toBottomOf="@id/releaseDate" />
 
     <me.zhanghai.android.materialratingbar.MaterialRatingBar
-            android:id="@+id/ratingBar"
-            style="@style/Widget.MaterialRatingBar.RatingBar.Indicator"
-            android:layout_width="0dp"
-            android:layout_height="32dp"
-            android:isIndicator="true"
-            android:numStars="5"
-            app:layout_constraintBottom_toBottomOf="@id/moviePoster"
-            app:layout_constraintEnd_toStartOf="@id/ratingText"
-            app:layout_constraintStart_toStartOf="@id/releaseDate" />
+        android:id="@+id/ratingBar"
+        style="@style/Widget.MaterialRatingBar.RatingBar.Indicator"
+        android:layout_width="0dp"
+        android:layout_height="32dp"
+        android:isIndicator="true"
+        android:numStars="5"
+        app:layout_constraintBottom_toBottomOf="@id/moviePoster"
+        app:layout_constraintEnd_toStartOf="@id/ratingText"
+        app:layout_constraintStart_toStartOf="@id/releaseDate" />
 
-        <TextView
-            android:id="@+id/ratingText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:textColor="@color/colorWhite"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="@id/ratingBar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/ratingBar"
-            app:layout_constraintTop_toTopOf="@id/ratingBar" />
+    <TextView
+        android:id="@+id/ratingText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:textColor="@color/colorWhite"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/ratingBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/ratingBar"
+        app:layout_constraintTop_toTopOf="@id/ratingBar" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

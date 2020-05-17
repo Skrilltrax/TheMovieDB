@@ -1,45 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <ImageView
+        android:id="@+id/cast_crew_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp" />
 
-        <ImageView
-            android:id="@+id/cast_crew_image"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp" />
+    <TextView
+        android:id="@+id/cast_crew_name"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:ellipsize="marquee"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textColor="@color/colorWhite"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        tools:text="Keanu Reevessssssssss" />
 
-        <TextView
-            android:id="@+id/cast_crew_name"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:textColor="@color/colorWhite"
-            android:singleLine="true"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:ellipsize="marquee"
-            tools:text="Keanu Reevessssssssss" />
+    <TextView
+        android:id="@+id/cast_crew_role"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:ellipsize="marquee"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textColor="#8d8d8d"
+        android:textSize="12sp"
+        tools:text="Keanu Reevessssssssss" />
 
-        <TextView
-            android:id="@+id/cast_crew_role"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            android:textColor="#8d8d8d"
-            android:textSize="12sp"
-            android:singleLine="true"
-            android:gravity="center"
-            android:ellipsize="marquee"
-            tools:text="Keanu Reevessssssssss" />
-
-    </LinearLayout>
-</layout>
+</LinearLayout>
