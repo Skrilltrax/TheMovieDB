@@ -4,11 +4,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import me.skrilltrax.themoviedb.R
 import me.skrilltrax.themoviedb.databinding.ItemListBinding
 import me.skrilltrax.themoviedb.interfaces.ListItemClickListener
 import me.skrilltrax.themoviedb.model.list.ListResultItem
+import me.skrilltrax.themoviedb.utils.setPosterImage
+import me.skrilltrax.themoviedb.utils.setRating
+import timber.log.Timber
 
-class ListAdapter(private val list: List<ListResultItem>, val listener: ListItemClickListener, val isMovieSelected: Boolean) :
+class ListAdapter(
+    private val list: List<ListResultItem>,
+    val listener: ListItemClickListener,
+    val isMovieSelected: Boolean
+) :
     RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
 
     private lateinit var binding: ItemListBinding
@@ -37,11 +45,25 @@ class ListAdapter(private val list: List<ListResultItem>, val listener: ListItem
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(resultsItem: ListResultItem) {
+            with(binding) {
+                val voteAverage: Float = resultsItem.voteAverage?.toFloat() ?: 0.0f
+                title.text = resultsItem.title
+                resultsItem.posterPath?.let { image.setPosterImage(it) }
+                releaseDate.text = itemView.context.resources.getString(
+                    R.string.release_date_s,
+                    resultsItem.releaseDate
+                )
+                if (voteAverage == 0.0f) {
+                    ratingText.text = "N/A"
+                } else {
+                    ratingText.text = voteAverage.toString()
+                    ratingBar.rating = voteAverage / 2
+                }
+            }
+
             itemView.setOnClickListener {
                 listener.onItemClick(resultsItem)
             }
-            binding.data = resultsItem
-            binding.isMovie = isMovieSelected
         }
     }
 }

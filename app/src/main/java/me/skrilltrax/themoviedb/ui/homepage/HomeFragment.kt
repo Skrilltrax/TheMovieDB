@@ -75,16 +75,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupTabLayout() {
-        binding.appBar.tabLayout.getTabAt(Tabs.TAB_POPULAR.tabId)
-            ?.select() // Select first tab of viewpager
+        binding.appBar.tabLayout.getTabAt(Tabs.TAB_POPULAR.tabId)?.select() // Select first tab of viewpager
+
         TabLayoutMediator(binding.appBar.tabLayout, binding.viewPager) { tab, position ->
-            tab.text = when (position) {
-                0 -> "Popular"
-                1 -> "Now Playing"
-                2 -> "Upcoming"
-                3 -> "Top Rated"
-                else -> null
-            }
+            tab.text = Tabs.getTabById(position)!!.tabName
         }.attach()
     }
 

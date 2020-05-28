@@ -24,6 +24,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import me.skrilltrax.themoviedb.R
 import me.skrilltrax.themoviedb.adapter.CreditsAdapter
 import me.skrilltrax.themoviedb.adapter.GenreAdapter
 import me.skrilltrax.themoviedb.adapter.RecommendationAdapter
@@ -38,6 +39,9 @@ import me.skrilltrax.themoviedb.model.list.ListResultItem
 import me.skrilltrax.themoviedb.model.videos.VideoResultsItem
 import me.skrilltrax.themoviedb.utils.SystemLayoutUtils.makeFullScreenHideNavigation
 import me.skrilltrax.themoviedb.utils.SystemLayoutUtils.setStatusBarTint
+import me.skrilltrax.themoviedb.utils.setHeroImage
+import me.skrilltrax.themoviedb.utils.setPosterImage
+import me.skrilltrax.themoviedb.utils.setRating
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
@@ -100,7 +104,20 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemCl
         })
 
         movieDetailViewModel.movieDetail.observe(viewLifecycleOwner, Observer {
-            //            binding.movieDetail = it
+            with(binding) {
+                synopsis.text = it.overview;
+                movieHeader.movieTitle.text = it.title;
+                movieHeader.releaseDate.text = resources.getString(R.string.release_date_s, it.releaseDate);
+                val voteAverage: Float = it.voteAverage?.toFloat() ?: 0.0f
+                if (voteAverage == 0.0f) {
+                    movieHeader.ratingText.text = "N/A"
+                } else {
+                    movieHeader.ratingText.text = voteAverage.toString()
+                    movieHeader.ratingBar.rating = voteAverage / 2
+                }
+                it.backdropPath?.let { url -> movieHeader.movieBackground.setHeroImage(url) }
+                it.posterPath?.let { url -> movieHeader.moviePoster.setPosterImage(url) }
+            }
         })
 
         movieDetailViewModel.genres.observe(viewLifecycleOwner, Observer {

@@ -13,7 +13,6 @@ class ViewPagerAdapter(private val fragment: Fragment, private var isMovieSelect
     override fun createFragment(position: Int): Fragment {
         val tab = Tabs.getTabById(position)
         return if (tab != null) {
-            Timber.d("Tab ID : ${tab.tabId}, isMovieSelected: $isMovieSelected")
             if (isMovieSelected) {
                 MovieViewPagerFragment.newInstance(tab.tabId)
             } else {

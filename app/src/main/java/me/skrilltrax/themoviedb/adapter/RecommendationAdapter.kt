@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import me.skrilltrax.themoviedb.databinding.ItemMovieRecommendationBinding
 import me.skrilltrax.themoviedb.interfaces.ListItemClickListener
 import me.skrilltrax.themoviedb.model.list.ListResultItem
+import me.skrilltrax.themoviedb.utils.setPosterImage
 
 class RecommendationAdapter(
     private val list: List<ListResultItem>,
@@ -40,7 +41,7 @@ class RecommendationAdapter(
     inner class MovieRecommendationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(movieResultsItem: ListResultItem) {
-            binding.movieData = movieResultsItem
+            movieResultsItem.posterPath?.let { binding.movieImage.setPosterImage(it) }
             itemView.setOnClickListener {
                 listener.onItemClick(movieResultsItem)
             }

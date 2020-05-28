@@ -1,6 +1,6 @@
 package me.skrilltrax.themoviedb.di
 
-import me.skrilltrax.themoviedb.Constants.SERVER_URL
+import me.skrilltrax.themoviedb.constants.Constants.SERVER_URL
 import me.skrilltrax.themoviedb.di.factory.HttpLoggingInterceptorFactory
 import me.skrilltrax.themoviedb.di.factory.OkHttpFactory
 import me.skrilltrax.themoviedb.di.factory.RetrofitFactory
