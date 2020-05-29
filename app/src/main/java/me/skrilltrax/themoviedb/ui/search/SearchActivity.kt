@@ -12,9 +12,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import me.skrilltrax.themoviedb.BuildConfig
 import me.skrilltrax.themoviedb.R
-import me.skrilltrax.themoviedb.adapter.ListAdapter
+import me.skrilltrax.themoviedb.adapter.MovieListAdapter
 import me.skrilltrax.themoviedb.interfaces.ListItemClickListener
-import me.skrilltrax.themoviedb.model.list.ListResultItem
+import me.skrilltrax.themoviedb.model.list.movie.MovieListResultItem
 import me.skrilltrax.themoviedb.network.api.movie.MovieApiInterface
 import org.koin.android.ext.android.inject
 import retrofit2.HttpException
@@ -42,21 +42,21 @@ class SearchActivity : AppCompatActivity(), ListItemClickListener {
     private fun setupRecyclerView() {
         recyclerView.apply {
             layoutManager = LinearLayoutManager(this@SearchActivity, RecyclerView.VERTICAL, false)
-            adapter = ListAdapter(listOf(), this@SearchActivity, true)
+            adapter = MovieListAdapter(listOf(), this@SearchActivity, true)
         }
     }
 
     private fun fetchDetails() {
-        val movieList: ArrayList<ListResultItem> = ArrayList()
+        val movieList: ArrayList<MovieListResultItem> = ArrayList()
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val movieResponse = client.getPopularMovies(BuildConfig.API_KEY)
                 if (movieResponse.isSuccessful) {
-                    movieList.addAll(movieResponse.body()?.results as Collection<ListResultItem>)
+                    movieList.addAll(movieResponse.body()?.results as Collection<MovieListResultItem>)
                     withContext(Dispatchers.Main) {
                         recyclerView.adapter =
-                            ListAdapter(movieList, this@SearchActivity, true)
-                        (recyclerView.adapter as ListAdapter).notifyDataSetChanged()
+                            MovieListAdapter(movieList, this@SearchActivity, true)
+                        (recyclerView.adapter as MovieListAdapter).notifyDataSetChanged()
 //                            hideLoading()
                     }
                 } else {
@@ -80,6 +80,6 @@ class SearchActivity : AppCompatActivity(), ListItemClickListener {
         }
     }
 
-    override fun onItemClick(resultsItem: ListResultItem) {
+    override fun onItemClick(resultsItem: MovieListResultItem) {
     }
 }

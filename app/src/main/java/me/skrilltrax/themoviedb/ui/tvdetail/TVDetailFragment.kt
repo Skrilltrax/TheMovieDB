@@ -1,4 +1,4 @@
-package me.skrilltrax.themoviedb.ui.moviedetail
+package me.skrilltrax.themoviedb.ui.tvdetail
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
@@ -35,7 +35,7 @@ import me.skrilltrax.themoviedb.interfaces.ListItemClickListener
 import me.skrilltrax.themoviedb.interfaces.MovieDetailItemClickListener
 import me.skrilltrax.themoviedb.model.credits.CastItem
 import me.skrilltrax.themoviedb.model.credits.CrewItem
-import me.skrilltrax.themoviedb.model.list.movie.MovieListResultItem
+import me.skrilltrax.themoviedb.model.list.tv.TVListResultItem
 import me.skrilltrax.themoviedb.model.videos.VideoResultsItem
 import me.skrilltrax.themoviedb.utils.SystemLayoutUtils.makeFullScreenHideNavigation
 import me.skrilltrax.themoviedb.utils.SystemLayoutUtils.setStatusBarTint
@@ -46,12 +46,12 @@ import me.skrilltrax.themoviedb.utils.visible
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemClickListener {
+class TVDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemClickListener {
 
-    private val movieDetailViewModel: MovieDetailViewModel by viewModel()
-    private val movieDetailActivity by lazy { requireActivity() as MovieDetailActivity }
-    private var movieId: MutableLiveData<String> = MutableLiveData("")
-    private lateinit var movieStack: Stack<String>
+    private val tvDetailViewModel: TVDetailViewModel by viewModel()
+    private val tvDetailActivity by lazy { requireActivity() as TVDetailActivity }
+    private var showId: MutableLiveData<String> = MutableLiveData("")
+    private lateinit var showStack: Stack<String>
     private lateinit var binding: FragmentMovieDetailBinding
     private lateinit var scrollChangedListener: ViewTreeObserver.OnScrollChangedListener
     private lateinit var callback: OnBackPressedCallback
@@ -62,13 +62,13 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemCl
         savedInstanceState: Bundle?
     ): View? {
         makeFullScreenHideNavigation()
-        arguments?.let { movieId.postValue(it.getString("movie_id", "")) }
-        movieStack = Stack()
-        movieStack.push(movieId.value)
+        arguments?.let { showId.postValue(it.getString("show_id", "")) }
+        showStack = Stack()
+        showStack.push(showId.value)
         callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
-            movieId.postValue(movieStack.pop())
-            isEnabled = movieStack.size > 1
-            movieDetailActivity.showLoading()
+            showId.postValue(showStack.pop())
+            isEnabled = showStack.size > 1
+            tvDetailActivity.showLoading()
             binding.root.fullScroll(ScrollView.FOCUS_UP)
         }
         callback.isEnabled = false
@@ -82,7 +82,7 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemCl
             rootView.updatePadding(0, 0, 0, insets.systemWindowInsetBottom)
             insets
         }
-        movieDetailActivity.showLoading()
+        tvDetailActivity.showLoading()
         observeScroll(view)
         setupObservers(viewLifecycleOwner)
     }
@@ -93,18 +93,18 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemCl
     }
 
     private fun setupObservers(viewLifecycleOwner: LifecycleOwner) {
-        movieId.observe(viewLifecycleOwner, Observer {
-            movieDetailViewModel.movieId.postValue(it)
+        showId.observe(viewLifecycleOwner, Observer {
+            tvDetailViewModel.showId.postValue(it)
         })
 
-        movieDetailViewModel.movieId.observe(viewLifecycleOwner, Observer {
-            movieDetailViewModel.fetchMovieDetails()
-            movieDetailViewModel.fetchCastAndCrew()
-            movieDetailViewModel.fetchVideos()
-            movieDetailViewModel.fetchRecommendations()
+        tvDetailViewModel.showId.observe(viewLifecycleOwner, Observer {
+            tvDetailViewModel.fetchShowDetails()
+            tvDetailViewModel.fetchCastAndCrew()
+            tvDetailViewModel.fetchVideos()
+            tvDetailViewModel.fetchRecommendations()
         })
 
-        movieDetailViewModel.movieDetail.observe(viewLifecycleOwner, Observer {
+        tvDetailViewModel.tvDetail.observe(viewLifecycleOwner, Observer {
             with(binding) {
                 if (it.overview.isNullOrEmpty()) {
                     synopsis.gone()
@@ -113,8 +113,8 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemCl
                     synopsis.visible()
                     titleSynopsis.visible()
                 }
-
                 val voteAverage: Float = it.voteAverage?.toFloat() ?: 0.0f
+
                 if (voteAverage == 0.0f) {
                     movieHeader.ratingText.text = "N/A"
                 } else {
@@ -123,15 +123,15 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemCl
                 }
 
                 synopsis.text = it.overview
-                movieHeader.movieTitle.text = it.title
+                movieHeader.movieTitle.text = it.name
                 movieHeader.releaseDate.text =
-                    resources.getString(R.string.release_date_s, it.releaseDate)
+                    resources.getString(R.string.release_date_s, it.firstAirDate)
                 it.backdropPath?.let { url -> movieHeader.movieBackground.setHeroImage(url) }
                 it.posterPath?.let { url -> movieHeader.moviePoster.setPosterImage(url) }
             }
         })
 
-        movieDetailViewModel.genres.observe(viewLifecycleOwner, Observer {
+        tvDetailViewModel.genres.observe(viewLifecycleOwner, Observer {
             if (it.isEmpty()) {
                 binding.genreRecyclerView.gone()
                 return@Observer
@@ -141,7 +141,7 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemCl
             binding.genreRecyclerView.adapter = GenreAdapter(it)
         })
 
-        movieDetailViewModel.cast.observe(viewLifecycleOwner, Observer {
+        tvDetailViewModel.cast.observe(viewLifecycleOwner, Observer {
             val castList: ArrayList<CastItem> = arrayListOf()
             for (castListItem in it) {
                 if (castListItem.profilePath != null) {
@@ -156,12 +156,11 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemCl
             }
             binding.castRecyclerView.visible()
             binding.titleCast.visible()
-
             binding.castRecyclerView.adapter =
                 CreditsAdapter(castList as List<CastItem>, CreditsType.CAST)
         })
 
-        movieDetailViewModel.crew.observe(viewLifecycleOwner, Observer {
+        tvDetailViewModel.crew.observe(viewLifecycleOwner, Observer {
             val crewList: ArrayList<CrewItem> = arrayListOf()
             for (crewListItem in it) {
                 if (crewListItem.profilePath != null) {
@@ -181,7 +180,7 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemCl
                 CreditsAdapter(crewList as List<CrewItem>, CreditsType.CREW)
         })
 
-        movieDetailViewModel.videos.observe(viewLifecycleOwner, Observer {
+        tvDetailViewModel.videos.observe(viewLifecycleOwner, Observer {
             if (it.isEmpty()) {
                 binding.videosRecyclerView.gone()
                 binding.titleVideos.gone()
@@ -189,10 +188,11 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemCl
             }
             binding.videosRecyclerView.visible()
             binding.titleVideos.visible()
+
             binding.videosRecyclerView.adapter = VideoAdapter(it, this)
         })
 
-        movieDetailViewModel.recommendations.observe(viewLifecycleOwner, Observer { list ->
+        tvDetailViewModel.recommendations.observe(viewLifecycleOwner, Observer { list ->
             if (list.isEmpty()) {
                 binding.recommendedRecyclerView.gone()
                 binding.titleRecommended.gone()
@@ -208,11 +208,11 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemCl
             binding.recommendedRecyclerView.adapter = RecommendationAdapter(urlIdList, this)
         })
 
-        movieDetailViewModel.isLoading.observe(viewLifecycleOwner, Observer {
+        tvDetailViewModel.isLoading.observe(viewLifecycleOwner, Observer {
             if (it == false) lifecycleScope.launch(Dispatchers.IO) {
                 delay(300)
                 withContext(Dispatchers.Main) {
-                    movieDetailActivity.hideLoading()
+                    tvDetailActivity.hideLoading()
                 }
             }
         })
@@ -231,15 +231,15 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemCl
         }
     }
 
-    override fun onItemClick(resultsItem: MovieListResultItem) {
+    override fun onItemClick(resultsItem: TVListResultItem) {
         this.onItemClick(resultsItem.id.toString())
     }
 
     override fun onItemClick(id: String) {
-        movieDetailActivity.showLoading()
-        movieId.postValue(id)
+        tvDetailActivity.showLoading()
+        showId.postValue(id)
         binding.root.fullScroll(ScrollView.FOCUS_UP)
-        movieStack.push(movieId.value)
+        showStack.push(showId.value)
         callback.isEnabled = true
     }
 
@@ -250,7 +250,7 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemCl
 
     override fun onPause() {
         view?.viewTreeObserver?.removeOnScrollChangedListener(scrollChangedListener)
-        movieDetailActivity.dialog?.let {
+        tvDetailActivity.dialog?.let {
             if (it.isShowing) {
                 it.hide()
             }
@@ -260,10 +260,10 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemCl
     }
 
     companion object {
-        fun newInstance(id: String): MovieDetailFragment {
-            return MovieDetailFragment().also {
+        fun newInstance(id: String): TVDetailFragment {
+            return TVDetailFragment().also {
                 val bundle = Bundle()
-                bundle.putString("movie_id", id)
+                bundle.putString("show_id", id)
                 it.arguments = bundle
             }
         }

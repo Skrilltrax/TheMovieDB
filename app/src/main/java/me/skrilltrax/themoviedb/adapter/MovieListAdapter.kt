@@ -5,25 +5,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import me.skrilltrax.themoviedb.R
-import me.skrilltrax.themoviedb.databinding.ItemListBinding
+import me.skrilltrax.themoviedb.databinding.ItemListMovieBinding
 import me.skrilltrax.themoviedb.interfaces.ListItemClickListener
-import me.skrilltrax.themoviedb.model.list.ListResultItem
+import me.skrilltrax.themoviedb.model.list.movie.MovieListResultItem
 import me.skrilltrax.themoviedb.utils.setPosterImage
-import me.skrilltrax.themoviedb.utils.setRating
-import timber.log.Timber
 
-class ListAdapter(
-    private val list: List<ListResultItem>,
+class MovieListAdapter(
+    private val list: List<MovieListResultItem>,
     val listener: ListItemClickListener,
     val isMovieSelected: Boolean
 ) :
-    RecyclerView.Adapter<ListAdapter.ListViewHolder>() {
+    RecyclerView.Adapter<MovieListAdapter.ListViewHolder>() {
 
-    private lateinit var binding: ItemListBinding
+    private lateinit var binding: ItemListMovieBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        binding = ItemListBinding.inflate(inflater, parent, false)
+        binding = ItemListMovieBinding.inflate(inflater, parent, false)
         return ListViewHolder(binding.root)
     }
 
@@ -44,7 +42,7 @@ class ListAdapter(
     }
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        fun bind(resultsItem: ListResultItem) {
+        fun bind(resultsItem: MovieListResultItem) {
             with(binding) {
                 val voteAverage: Float = resultsItem.voteAverage?.toFloat() ?: 0.0f
                 title.text = resultsItem.title

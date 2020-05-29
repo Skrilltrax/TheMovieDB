@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import me.skrilltrax.themoviedb.model.list.ListResultItem
+import me.skrilltrax.themoviedb.model.list.movie.MovieListResultItem
 import me.skrilltrax.themoviedb.network.api.movie.MovieListRepository
 import timber.log.Timber
 
@@ -17,23 +17,23 @@ class MovieListViewModel(private val movieListRepository: MovieListRepository) :
     private var upcomingMovieStatus: Boolean = false
     private var topRatedMovieStatus: Boolean = false
 
-    private val _popularMovieList: MutableLiveData<ArrayList<ListResultItem>> = MutableLiveData()
-    private val _playingMovieList: MutableLiveData<ArrayList<ListResultItem>> = MutableLiveData()
-    private val _upcomingMovieList: MutableLiveData<ArrayList<ListResultItem>> = MutableLiveData()
-    private val _topRatedMovieList: MutableLiveData<ArrayList<ListResultItem>> = MutableLiveData()
+    private val _popularMovieList: MutableLiveData<ArrayList<MovieListResultItem>> = MutableLiveData()
+    private val _playingMovieList: MutableLiveData<ArrayList<MovieListResultItem>> = MutableLiveData()
+    private val _upcomingMovieList: MutableLiveData<ArrayList<MovieListResultItem>> = MutableLiveData()
+    private val _topRatedMovieList: MutableLiveData<ArrayList<MovieListResultItem>> = MutableLiveData()
 
     val isLoading: MutableLiveData<Boolean> = MutableLiveData(true)
 
-    val popularMovieList: LiveData<ArrayList<ListResultItem>>
+    val popularMovieList: LiveData<ArrayList<MovieListResultItem>>
         get() = _popularMovieList
 
-    val playingMovieList: LiveData<ArrayList<ListResultItem>>
+    val playingMovieList: LiveData<ArrayList<MovieListResultItem>>
         get() = _playingMovieList
 
-    val upcomingMovieList: LiveData<ArrayList<ListResultItem>>
+    val upcomingMovieList: LiveData<ArrayList<MovieListResultItem>>
         get() = _upcomingMovieList
 
-    val topRatedMovieList: LiveData<ArrayList<ListResultItem>>
+    val topRatedMovieList: LiveData<ArrayList<MovieListResultItem>>
         get() = _topRatedMovieList
 
     init {
@@ -48,7 +48,7 @@ class MovieListViewModel(private val movieListRepository: MovieListRepository) :
             viewModelScope.launch {
                 val popularList = movieListRepository.getPopularMovieList()
                 if (popularList != null) {
-                    _popularMovieList.postValue(popularList.results as ArrayList<ListResultItem>?)
+                    _popularMovieList.postValue(popularList.results as ArrayList<MovieListResultItem>?)
                     popularMovieStatus = true
                     checkStatus()
                 }
@@ -61,7 +61,7 @@ class MovieListViewModel(private val movieListRepository: MovieListRepository) :
             viewModelScope.launch {
                 val playingList = movieListRepository.getPlayingMovieList()
                 if (playingList != null) {
-                    _playingMovieList.postValue(playingList.results as ArrayList<ListResultItem>?)
+                    _playingMovieList.postValue(playingList.results as ArrayList<MovieListResultItem>?)
                     playingMovieStatus = true
                     checkStatus()
                 }
@@ -74,7 +74,7 @@ class MovieListViewModel(private val movieListRepository: MovieListRepository) :
             viewModelScope.launch {
                 val upcomingList = movieListRepository.getUpcomingMovieList()
                 if (upcomingList != null) {
-                    _upcomingMovieList.postValue(upcomingList.results as ArrayList<ListResultItem>?)
+                    _upcomingMovieList.postValue(upcomingList.results as ArrayList<MovieListResultItem>?)
                     upcomingMovieStatus = true
                     checkStatus()
                 }
@@ -87,7 +87,7 @@ class MovieListViewModel(private val movieListRepository: MovieListRepository) :
             viewModelScope.launch {
                 val topRatedList = movieListRepository.getTopRatedMovieList()
                 if (topRatedList != null) {
-                    _topRatedMovieList.postValue(topRatedList.results as ArrayList<ListResultItem>?)
+                    _topRatedMovieList.postValue(topRatedList.results as ArrayList<MovieListResultItem>?)
                     topRatedMovieStatus = true
                     checkStatus()
                 }

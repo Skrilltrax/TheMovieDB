@@ -1,6 +1,8 @@
-package me.skrilltrax.themoviedb.model.tv.detail
+package me.skrilltrax.themoviedb.model.detail.tv
 
 import com.google.gson.annotations.SerializedName
+import me.skrilltrax.themoviedb.model.detail.GenresItem
+import me.skrilltrax.themoviedb.model.detail.ProductionCompaniesItem
 
 data class TVDetailResponse(
 

@@ -1,4 +1,4 @@
-package me.skrilltrax.themoviedb.ui.moviedetail
+package me.skrilltrax.themoviedb.ui.tvdetail
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,30 +7,30 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import me.skrilltrax.themoviedb.model.credits.CastItem
 import me.skrilltrax.themoviedb.model.credits.CrewItem
-import me.skrilltrax.themoviedb.model.list.movie.MovieListResultItem
 import me.skrilltrax.themoviedb.model.detail.GenresItem
-import me.skrilltrax.themoviedb.model.detail.movie.MovieDetailResponse
+import me.skrilltrax.themoviedb.model.detail.tv.TVDetailResponse
+import me.skrilltrax.themoviedb.model.list.tv.TVListResultItem
 import me.skrilltrax.themoviedb.model.videos.VideoResultsItem
-import me.skrilltrax.themoviedb.network.api.movie.MovieDetailRepository
+import me.skrilltrax.themoviedb.network.api.tv.TVDetailRepository
 import timber.log.Timber
 
 @Suppress("UNCHECKED_CAST")
-class MovieDetailViewModel(private val movieDetailRepository: MovieDetailRepository) : ViewModel() {
+class TVDetailViewModel(private val tvDetailRepository: TVDetailRepository) : ViewModel() {
 
-    private var movieDetailStatus: Boolean = false
+    private var tvDetailStatus: Boolean = false
     private var crewStatus: Boolean = false
     private var castStatus: Boolean = false
 
-    private val _movieDetail: MutableLiveData<MovieDetailResponse> = MutableLiveData()
+    private val _tvDetail: MutableLiveData<TVDetailResponse> = MutableLiveData()
     private val _genres: MutableLiveData<List<GenresItem>> = MutableLiveData(listOf())
     private val _cast: MutableLiveData<List<CastItem>> = MutableLiveData(listOf())
     private val _crew: MutableLiveData<List<CrewItem>> = MutableLiveData(listOf())
     private val _videos: MutableLiveData<List<VideoResultsItem>> = MutableLiveData(listOf())
     private val _trailers: MutableLiveData<List<VideoResultsItem>> = MutableLiveData(listOf())
     private val _extraVideos: MutableLiveData<List<VideoResultsItem>> = MutableLiveData(listOf())
-    private val _recommendations: MutableLiveData<List<MovieListResultItem>> = MutableLiveData(listOf())
+    private val _recommendations: MutableLiveData<List<TVListResultItem>> = MutableLiveData(listOf())
 
-    val movieId: MutableLiveData<String> = MutableLiveData("")
+    val showId: MutableLiveData<String> = MutableLiveData("")
     val isLoading: MutableLiveData<Boolean> = MutableLiveData(true)
 
     val genres: LiveData<List<GenresItem>>
@@ -42,8 +42,8 @@ class MovieDetailViewModel(private val movieDetailRepository: MovieDetailReposit
     val crew: LiveData<List<CrewItem>>
         get() = _crew
 
-    val movieDetail: LiveData<MovieDetailResponse>
-        get() = _movieDetail
+    val tvDetail: LiveData<TVDetailResponse>
+        get() = _tvDetail
 
     val videos: LiveData<List<VideoResultsItem>>
         get() = _videos
@@ -54,18 +54,18 @@ class MovieDetailViewModel(private val movieDetailRepository: MovieDetailReposit
     val extraVideos: LiveData<List<VideoResultsItem>>
         get() = _extraVideos
 
-    val recommendations: LiveData<List<MovieListResultItem>>
+    val recommendations: LiveData<List<TVListResultItem>>
         get() = _recommendations
 
     @Suppress("UNCHECKED_CAST")
-    fun fetchMovieDetails() {
+    fun fetchShowDetails() {
         viewModelScope.launch {
-            val movieDetailData = movieDetailRepository.getMovieDetails(movieId.value!!)
-            if (movieDetailData != null) {
-                _movieDetail.postValue(movieDetailData)
-                if (movieDetailData.genres != null)
-                _genres.postValue(movieDetailData.genres as List<GenresItem>)
-                movieDetailStatus = true
+            val tvDetailData = tvDetailRepository.getShowDetails(showId.value!!)
+            if (tvDetailData != null) {
+                _tvDetail.postValue(tvDetailData)
+                if (tvDetailData.genres != null)
+                _genres.postValue(tvDetailData.genres as List<GenresItem>)
+                tvDetailStatus = true
                 checkStatus()
             }
         }
@@ -73,7 +73,7 @@ class MovieDetailViewModel(private val movieDetailRepository: MovieDetailReposit
 
     fun fetchCastAndCrew() {
         viewModelScope.launch {
-            val movieCredits = movieDetailRepository.getCastCrew(movieId.value!!)
+            val movieCredits = tvDetailRepository.getCastCrew(showId.value!!)
             if (movieCredits != null) {
                 _cast.postValue(movieCredits.cast as List<CastItem>)
                 castStatus = true
@@ -87,7 +87,7 @@ class MovieDetailViewModel(private val movieDetailRepository: MovieDetailReposit
 
     fun fetchVideos() {
         viewModelScope.launch {
-            val movieVideos = movieDetailRepository.getVideos(movieId.value!!)
+            val movieVideos = tvDetailRepository.getVideos(showId.value!!)
             if (movieVideos != null) {
                 Timber.d("videos : ${movieVideos.results?.size}}")
                 _videos.postValue(movieVideos.results as List<VideoResultsItem>)
@@ -99,9 +99,9 @@ class MovieDetailViewModel(private val movieDetailRepository: MovieDetailReposit
 
     fun fetchRecommendations() {
         viewModelScope.launch {
-            val recommendedVideos = movieDetailRepository.getRecommendations(movieId.value!!)
+            val recommendedVideos = tvDetailRepository.getRecommendations(showId.value!!)
             if (null != recommendedVideos) {
-                _recommendations.postValue(recommendedVideos.results as List<MovieListResultItem>)
+                _recommendations.postValue(recommendedVideos.results as List<TVListResultItem>)
             }
         }
     }
@@ -123,7 +123,7 @@ class MovieDetailViewModel(private val movieDetailRepository: MovieDetailReposit
     }
 
     private fun checkStatus() {
-        if (movieDetailStatus && castStatus && crewStatus) {
+        if (tvDetailStatus && castStatus && crewStatus) {
             isLoading.postValue(false)
         }
     }

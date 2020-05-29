@@ -26,6 +26,7 @@
         <activity
             android:name=".ui.BaseActivity"
              />
+        <activity android:name=".ui.tvdetail.TVDetailActivity" />
     </application>
     <!--android:configChanges="orientation|screenSize|keyboardHidden"-->
 </manifest>

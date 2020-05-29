@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import me.skrilltrax.themoviedb.databinding.ItemGenreBinding
-import me.skrilltrax.themoviedb.model.movie.detail.GenresItem
+import me.skrilltrax.themoviedb.model.detail.GenresItem
 
 class GenreAdapter(val genreList: List<GenresItem>) :
     RecyclerView.Adapter<GenreAdapter.MovieGenreViewHolder>() {

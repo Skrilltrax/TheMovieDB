@@ -2,8 +2,8 @@ package me.skrilltrax.themoviedb.network.api.movie
 
 import me.skrilltrax.themoviedb.BuildConfig
 import me.skrilltrax.themoviedb.model.credits.CreditsResponse
-import me.skrilltrax.themoviedb.model.list.ListResponse
-import me.skrilltrax.themoviedb.model.movie.detail.MovieDetailResponse
+import me.skrilltrax.themoviedb.model.list.movie.MovieListResponse
+import me.skrilltrax.themoviedb.model.detail.movie.MovieDetailResponse
 import me.skrilltrax.themoviedb.model.videos.VideoResponse
 import me.skrilltrax.themoviedb.network.BaseRepository
 
@@ -33,7 +33,7 @@ class MovieDetailRepository(private val client: MovieApiInterface) : BaseReposit
         )
     }
 
-    suspend fun getRecommendations(movieId: String): ListResponse? {
+    suspend fun getRecommendations(movieId: String): MovieListResponse? {
 
         return safeApiCall(
             call = { client.getMovieRecommendations(movieId, BuildConfig.API_KEY) },

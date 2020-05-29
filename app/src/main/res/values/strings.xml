@@ -2,4 +2,5 @@
     <string name="app_name">The Movie DB</string>
     <string name="release_date_s">Release Date : %s</string>
     <string name="seasons_s">Seasons : %s</string>
+    <string name="s_seasons_s_episodes">%s Seasons (%s Episodes)</string>
 </resources>

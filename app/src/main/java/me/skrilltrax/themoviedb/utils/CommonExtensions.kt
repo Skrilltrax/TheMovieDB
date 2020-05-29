@@ -1,7 +1,15 @@
 package me.skrilltrax.themoviedb.utils
 
-import me.zhanghai.android.materialratingbar.MaterialRatingBar
+import android.view.View
 
-fun MaterialRatingBar.setRating(rating: Double) {
-    this.rating = rating.toFloat() / 2
+fun View.visible() {
+    this.visibility = View.VISIBLE
+}
+
+fun View.invisible() {
+    this.visibility = View.INVISIBLE
+}
+
+fun View.gone() {
+    this.visibility = View.GONE
 }

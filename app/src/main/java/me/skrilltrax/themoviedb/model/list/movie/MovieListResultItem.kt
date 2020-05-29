@@ -1,4 +1,4 @@
-package me.skrilltrax.themoviedb.model.list
+package me.skrilltrax.themoviedb.model.list.movie
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 @Entity
-data class ListResultItem(
+data class MovieListResultItem(
 
     @PrimaryKey
     @field:SerializedName("id")
