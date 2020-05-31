@@ -10,9 +10,11 @@ if (System.getenv("TMDB_API_KEY") != null) {
     apiKey = "\"$apiKey\""
 } else {
     def secretsFile = rootProject.file("secrets.properties")
-    def secretsProperties = new Properties()
-    secretsProperties.load(new FileInputStream(secretsFile))
-    apiKey = secretsProperties['API_KEY']
+    if (secretsFile != null) {
+        def secretsProperties = new Properties()
+        secretsProperties.load(new FileInputStream(secretsFile))
+        apiKey = secretsProperties['API_KEY']
+    }
 }
 android {
     compileSdkVersion 29
