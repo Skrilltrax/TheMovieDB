@@ -9,6 +9,7 @@ import me.skrilltrax.themoviedb.constants.CreditsType
 import me.skrilltrax.themoviedb.databinding.ItemCastCrewBinding
 import me.skrilltrax.themoviedb.model.credits.CastItem
 import me.skrilltrax.themoviedb.model.credits.CrewItem
+import me.skrilltrax.themoviedb.utils.setCreditImage
 import timber.log.Timber
 
 class CreditsAdapter(val list: List<Any>, private val type: CreditsType) :
@@ -22,7 +23,6 @@ class CreditsAdapter(val list: List<Any>, private val type: CreditsType) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CastCrewViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         binding = ItemCastCrewBinding.inflate(inflater, parent, false)
-        binding.creditsType = type
         if (type == CreditsType.CAST) {
             castList = list as List<CastItem>
         } else {
@@ -50,13 +50,17 @@ class CreditsAdapter(val list: List<Any>, private val type: CreditsType) :
 
     inner class CastCrewViewHolder(itemView: View, private val type: CreditsType) :
         RecyclerView.ViewHolder(itemView) {
-
         fun bind(position: Int) {
             if (type == CreditsType.CAST) {
-                Timber.d("${castList[position].name}")
-                binding.castData = castList[position]
+                val castItem = castList[position]
+                binding.castCrewName.text = castItem.name
+                binding.castCrewRole.text = castItem.character
+                castItem.profilePath?.let { binding.castCrewImage.setCreditImage(it) }
             } else {
-                binding.crewData = crewList[position]
+                val crewItem = crewList[position]
+                binding.castCrewName.text = crewItem.name
+                binding.castCrewRole.text = crewItem.job
+                crewItem.profilePath?.let { binding.castCrewImage.setCreditImage(it) }
             }
         }
     }

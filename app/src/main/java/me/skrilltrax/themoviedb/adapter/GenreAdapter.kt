@@ -5,9 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import me.skrilltrax.themoviedb.databinding.ItemGenreBinding
-import me.skrilltrax.themoviedb.model.movie.detail.GenresItem
+import me.skrilltrax.themoviedb.model.detail.GenresItem
 
-class GenreAdapter(val genreList: List<GenresItem>) : RecyclerView.Adapter<GenreAdapter.MovieGenreViewHolder>() {
+class GenreAdapter(val genreList: List<GenresItem>) :
+    RecyclerView.Adapter<GenreAdapter.MovieGenreViewHolder>() {
 
     private lateinit var binding: ItemGenreBinding
 
@@ -37,7 +38,7 @@ class GenreAdapter(val genreList: List<GenresItem>) : RecyclerView.Adapter<Genre
         private var genreID: Int? = null
         fun bind(position: Int) {
             genreID = genreList[position].id!!
-            binding.genreDetail = genreList[position]
+            binding.genreButton.text = genreList[position].name
         }
     }
 }

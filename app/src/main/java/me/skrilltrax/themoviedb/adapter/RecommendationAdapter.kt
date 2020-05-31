@@ -4,28 +4,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import me.skrilltrax.themoviedb.databinding.ItemMovieRecommendationBinding
+import me.skrilltrax.themoviedb.databinding.ItemRecommendationBinding
 import me.skrilltrax.themoviedb.interfaces.ListItemClickListener
-import me.skrilltrax.themoviedb.model.list.ListResultItem
+import me.skrilltrax.themoviedb.utils.setPosterImage
 
 class RecommendationAdapter(
-    private val list: List<ListResultItem>,
+    private val list: List<Pair<String, String>>,
     private val listener: ListItemClickListener
-) : RecyclerView.Adapter<RecommendationAdapter.MovieRecommendationViewHolder>() {
+) : RecyclerView.Adapter<RecommendationAdapter.RecommendationViewHolder>() {
 
-    private lateinit var binding: ItemMovieRecommendationBinding
+    private lateinit var binding: ItemRecommendationBinding
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieRecommendationViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): RecommendationViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        binding = ItemMovieRecommendationBinding.inflate(inflater)
-        return MovieRecommendationViewHolder(binding.root)
+        binding = ItemRecommendationBinding.inflate(inflater)
+        return RecommendationViewHolder(binding.root)
     }
 
     override fun getItemCount(): Int {
         return list.size
     }
 
-    override fun onBindViewHolder(holder: MovieRecommendationViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: RecommendationViewHolder, position: Int) {
         holder.bind(list[position])
     }
 
@@ -37,12 +40,11 @@ class RecommendationAdapter(
         return position
     }
 
-    inner class MovieRecommendationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        fun bind(movieResultsItem: ListResultItem) {
-            binding.movieData = movieResultsItem
+    inner class RecommendationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bind(item: Pair<String, String>) {
+            binding.recommendationImage.setPosterImage(item.first)
             itemView.setOnClickListener {
-                listener.onItemClick(movieResultsItem)
+                listener.onItemClick(item.second)
             }
         }
     }

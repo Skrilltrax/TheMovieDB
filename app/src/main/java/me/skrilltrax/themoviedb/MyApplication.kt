@@ -1,7 +1,6 @@
 package me.skrilltrax.themoviedb
 
 import android.app.Application
-import com.facebook.stetho.Stetho
 import me.skrilltrax.themoviedb.di.appModule
 import me.skrilltrax.themoviedb.di.networkModule
 import me.skrilltrax.themoviedb.di.repositoryModule
@@ -21,6 +20,5 @@ class MyApplication : Application() {
             androidContext(this@MyApplication)
             modules(listOf(appModule, viewModelModule, repositoryModule, networkModule))
         }
-        Stetho.initializeWithDefaults(this)
     }
 }

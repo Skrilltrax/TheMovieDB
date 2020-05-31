@@ -5,19 +5,23 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import me.skrilltrax.themoviedb.R
+import me.skrilltrax.themoviedb.databinding.ActivityMainBinding
 import me.skrilltrax.themoviedb.ui.BaseActivity
-import me.skrilltrax.themoviedb.utils.SystemLayoutUtils
 import me.skrilltrax.themoviedb.utils.SystemLayoutUtils.setNavigationBarColor
 
 class MainActivity : BaseActivity() {
     private lateinit var bottomNav: BottomNavigationView
+    private lateinit var binding: ActivityMainBinding
+
     private var previousSelection: Int = 0
     val isMovieSelected: MutableLiveData<Boolean> = MutableLiveData(true)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setNavigationBarColor(ContextCompat.getColor(this, R.color.background))
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         if (supportFragmentManager.backStackEntryCount == 0 && savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .add(R.id.frame, HomeFragment.newInstance())

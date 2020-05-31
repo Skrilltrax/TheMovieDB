@@ -13,7 +13,6 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.core.view.ViewCompat
 import androidx.core.view.updatePadding
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
@@ -36,13 +35,15 @@ import me.skrilltrax.themoviedb.interfaces.ListItemClickListener
 import me.skrilltrax.themoviedb.interfaces.MovieDetailItemClickListener
 import me.skrilltrax.themoviedb.model.credits.CastItem
 import me.skrilltrax.themoviedb.model.credits.CrewItem
-import me.skrilltrax.themoviedb.model.list.ListResultItem
-import me.skrilltrax.themoviedb.model.movie.detail.GenresItem
+import me.skrilltrax.themoviedb.model.list.movie.MovieListResultItem
 import me.skrilltrax.themoviedb.model.videos.VideoResultsItem
 import me.skrilltrax.themoviedb.utils.SystemLayoutUtils.makeFullScreenHideNavigation
 import me.skrilltrax.themoviedb.utils.SystemLayoutUtils.setStatusBarTint
+import me.skrilltrax.themoviedb.utils.gone
+import me.skrilltrax.themoviedb.utils.setHeroImage
+import me.skrilltrax.themoviedb.utils.setPosterImage
+import me.skrilltrax.themoviedb.utils.visible
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemClickListener {
 
@@ -54,7 +55,11 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemCl
     private lateinit var scrollChangedListener: ViewTreeObserver.OnScrollChangedListener
     private lateinit var callback: OnBackPressedCallback
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         makeFullScreenHideNavigation()
         arguments?.let { movieId.postValue(it.getString("movie_id", "")) }
         movieStack = Stack()
@@ -63,10 +68,10 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemCl
             movieId.postValue(movieStack.pop())
             isEnabled = movieStack.size > 1
             movieDetailActivity.showLoading()
-            (binding.root as ScrollView).fullScroll(ScrollView.FOCUS_UP)
+            binding.root.fullScroll(ScrollView.FOCUS_UP)
         }
         callback.isEnabled = false
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_movie_detail, container, false)
+        binding = FragmentMovieDetailBinding.inflate(layoutInflater)
         return binding.root
     }
 
@@ -99,37 +104,107 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemCl
         })
 
         movieDetailViewModel.movieDetail.observe(viewLifecycleOwner, Observer {
-            binding.movieDetail = it
+            with(binding) {
+                if (it.overview.isNullOrEmpty()) {
+                    synopsis.gone()
+                    titleSynopsis.gone()
+                } else {
+                    synopsis.visible()
+                    titleSynopsis.visible()
+                }
+
+                val voteAverage: Float = it.voteAverage?.toFloat() ?: 0.0f
+                if (voteAverage == 0.0f) {
+                    movieHeader.ratingText.text = "N/A"
+                } else {
+                    movieHeader.ratingText.text = voteAverage.toString()
+                    movieHeader.ratingBar.rating = voteAverage / 2
+                }
+
+                synopsis.text = it.overview
+                movieHeader.movieTitle.text = it.title
+                movieHeader.releaseDate.text =
+                    resources.getString(R.string.release_date_s, it.releaseDate)
+                it.backdropPath?.let { url -> movieHeader.movieBackground.setHeroImage(url) }
+                it.posterPath?.let { url -> movieHeader.moviePoster.setPosterImage(url) }
+            }
         })
 
-        movieDetailViewModel.genres.observe(viewLifecycleOwner, Observer<List<GenresItem>> {
-            binding.genreAdapter = GenreAdapter(it)
+        movieDetailViewModel.genres.observe(viewLifecycleOwner, Observer {
+            if (it.isEmpty()) {
+                binding.genreRecyclerView.gone()
+                return@Observer
+            }
+            binding.genreRecyclerView.visible()
+
+            binding.genreRecyclerView.adapter = GenreAdapter(it)
         })
 
-        movieDetailViewModel.cast.observe(viewLifecycleOwner, Observer<List<CastItem>> {
+        movieDetailViewModel.cast.observe(viewLifecycleOwner, Observer {
             val castList: ArrayList<CastItem> = arrayListOf()
             for (castListItem in it) {
-                if (castListItem.profilePath != null) { castList.add(castListItem) }
+                if (castListItem.profilePath != null) {
+                    castList.add(castListItem)
+                }
             }
-            binding.castAdapter = CreditsAdapter(castList as List<CastItem>, CreditsType.CAST)
+
+            if (castList.isEmpty()) {
+                binding.castRecyclerView.gone()
+                binding.titleCast.gone()
+                return@Observer
+            }
+            binding.castRecyclerView.visible()
+            binding.titleCast.visible()
+
+            binding.castRecyclerView.adapter =
+                CreditsAdapter(castList as List<CastItem>, CreditsType.CAST)
         })
 
-        movieDetailViewModel.crew.observe(viewLifecycleOwner, Observer<List<CrewItem>> {
+        movieDetailViewModel.crew.observe(viewLifecycleOwner, Observer {
             val crewList: ArrayList<CrewItem> = arrayListOf()
             for (crewListItem in it) {
-                if (crewListItem.profilePath != null) { crewList.add(crewListItem) }
+                if (crewListItem.profilePath != null) {
+                    crewList.add(crewListItem)
+                }
             }
-            binding.crewAdapter =
+
+            if (crewList.isEmpty()) {
+                binding.crewRecyclerView.gone()
+                binding.titleCrew.gone()
+                return@Observer
+            }
+            binding.crewRecyclerView.visible()
+            binding.titleCrew.visible()
+
+            binding.crewRecyclerView.adapter =
                 CreditsAdapter(crewList as List<CrewItem>, CreditsType.CREW)
         })
 
         movieDetailViewModel.videos.observe(viewLifecycleOwner, Observer {
-            Timber.d("trailers : ${it.size}")
-            binding.videoAdapter = VideoAdapter(it, this)
+            if (it.isEmpty()) {
+                binding.videosRecyclerView.gone()
+                binding.titleVideos.gone()
+                return@Observer
+            }
+            binding.videosRecyclerView.visible()
+            binding.titleVideos.visible()
+            binding.videosRecyclerView.adapter = VideoAdapter(it, this)
         })
 
-        movieDetailViewModel.recommendations.observe(viewLifecycleOwner, Observer {
-            binding.recommendationAdapter = RecommendationAdapter(it, this)
+        movieDetailViewModel.recommendations.observe(viewLifecycleOwner, Observer { list ->
+            if (list.isEmpty()) {
+                binding.recommendedRecyclerView.gone()
+                binding.titleRecommended.gone()
+                return@Observer
+            }
+            binding.recommendedRecyclerView.visible()
+            binding.titleRecommended.visible()
+
+            val urlIdList: ArrayList<Pair<String, String>> = ArrayList()
+            list.forEach {
+                urlIdList.add(Pair(it.posterPath ?: "", it.id.toString()))
+            }
+            binding.recommendedRecyclerView.adapter = RecommendationAdapter(urlIdList, this)
         })
 
         movieDetailViewModel.isLoading.observe(viewLifecycleOwner, Observer {
@@ -155,10 +230,14 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemCl
         }
     }
 
-    override fun onItemClick(resultsItem: ListResultItem) {
+    override fun onItemClick(resultsItem: MovieListResultItem) {
+        this.onItemClick(resultsItem.id.toString())
+    }
+
+    override fun onItemClick(id: String) {
         movieDetailActivity.showLoading()
-        movieId.postValue(resultsItem.id.toString())
-        (binding.root as ScrollView).fullScroll(ScrollView.FOCUS_UP)
+        movieId.postValue(id)
+        binding.root.fullScroll(ScrollView.FOCUS_UP)
         movieStack.push(movieId.value)
         callback.isEnabled = true
     }
@@ -171,7 +250,9 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemCl
     override fun onPause() {
         view?.viewTreeObserver?.removeOnScrollChangedListener(scrollChangedListener)
         movieDetailActivity.dialog?.let {
-            if (it.isShowing) { it.hide() }
+            if (it.isShowing) {
+                it.hide()
+            }
             it.dismiss()
         }
         super.onPause()

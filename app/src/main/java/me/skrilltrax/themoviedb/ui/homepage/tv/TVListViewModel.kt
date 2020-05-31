@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import me.skrilltrax.themoviedb.model.list.ListResultItem
+import me.skrilltrax.themoviedb.model.list.tv.TVListResultItem
 import me.skrilltrax.themoviedb.network.api.tv.TVListRepository
 import timber.log.Timber
 
@@ -17,31 +17,38 @@ class TVListViewModel(private val tvListRepository: TVListRepository) : ViewMode
     private var upcomingShowsStatus: Boolean = false
     private var topRatedShowsStatus: Boolean = false
 
-    private val _popularShowsList: MutableLiveData<ArrayList<ListResultItem>> = MutableLiveData()
-    private val _playingShowsList: MutableLiveData<ArrayList<ListResultItem>> = MutableLiveData()
-    private val _upcomingShowsList: MutableLiveData<ArrayList<ListResultItem>> = MutableLiveData()
-    private val _topRatedShowsList: MutableLiveData<ArrayList<ListResultItem>> = MutableLiveData()
+    private val _popularShowsList: MutableLiveData<ArrayList<TVListResultItem>> = MutableLiveData()
+    private val _playingShowsList: MutableLiveData<ArrayList<TVListResultItem>> = MutableLiveData()
+    private val _upcomingShowsList: MutableLiveData<ArrayList<TVListResultItem>> = MutableLiveData()
+    private val _topRatedShowsList: MutableLiveData<ArrayList<TVListResultItem>> = MutableLiveData()
 
     val isLoading: MutableLiveData<Boolean> = MutableLiveData(true)
 
-    val popularShowsList: LiveData<ArrayList<ListResultItem>>
+    val popularShowsList: LiveData<ArrayList<TVListResultItem>>
         get() = _popularShowsList
 
-    val playingShowsList: LiveData<ArrayList<ListResultItem>>
+    val playingShowsList: LiveData<ArrayList<TVListResultItem>>
         get() = _playingShowsList
 
-    val upcomingShowsList: LiveData<ArrayList<ListResultItem>>
+    val upcomingShowsList: LiveData<ArrayList<TVListResultItem>>
         get() = _upcomingShowsList
 
-    val topRatedShowsList: LiveData<ArrayList<ListResultItem>>
+    val topRatedShowsList: LiveData<ArrayList<TVListResultItem>>
         get() = _topRatedShowsList
+
+    init {
+        fetchPopularShowsList()
+        fetchPlayingShowsList()
+        fetchUpcomingShowsList()
+        fetchTopRatedShowsList()
+    }
 
     fun fetchPopularShowsList() {
         if (!popularShowsStatus) {
             viewModelScope.launch {
                 val popularList = tvListRepository.getPopularShowsList()
                 if (popularList != null) {
-                    _popularShowsList.postValue(popularList.results as ArrayList<ListResultItem>?)
+                    _popularShowsList.postValue(popularList.results as ArrayList<TVListResultItem>?)
                     popularShowsStatus = true
                     checkStatus()
                 }
@@ -54,7 +61,7 @@ class TVListViewModel(private val tvListRepository: TVListRepository) : ViewMode
             viewModelScope.launch {
                 val playingList = tvListRepository.getOnAirShowsList()
                 if (playingList != null) {
-                    _playingShowsList.postValue(playingList.results as ArrayList<ListResultItem>?)
+                    _playingShowsList.postValue(playingList.results as ArrayList<TVListResultItem>?)
                     playingShowsStatus = true
                     checkStatus()
                 }
@@ -67,7 +74,7 @@ class TVListViewModel(private val tvListRepository: TVListRepository) : ViewMode
             viewModelScope.launch {
                 val upcomingList = tvListRepository.getAiringShowsList()
                 if (upcomingList != null) {
-                    _upcomingShowsList.postValue(upcomingList.results as ArrayList<ListResultItem>?)
+                    _upcomingShowsList.postValue(upcomingList.results as ArrayList<TVListResultItem>?)
                     upcomingShowsStatus = true
                     checkStatus()
                 }
@@ -80,7 +87,7 @@ class TVListViewModel(private val tvListRepository: TVListRepository) : ViewMode
             viewModelScope.launch {
                 val topRatedList = tvListRepository.getTopRatedShowsList()
                 if (topRatedList != null) {
-                    _topRatedShowsList.postValue(topRatedList.results as ArrayList<ListResultItem>?)
+                    _topRatedShowsList.postValue(topRatedList.results as ArrayList<TVListResultItem>?)
                     topRatedShowsStatus = true
                     checkStatus()
                 }

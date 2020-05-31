@@ -1,8 +1,8 @@
 package me.skrilltrax.themoviedb.network.api.movie
 
 import me.skrilltrax.themoviedb.model.credits.CreditsResponse
-import me.skrilltrax.themoviedb.model.list.ListResponse
-import me.skrilltrax.themoviedb.model.movie.detail.MovieDetailResponse
+import me.skrilltrax.themoviedb.model.detail.movie.MovieDetailResponse
+import me.skrilltrax.themoviedb.model.list.movie.MovieListResponse
 import me.skrilltrax.themoviedb.model.videos.VideoResponse
 import me.skrilltrax.themoviedb.network.RetrofitInstance
 import retrofit2.Response
@@ -13,20 +13,20 @@ import retrofit2.http.Query
 interface MovieApiInterface {
 
     @GET("movie/popular")
-    suspend fun getPopularMovies(@Query("api_key") apiKey: String): Response<ListResponse>
+    suspend fun getPopularMovies(@Query("api_key") apiKey: String): Response<MovieListResponse>
 
     @GET("movie/latest")
-    suspend fun getLatestMovies(@Query("api_key") apiKey: String): Response<ListResponse>
+    suspend fun getLatestMovies(@Query("api_key") apiKey: String): Response<MovieListResponse>
 
     @GET("movie/now_playing")
-    suspend fun getNowPlayingMovies(@Query("api_key") apiKey: String): Response<ListResponse>
+    suspend fun getNowPlayingMovies(@Query("api_key") apiKey: String): Response<MovieListResponse>
 
     // TODO : Pass region parameter to get proper upcoming movies
     @GET("movie/upcoming")
-    suspend fun getUpcomingMovies(@Query("api_key") apiKey: String): Response<ListResponse>
+    suspend fun getUpcomingMovies(@Query("api_key") apiKey: String): Response<MovieListResponse>
 
     @GET("movie/top_rated")
-    suspend fun getTopRatedMovies(@Query("api_key") apiKey: String): Response<ListResponse>
+    suspend fun getTopRatedMovies(@Query("api_key") apiKey: String): Response<MovieListResponse>
 
     @GET("movie/{movie_id}")
     suspend fun getMovieDetails(@Path("movie_id") id: String, @Query("api_key") apiKey: String): Response<MovieDetailResponse>
@@ -38,7 +38,7 @@ interface MovieApiInterface {
     suspend fun getMovieVideos(@Path("movie_id") id: String, @Query("api_key") apiKey: String): Response<VideoResponse>
 
     @GET("movie/{movie_id}/recommendations")
-    suspend fun getMovieRecommendations(@Path("movie_id") id: String, @Query("api_key") apiKey: String): Response<ListResponse>
+    suspend fun getMovieRecommendations(@Path("movie_id") id: String, @Query("api_key") apiKey: String): Response<MovieListResponse>
 
     companion object {
         fun getClient(): MovieApiInterface {

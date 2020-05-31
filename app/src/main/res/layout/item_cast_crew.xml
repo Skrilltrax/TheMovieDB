@@ -1,62 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <data>
-        <import type="me.skrilltrax.themoviedb.constants.CreditsType"/>
-        <variable
-            name="castData"
-            type="me.skrilltrax.themoviedb.model.credits.CastItem" />
-        <variable
-            name="crewData"
-            type="me.skrilltrax.themoviedb.model.credits.CrewItem" />
-        <variable
-            name="creditsType"
-            type="me.skrilltrax.themoviedb.constants.CreditsType" />
-    </data>
+    <ImageView
+        android:id="@+id/cast_crew_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp" />
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/cast_crew_name"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:ellipsize="marquee"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textColor="@color/colorWhite"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        tools:text="Keanu Reevessssssssss" />
 
-        <ImageView
-            android:id="@+id/cast_crew_image"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            app:creditImageUrl="@{creditsType == CreditsType.CAST ? castData.profilePath : crewData.profilePath}"/>
+    <TextView
+        android:id="@+id/cast_crew_role"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:ellipsize="marquee"
+        android:gravity="center"
+        android:singleLine="true"
+        android:textColor="#8d8d8d"
+        android:textSize="12sp"
+        tools:text="Keanu Reevessssssssss" />
 
-        <TextView
-            android:id="@+id/cast_crew_name"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@{creditsType == CreditsType.CAST ? castData.name : crewData.name}"
-            android:textSize="13sp"
-            android:textStyle="bold"
-            android:textColor="@color/colorWhite"
-            android:singleLine="true"
-            android:gravity="center"
-            android:layout_gravity="center"
-            android:ellipsize="marquee"
-            tools:text="Keanu Reevessssssssss" />
-
-        <TextView
-            android:id="@+id/cast_crew_role"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"
-            android:text="@{creditsType == CreditsType.CAST ? castData.character : crewData.job}"
-            android:textColor="#8d8d8d"
-            android:textSize="12sp"
-            android:singleLine="true"
-            android:gravity="center"
-            android:ellipsize="marquee"
-            tools:text="Keanu Reevessssssssss" />
-
-    </LinearLayout>
-</layout>
+</LinearLayout>

@@ -7,9 +7,9 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import me.skrilltrax.themoviedb.model.credits.CastItem
 import me.skrilltrax.themoviedb.model.credits.CrewItem
-import me.skrilltrax.themoviedb.model.list.ListResultItem
-import me.skrilltrax.themoviedb.model.movie.detail.GenresItem
-import me.skrilltrax.themoviedb.model.movie.detail.MovieDetailResponse
+import me.skrilltrax.themoviedb.model.detail.GenresItem
+import me.skrilltrax.themoviedb.model.detail.movie.MovieDetailResponse
+import me.skrilltrax.themoviedb.model.list.movie.MovieListResultItem
 import me.skrilltrax.themoviedb.model.videos.VideoResultsItem
 import me.skrilltrax.themoviedb.network.api.movie.MovieDetailRepository
 import timber.log.Timber
@@ -28,7 +28,7 @@ class MovieDetailViewModel(private val movieDetailRepository: MovieDetailReposit
     private val _videos: MutableLiveData<List<VideoResultsItem>> = MutableLiveData(listOf())
     private val _trailers: MutableLiveData<List<VideoResultsItem>> = MutableLiveData(listOf())
     private val _extraVideos: MutableLiveData<List<VideoResultsItem>> = MutableLiveData(listOf())
-    private val _recommendations: MutableLiveData<List<ListResultItem>> = MutableLiveData(listOf())
+    private val _recommendations: MutableLiveData<List<MovieListResultItem>> = MutableLiveData(listOf())
 
     val movieId: MutableLiveData<String> = MutableLiveData("")
     val isLoading: MutableLiveData<Boolean> = MutableLiveData(true)
@@ -54,7 +54,7 @@ class MovieDetailViewModel(private val movieDetailRepository: MovieDetailReposit
     val extraVideos: LiveData<List<VideoResultsItem>>
         get() = _extraVideos
 
-    val recommendations: LiveData<List<ListResultItem>>
+    val recommendations: LiveData<List<MovieListResultItem>>
         get() = _recommendations
 
     @Suppress("UNCHECKED_CAST")
@@ -101,7 +101,7 @@ class MovieDetailViewModel(private val movieDetailRepository: MovieDetailReposit
         viewModelScope.launch {
             val recommendedVideos = movieDetailRepository.getRecommendations(movieId.value!!)
             if (null != recommendedVideos) {
-                _recommendations.postValue(recommendedVideos.results as List<ListResultItem>)
+                _recommendations.postValue(recommendedVideos.results as List<MovieListResultItem>)
             }
         }
     }

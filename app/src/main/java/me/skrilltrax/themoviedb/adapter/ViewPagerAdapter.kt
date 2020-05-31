@@ -5,7 +5,6 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import me.skrilltrax.themoviedb.constants.Tabs
 import me.skrilltrax.themoviedb.ui.homepage.movie.MovieViewPagerFragment
 import me.skrilltrax.themoviedb.ui.homepage.tv.TVViewPagerFragment
-import timber.log.Timber
 
 class ViewPagerAdapter(private val fragment: Fragment, private var isMovieSelected: Boolean) :
     FragmentStateAdapter(fragment) {
@@ -13,7 +12,6 @@ class ViewPagerAdapter(private val fragment: Fragment, private var isMovieSelect
     override fun createFragment(position: Int): Fragment {
         val tab = Tabs.getTabById(position)
         return if (tab != null) {
-            Timber.d("Tab ID : ${tab.tabId}, isMovieSelected: $isMovieSelected")
             if (isMovieSelected) {
                 MovieViewPagerFragment.newInstance(tab.tabId)
             } else {

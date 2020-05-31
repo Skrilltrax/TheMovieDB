@@ -11,5 +11,5 @@
 /build
 /captures
 .externalNativeBuild
-secrets.properties
 **/local.properties
+secrets.properties
