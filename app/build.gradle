@@ -4,10 +4,16 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 apply plugin: "androidx.navigation.safeargs.kotlin"
 
-def secretsFile = rootProject.file("secrets.properties")
-def secretsProperties = new Properties()
-secretsProperties.load(new FileInputStream(secretsFile))
-
+String apiKey = ""
+if (System.getenv("TMDB_API_KEY") != null) {
+    apiKey = System.getenv("TMDB_API_KEY")
+    apiKey = "\"$apiKey\""
+} else {
+    def secretsFile = rootProject.file("secrets.properties")
+    def secretsProperties = new Properties()
+    secretsProperties.load(new FileInputStream(secretsFile))
+    apiKey = secretsProperties['API_KEY']
+}
 android {
     compileSdkVersion 29
     defaultConfig {
@@ -17,8 +23,7 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "API_KEY", secretsProperties['API_KEY'])
-
+        buildConfigField("String", "API_KEY", apiKey)
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
