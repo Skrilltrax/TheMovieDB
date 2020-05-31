@@ -4,7 +4,6 @@ import me.skrilltrax.themoviedb.constants.Constants.SERVER_URL
 import me.skrilltrax.themoviedb.di.factory.HttpLoggingInterceptorFactory
 import me.skrilltrax.themoviedb.di.factory.OkHttpFactory
 import me.skrilltrax.themoviedb.di.factory.RetrofitFactory
-import me.skrilltrax.themoviedb.di.factory.StethoInterceptorFactory
 import me.skrilltrax.themoviedb.network.api.movie.MovieApiInterface
 import me.skrilltrax.themoviedb.network.api.movie.MovieDetailRepository
 import me.skrilltrax.themoviedb.network.api.movie.MovieListRepository
@@ -23,8 +22,7 @@ val appModule = module {
 
 val networkModule = module {
     single { HttpLoggingInterceptorFactory.provideHttpLoggingInterceptor() }
-    single { StethoInterceptorFactory.provideStethoInterceptor() }
-    single { OkHttpFactory.provideOkHttpClient(get(), get()) }
+    single { OkHttpFactory.provideOkHttpClient(get()) }
     single { RetrofitFactory.createWebService<MovieApiInterface>(get(), SERVER_URL) }
     single { RetrofitFactory.createWebService<TVApiInterface>(get(), SERVER_URL) }
 }

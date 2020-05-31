@@ -200,6 +200,7 @@ class TVDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemClick
             }
             binding.recommendedRecyclerView.visible()
             binding.titleRecommended.visible()
+            binding.titleRecommended.text = "Similar Shows"
 
             val urlIdList: ArrayList<Pair<String, String>> = ArrayList()
             list.forEach {
