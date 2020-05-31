@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView
 import me.skrilltrax.themoviedb.databinding.ItemVideoBinding
 import me.skrilltrax.themoviedb.interfaces.MovieDetailItemClickListener
 import me.skrilltrax.themoviedb.model.videos.VideoResultsItem
-import me.skrilltrax.themoviedb.utils.setPosterImage
 import me.skrilltrax.themoviedb.utils.setThumbnail
 
 class VideoAdapter(private val videoList: List<VideoResultsItem>, private val listener: MovieDetailItemClickListener) :

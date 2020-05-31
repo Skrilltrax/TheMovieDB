@@ -68,7 +68,6 @@ class TVViewPagerFragment : Fragment(), ListItemClickListener {
         }
     }
 
-
     override fun onItemClick(tvResultsItem: TVListResultItem) {
         val intent = Intent(this.context, TVDetailActivity::class.java)
         intent.putExtra("show_id", tvResultsItem.id.toString())

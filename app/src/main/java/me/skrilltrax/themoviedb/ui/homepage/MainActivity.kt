@@ -7,7 +7,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import me.skrilltrax.themoviedb.R
 import me.skrilltrax.themoviedb.databinding.ActivityMainBinding
 import me.skrilltrax.themoviedb.ui.BaseActivity
-import me.skrilltrax.themoviedb.utils.SystemLayoutUtils
 import me.skrilltrax.themoviedb.utils.SystemLayoutUtils.setNavigationBarColor
 
 class MainActivity : BaseActivity() {

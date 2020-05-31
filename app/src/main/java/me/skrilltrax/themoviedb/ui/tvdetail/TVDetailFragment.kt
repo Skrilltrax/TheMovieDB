@@ -44,7 +44,6 @@ import me.skrilltrax.themoviedb.utils.setHeroImage
 import me.skrilltrax.themoviedb.utils.setPosterImage
 import me.skrilltrax.themoviedb.utils.visible
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
 
 class TVDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemClickListener {
 

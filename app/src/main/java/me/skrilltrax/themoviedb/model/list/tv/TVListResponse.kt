@@ -8,14 +8,14 @@ import kotlinx.android.parcel.Parcelize
 data class TVListResponse(
 
     @field:SerializedName("page")
-	val page: Int? = null,
+    val page: Int? = null,
 
     @field:SerializedName("total_pages")
-	val totalPages: Int? = null,
+    val totalPages: Int? = null,
 
     @field:SerializedName("results")
-	val results: List<TVListResultItem>? = null,
+    val results: List<TVListResultItem>? = null,
 
     @field:SerializedName("total_results")
-	val totalResults: Int? = null
+    val totalResults: Int? = null
 ) : Parcelable

@@ -1,8 +1,8 @@
 package me.skrilltrax.themoviedb.network.api.movie
 
 import me.skrilltrax.themoviedb.model.credits.CreditsResponse
-import me.skrilltrax.themoviedb.model.list.movie.MovieListResponse
 import me.skrilltrax.themoviedb.model.detail.movie.MovieDetailResponse
+import me.skrilltrax.themoviedb.model.list.movie.MovieListResponse
 import me.skrilltrax.themoviedb.model.videos.VideoResponse
 import me.skrilltrax.themoviedb.network.RetrofitInstance
 import retrofit2.Response

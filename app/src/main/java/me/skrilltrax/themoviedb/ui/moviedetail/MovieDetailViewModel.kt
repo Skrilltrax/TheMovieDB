@@ -7,9 +7,9 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
 import me.skrilltrax.themoviedb.model.credits.CastItem
 import me.skrilltrax.themoviedb.model.credits.CrewItem
-import me.skrilltrax.themoviedb.model.list.movie.MovieListResultItem
 import me.skrilltrax.themoviedb.model.detail.GenresItem
 import me.skrilltrax.themoviedb.model.detail.movie.MovieDetailResponse
+import me.skrilltrax.themoviedb.model.list.movie.MovieListResultItem
 import me.skrilltrax.themoviedb.model.videos.VideoResultsItem
 import me.skrilltrax.themoviedb.network.api.movie.MovieDetailRepository
 import timber.log.Timber
