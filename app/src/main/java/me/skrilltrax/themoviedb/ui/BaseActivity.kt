@@ -12,17 +12,17 @@ open class BaseActivity : AppCompatActivity() {
 
     fun showLoading() {
         dialog = Dialog(this)
-        if (null != dialog!!.window) {
-            dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog?.let {
+            it.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            it.setContentView(R.layout.progress_lottie)
+            it.setCanceledOnTouchOutside(false)
+            it.show()
         }
-        dialog!!.setContentView(R.layout.progress_lottie)
-        dialog!!.setCanceledOnTouchOutside(false)
-        dialog!!.show()
     }
 
     fun hideLoading() {
-        if (dialog?.isShowing!!) {
-            dialog?.hide()
+        dialog?.let {
+            if (it.isShowing) it.hide()
         }
     }
 }
