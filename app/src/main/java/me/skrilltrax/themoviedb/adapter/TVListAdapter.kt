@@ -15,12 +15,10 @@ class TVListAdapter(
     val listener: ListItemClickListener
 ) : RecyclerView.Adapter<TVListAdapter.ListViewHolder>() {
 
-    private lateinit var binding: ItemListTvBinding
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        binding = ItemListTvBinding.inflate(inflater, parent, false)
-        return ListViewHolder(binding.root)
+        val binding = ItemListTvBinding.inflate(inflater, parent, false)
+        return ListViewHolder(binding, binding.root)
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
@@ -31,16 +29,9 @@ class TVListAdapter(
         return list.size
     }
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return position
-    }
-
-    inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ListViewHolder(private val binding: ItemListTvBinding, itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(resultsItem: TVListResultItem) {
+
             with(binding) {
                 val voteAverage: Float = resultsItem.voteAverage?.toFloat() ?: 0.0f
                 title.text = resultsItem.name

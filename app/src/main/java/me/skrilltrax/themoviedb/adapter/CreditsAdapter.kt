@@ -12,27 +12,26 @@ import me.skrilltrax.themoviedb.model.credits.CrewItem
 import me.skrilltrax.themoviedb.utils.setCreditImage
 import timber.log.Timber
 
-class CreditsAdapter(val list: List<Any>, private val type: CreditsType) :
-    RecyclerView.Adapter<CastCrewViewHolder>() {
+class CreditsAdapter(val list: List<Any>, private val type: CreditsType) : RecyclerView.Adapter<CastCrewViewHolder>() {
 
-    private lateinit var binding: ItemCastCrewBinding
     private lateinit var castList: List<CastItem>
     private lateinit var crewList: List<CrewItem>
 
     @Suppress("UNCHECKED_CAST")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CastCrewViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        binding = ItemCastCrewBinding.inflate(inflater, parent, false)
+        val binding = ItemCastCrewBinding.inflate(inflater, parent, false)
+
         if (type == CreditsType.CAST) {
             castList = list as List<CastItem>
         } else {
             crewList = list as List<CrewItem>
         }
-        return CastCrewViewHolder(binding.root, type)
+
+        return CastCrewViewHolder(type, binding, binding.root)
     }
 
     override fun onBindViewHolder(holder: CastCrewViewHolder, position: Int) {
-        Timber.d("$type : $position")
         holder.bind(position)
     }
 
@@ -40,16 +39,9 @@ class CreditsAdapter(val list: List<Any>, private val type: CreditsType) :
         return list.size
     }
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return position
-    }
-
-    inner class CastCrewViewHolder(itemView: View, private val type: CreditsType) :
+    inner class CastCrewViewHolder(private val type: CreditsType, private val binding: ItemCastCrewBinding, itemView: View) :
         RecyclerView.ViewHolder(itemView) {
+
         fun bind(position: Int) {
             if (type == CreditsType.CAST) {
                 val castItem = castList[position]

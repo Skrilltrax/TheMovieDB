@@ -13,15 +13,13 @@ class RecommendationAdapter(
     private val listener: ListItemClickListener
 ) : RecyclerView.Adapter<RecommendationAdapter.RecommendationViewHolder>() {
 
-    private lateinit var binding: ItemRecommendationBinding
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): RecommendationViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        binding = ItemRecommendationBinding.inflate(inflater)
-        return RecommendationViewHolder(binding.root)
+        val binding = ItemRecommendationBinding.inflate(inflater)
+        return RecommendationViewHolder(binding, binding.root)
     }
 
     override fun getItemCount(): Int {
@@ -32,15 +30,10 @@ class RecommendationAdapter(
         holder.bind(list[position])
     }
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return position
-    }
-
-    inner class RecommendationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class RecommendationViewHolder(
+        private val binding: ItemRecommendationBinding,
+        itemView: View
+    ) : RecyclerView.ViewHolder(itemView) {
         fun bind(item: Pair<String, String>) {
             binding.recommendationImage.setPosterImage(item.first)
             itemView.setOnClickListener {

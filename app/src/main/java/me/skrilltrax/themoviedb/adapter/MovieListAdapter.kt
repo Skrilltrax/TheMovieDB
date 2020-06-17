@@ -12,17 +12,15 @@ import me.skrilltrax.themoviedb.utils.setPosterImage
 
 class MovieListAdapter(
     private val list: List<MovieListResultItem>,
-    val listener: ListItemClickListener,
-    val isMovieSelected: Boolean
+    val listener: ListItemClickListener
 ) :
     RecyclerView.Adapter<MovieListAdapter.ListViewHolder>() {
 
-    private lateinit var binding: ItemListMovieBinding
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        binding = ItemListMovieBinding.inflate(inflater, parent, false)
-        return ListViewHolder(binding.root)
+        val binding = ItemListMovieBinding.inflate(inflater, parent, false)
+        return ListViewHolder(binding, binding.root)
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
@@ -33,16 +31,9 @@ class MovieListAdapter(
         return list.size
     }
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return position
-    }
-
-    inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class ListViewHolder(private val binding: ItemListMovieBinding, itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(resultsItem: MovieListResultItem) {
+
             with(binding) {
                 val voteAverage: Float = resultsItem.voteAverage?.toFloat() ?: 0.0f
                 title.text = resultsItem.title

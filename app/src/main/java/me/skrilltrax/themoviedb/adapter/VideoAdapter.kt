@@ -12,12 +12,10 @@ import me.skrilltrax.themoviedb.utils.setThumbnail
 class VideoAdapter(private val videoList: List<VideoResultsItem>, private val listener: MovieDetailItemClickListener) :
     RecyclerView.Adapter<VideoAdapter.VideoViewHolder>() {
 
-    lateinit var binding: ItemVideoBinding
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        binding = ItemVideoBinding.inflate(inflater, parent, false)
-        return VideoViewHolder(binding.root)
+        val binding = ItemVideoBinding.inflate(inflater, parent, false)
+        return VideoViewHolder(binding, binding.root)
     }
 
     override fun onBindViewHolder(holder: VideoViewHolder, position: Int) {
@@ -28,20 +26,16 @@ class VideoAdapter(private val videoList: List<VideoResultsItem>, private val li
         return videoList.size
     }
 
-    override fun getItemId(position: Int): Long {
-        return position.toLong()
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return position
-    }
-
-    inner class VideoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class VideoViewHolder(private val  binding: ItemVideoBinding, itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(position: Int) {
             val videoData = videoList[position]
-            videoData.key?.let { binding.videoPoster.setThumbnail(it) }
-            videoData.name?.let { binding.videoTitle.text = it }
+
+            with(binding) {
+                videoData.key?.let { videoPoster.setThumbnail(it) }
+                videoData.name?.let { videoTitle.text = it }
+            }
+
             itemView.setOnClickListener {
                 listener.onVideoItemClick(videoList[position])
             }
