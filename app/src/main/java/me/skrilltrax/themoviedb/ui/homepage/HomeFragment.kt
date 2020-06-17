@@ -8,7 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
-import me.skrilltrax.themoviedb.adapter.ViewPagerAdapter
+import me.skrilltrax.themoviedb.adapter.TVViewPagerAdapter
+import me.skrilltrax.themoviedb.adapter.MovieViewPagerAdapter
 import me.skrilltrax.themoviedb.constants.Tabs
 import me.skrilltrax.themoviedb.databinding.FragmentHomeBinding
 import me.skrilltrax.themoviedb.ui.homepage.movie.MovieListViewModel
@@ -20,8 +21,8 @@ class HomeFragment : Fragment() {
 
     private lateinit var binding: FragmentHomeBinding
     private lateinit var mainActivity: MainActivity
-    private lateinit var movieAdapter: ViewPagerAdapter
-    private lateinit var tvAdapter: ViewPagerAdapter
+    private lateinit var movieAdapter: MovieViewPagerAdapter
+    private lateinit var tvAdapter: TVViewPagerAdapter
 
     private val movieListViewModel by sharedViewModel<MovieListViewModel>()
     private val tvListViewModel by sharedViewModel<TVListViewModel>()
@@ -32,8 +33,8 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(layoutInflater)
-        movieAdapter = ViewPagerAdapter(this, true)
-        tvAdapter = ViewPagerAdapter(this, false)
+        movieAdapter = MovieViewPagerAdapter(this)
+        tvAdapter = TVViewPagerAdapter(this)
         return binding.root
     }
 
@@ -51,7 +52,6 @@ class HomeFragment : Fragment() {
 
     private fun setupObservers() {
         movieListViewModel.isLoading.observe(viewLifecycleOwner, Observer {
-            Timber.d("isLoading $it")
             if (it == false) {
                 if (mainActivity.dialog?.isShowing == true) {
                     mainActivity.hideLoading()
@@ -59,8 +59,8 @@ class HomeFragment : Fragment() {
                 mainActivity.dialog?.dismiss()
             }
         })
+
         tvListViewModel.isLoading.observe(viewLifecycleOwner, Observer {
-            Timber.d("isLoading $it")
             if (it == false) {
                 if (mainActivity.dialog?.isShowing == true) {
                     mainActivity.hideLoading()
@@ -68,14 +68,15 @@ class HomeFragment : Fragment() {
                 mainActivity.dialog?.dismiss()
             }
         })
+
         mainActivity.isMovieSelected.observe(viewLifecycleOwner, Observer {
-            Timber.d("isMovieSelected: $it")
             init(it)
         })
     }
 
     private fun setupTabLayout() {
-        binding.appBar.tabLayout.getTabAt(Tabs.TAB_POPULAR.tabId)?.select() // Select first tab of viewpager
+        binding.appBar.tabLayout.getTabAt(Tabs.TAB_POPULAR.tabId)
+            ?.select() // Select first tab of viewpager
 
         TabLayoutMediator(binding.appBar.tabLayout, binding.viewPager) { tab, position ->
             tab.text = Tabs.getTabById(position)!!.tabName
@@ -83,20 +84,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupViewPager(isMovieSelected: Boolean) {
-        binding.viewPager.adapter.let {
-            if (it is ViewPagerAdapter) {
-                it.clearAll()
-            }
-        }
         binding.viewPager.apply {
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
-//            removeAllViews()
             offscreenPageLimit = 3
-            adapter = if (isMovieSelected) {
-                movieAdapter
-            } else {
-                tvAdapter
-            }
+            adapter = if (isMovieSelected) movieAdapter else tvAdapter
         }
     }
 
