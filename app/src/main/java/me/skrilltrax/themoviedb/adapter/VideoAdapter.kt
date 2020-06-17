@@ -5,11 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import me.skrilltrax.themoviedb.databinding.ItemVideoBinding
-import me.skrilltrax.themoviedb.interfaces.MovieDetailItemClickListener
 import me.skrilltrax.themoviedb.model.videos.VideoResultsItem
 import me.skrilltrax.themoviedb.utils.setThumbnail
 
-class VideoAdapter(private val videoList: List<VideoResultsItem>, private val listener: MovieDetailItemClickListener) :
+class VideoAdapter(private val videoList: List<VideoResultsItem>, private val onVideoItemClick: (VideoResultsItem) -> Unit) :
     RecyclerView.Adapter<VideoAdapter.VideoViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VideoViewHolder {
@@ -37,7 +36,7 @@ class VideoAdapter(private val videoList: List<VideoResultsItem>, private val li
             }
 
             itemView.setOnClickListener {
-                listener.onVideoItemClick(videoList[position])
+                onVideoItemClick(videoList[position])
             }
         }
     }

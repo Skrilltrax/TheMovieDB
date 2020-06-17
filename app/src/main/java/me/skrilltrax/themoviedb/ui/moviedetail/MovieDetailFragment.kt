@@ -32,7 +32,6 @@ import me.skrilltrax.themoviedb.adapter.VideoAdapter
 import me.skrilltrax.themoviedb.constants.CreditsType
 import me.skrilltrax.themoviedb.databinding.FragmentMovieDetailBinding
 import me.skrilltrax.themoviedb.interfaces.ListItemClickListener
-import me.skrilltrax.themoviedb.interfaces.MovieDetailItemClickListener
 import me.skrilltrax.themoviedb.model.credits.CastItem
 import me.skrilltrax.themoviedb.model.credits.CrewItem
 import me.skrilltrax.themoviedb.model.list.movie.MovieListResultItem
@@ -45,7 +44,7 @@ import me.skrilltrax.themoviedb.utils.setPosterImage
 import me.skrilltrax.themoviedb.utils.visible
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemClickListener {
+class MovieDetailFragment : Fragment(), ListItemClickListener {
 
     private val movieDetailViewModel: MovieDetailViewModel by viewModel()
     private val movieDetailActivity by lazy { requireActivity() as MovieDetailActivity }
@@ -188,7 +187,9 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemCl
             }
             binding.videosRecyclerView.visible()
             binding.titleVideos.visible()
-            binding.videosRecyclerView.adapter = VideoAdapter(it, this)
+            binding.videosRecyclerView.adapter = VideoAdapter(it) { videoResultItem ->
+                onVideoItemClick(videoResultItem)
+            }
         })
 
         movieDetailViewModel.recommendations.observe(viewLifecycleOwner, Observer { list ->
@@ -217,7 +218,7 @@ class MovieDetailFragment : Fragment(), MovieDetailItemClickListener, ListItemCl
         })
     }
 
-    override fun onVideoItemClick(videoResultsItem: VideoResultsItem) {
+    private fun onVideoItemClick(videoResultsItem: VideoResultsItem) {
         val appIntent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:${videoResultsItem.key}"))
         val webIntent = Intent(
             Intent.ACTION_VIEW,
