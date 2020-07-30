@@ -24,6 +24,6 @@ fun httpLoggingInterceptor(
             block.invoke(message)
         }
     }).apply {
-        this.level = level;
+        this.level = level
     }
 }

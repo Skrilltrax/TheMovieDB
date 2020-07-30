@@ -1,5 +1,5 @@
-import java.util.Properties
 import java.io.FileInputStream
+import java.util.Properties
 
 plugins {
     id("com.android.application")
@@ -62,8 +62,8 @@ android {
 
 dependencies {
     compileOnly(Dependencies.AndroidX.annotation)
-    implementation ("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.0-rc")
-    implementation ("org.koin:koin-core:2.1.3")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.0-rc")
+    implementation("org.koin:koin-core:2.1.3")
 
     implementation(Dependencies.AndroidX.activity_ktx)
     implementation(Dependencies.AndroidX.appcompat)
@@ -103,13 +103,11 @@ dependencies {
     kapt(Dependencies.AndroidX.room_compiler)
     kapt(Dependencies.ThirdParty.glide_compiler)
 
-    //Gson
+    // Gson
     implementation("com.google.code.gson:gson:2.8.6")
 
-    //Anko Commons
+    // Anko Commons
 //    implementation("org.jetbrains.anko:anko-commons:0.10.8")
-    //room
+    // room
 //    implementation("androidx.room:room-runtime:2.2.5")
-
-
 }

@@ -44,7 +44,7 @@ import me.skrilltrax.themoviedb.utils.setPosterImage
 import me.skrilltrax.themoviedb.utils.visible
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class TVDetailFragment : Fragment(),  ListItemClickListener {
+class TVDetailFragment : Fragment(), ListItemClickListener {
 
     private val tvDetailViewModel: TVDetailViewModel by viewModel()
     private val tvDetailActivity by lazy { requireActivity() as TVDetailActivity }
@@ -187,7 +187,7 @@ class TVDetailFragment : Fragment(),  ListItemClickListener {
             binding.videosRecyclerView.visible()
             binding.titleVideos.visible()
 
-            binding.videosRecyclerView.adapter = VideoAdapter(it) {videoResultItem ->
+            binding.videosRecyclerView.adapter = VideoAdapter(it) { videoResultItem ->
                 onVideoItemClick(videoResultItem)
             }
         })

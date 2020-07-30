@@ -6,7 +6,6 @@ import me.skrilltrax.themoviedb.di.networkModule
 import me.skrilltrax.themoviedb.di.repositoryModule
 import me.skrilltrax.themoviedb.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
-import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import timber.log.Timber
 
