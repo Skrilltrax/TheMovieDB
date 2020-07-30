@@ -42,7 +42,7 @@ class SearchActivity : AppCompatActivity(), ListItemClickListener {
     private fun setupRecyclerView() {
         recyclerView.apply {
             layoutManager = LinearLayoutManager(this@SearchActivity, RecyclerView.VERTICAL, false)
-            adapter = MovieListAdapter(listOf(), this@SearchActivity, true)
+            adapter = MovieListAdapter(listOf(), this@SearchActivity)
         }
     }
 
@@ -55,7 +55,7 @@ class SearchActivity : AppCompatActivity(), ListItemClickListener {
                     movieList.addAll(movieResponse.body()?.results as Collection<MovieListResultItem>)
                     withContext(Dispatchers.Main) {
                         recyclerView.adapter =
-                            MovieListAdapter(movieList, this@SearchActivity, true)
+                            MovieListAdapter(movieList, this@SearchActivity)
                         (recyclerView.adapter as MovieListAdapter).notifyDataSetChanged()
 //                            hideLoading()
                     }

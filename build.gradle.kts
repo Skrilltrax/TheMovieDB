@@ -6,16 +6,14 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.2.0-alpha01'
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.72"
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.3.0-beta01"
+        classpath(Plugins.agp)
+        classpath(Plugins.kotlin)
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
 
 plugins {
-    id("de.fayard.buildSrcVersions") version "0.4.2"
     id("com.diffplug.gradle.spotless") version "3.26.1"
 }
 
@@ -24,12 +22,16 @@ spotless {
         target("**/*.kt")
         ktlint()
     }
+    kotlinGradle {
+        target("**/*.gradle.kts")
+        ktlint()
+    }
 }
 
 allprojects {
     repositories {
         google()
         jcenter()
-        maven { url "https://www.jitpack.io" }
+        maven("https://www.jitpack.io")
     }
 }

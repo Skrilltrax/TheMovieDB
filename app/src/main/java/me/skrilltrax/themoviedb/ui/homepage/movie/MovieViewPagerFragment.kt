@@ -49,22 +49,22 @@ class MovieViewPagerFragment : Fragment(), ListItemClickListener {
             Tabs.TAB_POPULAR.tabId -> movieListViewModel.popularMovieList.observe(
                 viewLifecycleOwner,
                 Observer {
-                    binding.recyclerView.adapter = MovieListAdapter(it, this, true)
+                    binding.recyclerView.adapter = MovieListAdapter(it, this)
                 })
             Tabs.TAB_PLAYING.tabId -> movieListViewModel.playingMovieList.observe(
                 viewLifecycleOwner,
                 Observer {
-                    binding.recyclerView.adapter = MovieListAdapter(it, this, true)
+                    binding.recyclerView.adapter = MovieListAdapter(it, this)
                 })
             Tabs.TAB_UPCOMING.tabId -> movieListViewModel.upcomingMovieList.observe(
                 viewLifecycleOwner,
                 Observer {
-                    binding.recyclerView.adapter = MovieListAdapter(it, this, true)
+                    binding.recyclerView.adapter = MovieListAdapter(it, this)
                 })
             Tabs.TAB_TOP_RATED.tabId -> movieListViewModel.topRatedMovieList.observe(
                 viewLifecycleOwner,
                 Observer {
-                    binding.recyclerView.adapter = MovieListAdapter(it, this, true)
+                    binding.recyclerView.adapter = MovieListAdapter(it, this)
                 })
         }
     }

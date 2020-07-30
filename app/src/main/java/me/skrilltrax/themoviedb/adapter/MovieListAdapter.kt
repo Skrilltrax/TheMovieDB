@@ -16,7 +16,6 @@ class MovieListAdapter(
 ) :
     RecyclerView.Adapter<MovieListAdapter.ListViewHolder>() {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemListMovieBinding.inflate(inflater, parent, false)

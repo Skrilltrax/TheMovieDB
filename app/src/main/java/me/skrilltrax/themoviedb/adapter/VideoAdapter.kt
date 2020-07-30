@@ -25,7 +25,7 @@ class VideoAdapter(private val videoList: List<VideoResultsItem>, private val on
         return videoList.size
     }
 
-    inner class VideoViewHolder(private val  binding: ItemVideoBinding, itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class VideoViewHolder(private val binding: ItemVideoBinding, itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(position: Int) {
             val videoData = videoList[position]

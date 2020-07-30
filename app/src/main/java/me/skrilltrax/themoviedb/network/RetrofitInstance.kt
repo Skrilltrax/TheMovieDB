@@ -1,5 +1,7 @@
 package me.skrilltrax.themoviedb.network
 
+import me.skrilltrax.themoviedb.BuildConfig
+import me.skrilltrax.themoviedb.utils.httpLoggingInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -11,7 +13,6 @@ object RetrofitInstance {
     private lateinit var retrofit: Retrofit
 
     fun getInstance(): Retrofit {
-
         if (!this::retrofit.isInitialized) {
             retrofit = Retrofit.Builder()
                 .baseUrl("https://api.themoviedb.org/3/")
@@ -23,15 +24,16 @@ object RetrofitInstance {
     }
 
     private fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor {
-        Timber.tag("Logging")
-        val httpLoggingInterceptor = HttpLoggingInterceptor() // TODO: Use timber implementation
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
-        return httpLoggingInterceptor
+        return httpLoggingInterceptor(HttpLoggingInterceptor.Level.BASIC) { message ->
+            Timber.tag("okhttp").d(message)
+        }
     }
 
     private fun provideOkHttpClient(): OkHttpClient {
-        return OkHttpClient.Builder()
-            .addInterceptor(provideHttpLoggingInterceptor())
-            .build()
+        val okHttpBuilder = OkHttpClient.Builder()
+        if (BuildConfig.IS_DEBUG) {
+            okHttpBuilder.addInterceptor(provideHttpLoggingInterceptor())
+        }
+        return okHttpBuilder.build()
     }
 }

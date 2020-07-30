@@ -10,7 +10,6 @@ import me.skrilltrax.themoviedb.databinding.ItemCastCrewBinding
 import me.skrilltrax.themoviedb.model.credits.CastItem
 import me.skrilltrax.themoviedb.model.credits.CrewItem
 import me.skrilltrax.themoviedb.utils.setCreditImage
-import timber.log.Timber
 
 class CreditsAdapter(val list: List<Any>, private val type: CreditsType) : RecyclerView.Adapter<CastCrewViewHolder>() {
 
