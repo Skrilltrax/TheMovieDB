@@ -3,9 +3,9 @@ import java.io.FileInputStream
 
 plugins {
     id("com.android.application")
-    id("kotlin-android")
-    id("kotlin-android-extensions")
-    id("kotlin-kapt")
+    kotlin("android")
+    kotlin("kapt")
+    kotlin("android.extensions")
 }
 
 var apiKey = ""
@@ -39,14 +39,20 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+        languageVersion = "1.4"
+        freeCompilerArgs = listOf("-Xopt-in=kotlin.RequiresOptIn")
     }
     buildTypes {
         getByName("release") {
-            isMinifyEnabled = false
+            buildConfigField("boolean", "IS_DEBUG", "false")
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+        }
+        getByName("debug") {
+            buildConfigField("boolean", "IS_DEBUG", "true")
         }
     }
 
@@ -55,60 +61,55 @@ android {
 }
 
 dependencies {
-    implementation(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.72")
-    implementation("androidx.core:core-ktx:1.3.1")
-    implementation("androidx.activity:activity-ktx:1.2.0-alpha07")
-    implementation("androidx.constraintlayout:constraintlayout:1.1.3")
+    compileOnly(Dependencies.AndroidX.annotation)
+    implementation ("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.0-rc")
+    implementation ("org.koin:koin-core:2.1.3")
 
-    //Timber
-    implementation("com.jakewharton.timber:timber:4.7.1")
+    implementation(Dependencies.AndroidX.activity_ktx)
+    implementation(Dependencies.AndroidX.appcompat)
+    implementation(Dependencies.AndroidX.constraint_layout)
+    implementation(Dependencies.AndroidX.core_ktx)
+    implementation(Dependencies.AndroidX.fragment_ktx)
+    implementation(Dependencies.AndroidX.lifecycle_common)
+    implementation(Dependencies.AndroidX.lifecycle_livedata_ktx)
+    implementation(Dependencies.AndroidX.lifecycle_viewmodel_ktx)
+    implementation(Dependencies.AndroidX.material)
+    implementation(Dependencies.AndroidX.preference)
+    implementation(Dependencies.AndroidX.recycler_view)
+    implementation(Dependencies.AndroidX.recycler_view_selection)
+    implementation(Dependencies.AndroidX.room_ktx)
+    implementation(Dependencies.AndroidX.viewpager2)
 
-    //Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.8.1")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.7.2")
-    implementation("com.squareup.retrofit2:converter-gson:2.8.1")
+    implementation(Dependencies.Kotlin.Coroutines.android)
+    implementation(Dependencies.Kotlin.Coroutines.core)
 
-    //Material Components
-    implementation("com.google.android.material:material:1.1.0")
+    implementation(Dependencies.ThirdParty.glide)
+    implementation(Dependencies.ThirdParty.koin_android)
+    implementation(Dependencies.ThirdParty.koin_androidx_scope)
+    implementation(Dependencies.ThirdParty.koin_androidx_viewmodel)
+    implementation(Dependencies.ThirdParty.lottie)
+    implementation(Dependencies.ThirdParty.material_rating_bar)
+    implementation(Dependencies.ThirdParty.okhttp_logging_interceptor)
+    implementation(Dependencies.ThirdParty.retrofit_converter_gson)
+    implementation(Dependencies.ThirdParty.timber)
+    implementation(Dependencies.ThirdParty.timberkt)
+    implementation(Dependencies.ThirdParty.whatthestack)
 
-    //Lifecycle
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-alpha06")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.0-alpha06")
+    testImplementation(Dependencies.Testing.junit)
+
+    androidTestImplementation(Dependencies.Testing.AndroidX.runner)
+    androidTestImplementation(Dependencies.Testing.AndroidX.espresso_core)
+
+    kapt(Dependencies.AndroidX.room_compiler)
+    kapt(Dependencies.ThirdParty.glide_compiler)
 
     //Gson
     implementation("com.google.code.gson:gson:2.8.6")
 
-    //Viewpager
-    implementation("androidx.viewpager2:viewpager2:1.1.0-alpha01")
-
     //Anko Commons
-    implementation("org.jetbrains.anko:anko-commons:0.10.8")
-
-    //Glide
-    implementation("com.github.bumptech.glide:glide:4.11.0")
-    kapt("com.github.bumptech.glide:compiler:4.11.0")
-
-    //Lottie
-    implementation("com.airbnb.android:lottie:3.4.1")
-
-    //Rating Bar
-    implementation("me.zhanghai.android.materialratingbar:library:1.4.0")
-
-    //Koin
-    implementation("org.koin:koin-android:2.1.3")
-    implementation("org.koin:koin-androidx-scope:2.1.3")
-    implementation("org.koin:koin-androidx-viewmodel:2.1.3")
-
-    //Viewpager 2
-    implementation("androidx.viewpager2:viewpager2:1.0.0")
-
+//    implementation("org.jetbrains.anko:anko-commons:0.10.8")
     //room
-    implementation("androidx.room:room-runtime:2.2.5")
-    implementation("androidx.room:room-ktx:2.2.5")
-    kapt("androidx.room:room-compiler:2.2.5")
+//    implementation("androidx.room:room-runtime:2.2.5")
 
-    testImplementation("junit:junit:4.13")
-    androidTestImplementation("androidx.test:runner:1.2.0")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.2.0")
+
 }
