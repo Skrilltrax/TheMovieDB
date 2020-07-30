@@ -16,6 +16,6 @@ jobs:
     - name: Fake secrets.properties
       run: touch secrets.properties
     - name: Add Fake data
-      run: echo "API_KEY=YOUR_KEY" >> secrets.properties
+      run: echo "API_KEY=\"YOUR_KEY\"" > secrets.properties
     - name: Build with Gradle
       run: ./gradlew build
