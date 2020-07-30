@@ -62,9 +62,6 @@ android {
 
 dependencies {
     compileOnly(Dependencies.AndroidX.annotation)
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.4.0-rc")
-    implementation("org.koin:koin-core:2.1.3")
-
     implementation(Dependencies.AndroidX.activity_ktx)
     implementation(Dependencies.AndroidX.appcompat)
     implementation(Dependencies.AndroidX.constraint_layout)
@@ -104,7 +101,7 @@ dependencies {
     kapt(Dependencies.ThirdParty.glide_compiler)
 
     // Gson
-    implementation("com.google.code.gson:gson:2.8.6")
+//    implementation("com.google.code.gson:gson:2.8.6")
 
     // Anko Commons
 //    implementation("org.jetbrains.anko:anko-commons:0.10.8")
