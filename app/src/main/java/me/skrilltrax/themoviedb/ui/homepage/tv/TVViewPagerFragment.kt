@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import me.skrilltrax.themoviedb.adapter.TVListAdapter
 import me.skrilltrax.themoviedb.constants.Tabs
 import me.skrilltrax.themoviedb.databinding.FragmentCommonViewpagerBinding
@@ -45,32 +44,24 @@ class TVViewPagerFragment : Fragment(), ListItemClickListener {
 
     private fun setupObservers(viewLifecycleOwner: LifecycleOwner, position: Int) {
         when (position) {
-            Tabs.TAB_POPULAR.tabId -> tvListViewModel.popularShowsList.observe(
-                viewLifecycleOwner,
-                Observer {
-                    binding.recyclerView.adapter = TVListAdapter(it, this)
-                })
-            Tabs.TAB_PLAYING.tabId -> tvListViewModel.playingShowsList.observe(
-                viewLifecycleOwner,
-                Observer {
-                    binding.recyclerView.adapter = TVListAdapter(it, this)
-                })
-            Tabs.TAB_UPCOMING.tabId -> tvListViewModel.upcomingShowsList.observe(
-                viewLifecycleOwner,
-                Observer {
-                    binding.recyclerView.adapter = TVListAdapter(it, this)
-                })
-            Tabs.TAB_TOP_RATED.tabId -> tvListViewModel.topRatedShowsList.observe(
-                viewLifecycleOwner,
-                Observer {
-                    binding.recyclerView.adapter = TVListAdapter(it, this)
-                })
+            Tabs.TAB_POPULAR.tabId -> tvListViewModel.popularShowsList.observe(viewLifecycleOwner) {
+                binding.recyclerView.adapter = TVListAdapter(it, this)
+            }
+            Tabs.TAB_PLAYING.tabId -> tvListViewModel.playingShowsList.observe(viewLifecycleOwner) {
+                binding.recyclerView.adapter = TVListAdapter(it, this)
+            }
+            Tabs.TAB_UPCOMING.tabId -> tvListViewModel.upcomingShowsList.observe(viewLifecycleOwner) {
+                binding.recyclerView.adapter = TVListAdapter(it, this)
+            }
+            Tabs.TAB_TOP_RATED.tabId -> tvListViewModel.topRatedShowsList.observe(viewLifecycleOwner) {
+                binding.recyclerView.adapter = TVListAdapter(it, this)
+            }
         }
     }
 
-    override fun onItemClick(tvResultsItem: TVListResultItem) {
+    override fun onItemClick(resultsItem: TVListResultItem) {
         val intent = Intent(this.context, TVDetailActivity::class.java)
-        intent.putExtra("show_id", tvResultsItem.id.toString())
+        intent.putExtra("show_id", resultsItem.id.toString())
         startActivity(intent)
     }
 

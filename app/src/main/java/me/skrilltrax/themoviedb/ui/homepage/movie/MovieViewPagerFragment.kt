@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
 import me.skrilltrax.themoviedb.adapter.MovieListAdapter
 import me.skrilltrax.themoviedb.constants.Tabs
 import me.skrilltrax.themoviedb.databinding.FragmentCommonViewpagerBinding
@@ -46,26 +45,19 @@ class MovieViewPagerFragment : Fragment(), ListItemClickListener {
 
     private fun setupObservers(viewLifecycleOwner: LifecycleOwner, position: Int) {
         when (position) {
-            Tabs.TAB_POPULAR.tabId -> movieListViewModel.popularMovieList.observe(
-                viewLifecycleOwner,
-                Observer {
-                    binding.recyclerView.adapter = MovieListAdapter(it, this)
-                })
-            Tabs.TAB_PLAYING.tabId -> movieListViewModel.playingMovieList.observe(
-                viewLifecycleOwner,
-                Observer {
-                    binding.recyclerView.adapter = MovieListAdapter(it, this)
-                })
-            Tabs.TAB_UPCOMING.tabId -> movieListViewModel.upcomingMovieList.observe(
-                viewLifecycleOwner,
-                Observer {
-                    binding.recyclerView.adapter = MovieListAdapter(it, this)
-                })
-            Tabs.TAB_TOP_RATED.tabId -> movieListViewModel.topRatedMovieList.observe(
-                viewLifecycleOwner,
-                Observer {
-                    binding.recyclerView.adapter = MovieListAdapter(it, this)
-                })
+            Tabs.TAB_POPULAR.tabId -> movieListViewModel.popularMovieList.observe(viewLifecycleOwner) {
+                binding.recyclerView.adapter = MovieListAdapter(it, this)
+            }
+
+            Tabs.TAB_PLAYING.tabId -> movieListViewModel.playingMovieList.observe(viewLifecycleOwner) {
+                binding.recyclerView.adapter = MovieListAdapter(it, this)
+            }
+            Tabs.TAB_UPCOMING.tabId -> movieListViewModel.upcomingMovieList.observe(viewLifecycleOwner) {
+                binding.recyclerView.adapter = MovieListAdapter(it, this)
+            }
+            Tabs.TAB_TOP_RATED.tabId -> movieListViewModel.topRatedMovieList.observe(viewLifecycleOwner) {
+                binding.recyclerView.adapter = MovieListAdapter(it, this)
+            }
         }
     }
 

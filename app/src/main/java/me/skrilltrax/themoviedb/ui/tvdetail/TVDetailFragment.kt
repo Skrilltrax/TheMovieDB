@@ -16,7 +16,6 @@ import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import java.util.Stack
 import kotlin.collections.ArrayList
@@ -91,18 +90,18 @@ class TVDetailFragment : Fragment(), ListItemClickListener {
     }
 
     private fun setupObservers(viewLifecycleOwner: LifecycleOwner) {
-        showId.observe(viewLifecycleOwner, Observer {
+        showId.observe(viewLifecycleOwner) {
             tvDetailViewModel.showId.postValue(it)
-        })
+        }
 
-        tvDetailViewModel.showId.observe(viewLifecycleOwner, Observer {
+        tvDetailViewModel.showId.observe(viewLifecycleOwner) {
             tvDetailViewModel.fetchShowDetails()
             tvDetailViewModel.fetchCastAndCrew()
             tvDetailViewModel.fetchVideos()
             tvDetailViewModel.fetchRecommendations()
-        })
+        }
 
-        tvDetailViewModel.tvDetail.observe(viewLifecycleOwner, Observer {
+        tvDetailViewModel.tvDetail.observe(viewLifecycleOwner) {
             with(binding) {
                 if (it.overview.isNullOrEmpty()) {
                     synopsis.gone()
@@ -127,19 +126,19 @@ class TVDetailFragment : Fragment(), ListItemClickListener {
                 it.backdropPath?.let { url -> movieHeader.movieBackground.setHeroImage(url) }
                 it.posterPath?.let { url -> movieHeader.moviePoster.setPosterImage(url) }
             }
-        })
+        }
 
-        tvDetailViewModel.genres.observe(viewLifecycleOwner, Observer {
+        tvDetailViewModel.genres.observe(viewLifecycleOwner) {
             if (it.isEmpty()) {
                 binding.genreRecyclerView.gone()
-                return@Observer
+                return@observe
             }
             binding.genreRecyclerView.visible()
 
             binding.genreRecyclerView.adapter = GenreAdapter(it)
-        })
+        }
 
-        tvDetailViewModel.cast.observe(viewLifecycleOwner, Observer {
+        tvDetailViewModel.cast.observe(viewLifecycleOwner) {
             val castList: ArrayList<CastItem> = arrayListOf()
             for (castListItem in it) {
                 if (castListItem.profilePath != null) {
@@ -150,15 +149,15 @@ class TVDetailFragment : Fragment(), ListItemClickListener {
             if (castList.isEmpty()) {
                 binding.castRecyclerView.gone()
                 binding.titleCast.gone()
-                return@Observer
+                return@observe
             }
             binding.castRecyclerView.visible()
             binding.titleCast.visible()
             binding.castRecyclerView.adapter =
                 CreditsAdapter(castList as List<CastItem>, CreditsType.CAST)
-        })
+        }
 
-        tvDetailViewModel.crew.observe(viewLifecycleOwner, Observer {
+        tvDetailViewModel.crew.observe(viewLifecycleOwner) {
             val crewList: ArrayList<CrewItem> = arrayListOf()
             for (crewListItem in it) {
                 if (crewListItem.profilePath != null) {
@@ -169,20 +168,20 @@ class TVDetailFragment : Fragment(), ListItemClickListener {
             if (crewList.isEmpty()) {
                 binding.crewRecyclerView.gone()
                 binding.titleCrew.gone()
-                return@Observer
+                return@observe
             }
             binding.crewRecyclerView.visible()
             binding.titleCrew.visible()
 
             binding.crewRecyclerView.adapter =
                 CreditsAdapter(crewList as List<CrewItem>, CreditsType.CREW)
-        })
+        }
 
-        tvDetailViewModel.videos.observe(viewLifecycleOwner, Observer {
+        tvDetailViewModel.videos.observe(viewLifecycleOwner) {
             if (it.isEmpty()) {
                 binding.videosRecyclerView.gone()
                 binding.titleVideos.gone()
-                return@Observer
+                return@observe
             }
             binding.videosRecyclerView.visible()
             binding.titleVideos.visible()
@@ -190,13 +189,13 @@ class TVDetailFragment : Fragment(), ListItemClickListener {
             binding.videosRecyclerView.adapter = VideoAdapter(it) { videoResultItem ->
                 onVideoItemClick(videoResultItem)
             }
-        })
+        }
 
-        tvDetailViewModel.recommendations.observe(viewLifecycleOwner, Observer { list ->
+        tvDetailViewModel.recommendations.observe(viewLifecycleOwner) { list ->
             if (list.isEmpty()) {
                 binding.recommendedRecyclerView.gone()
                 binding.titleRecommended.gone()
-                return@Observer
+                return@observe
             }
             binding.recommendedRecyclerView.visible()
             binding.titleRecommended.visible()
@@ -207,16 +206,16 @@ class TVDetailFragment : Fragment(), ListItemClickListener {
                 urlIdList.add(Pair(it.posterPath ?: "", it.id.toString()))
             }
             binding.recommendedRecyclerView.adapter = RecommendationAdapter(urlIdList, this)
-        })
+        }
 
-        tvDetailViewModel.isLoading.observe(viewLifecycleOwner, Observer {
+        tvDetailViewModel.isLoading.observe(viewLifecycleOwner) {
             if (it == false) lifecycleScope.launch(Dispatchers.IO) {
                 delay(300)
                 withContext(Dispatchers.Main) {
                     tvDetailActivity.hideLoading()
                 }
             }
-        })
+        }
     }
 
     private fun onVideoItemClick(videoResultsItem: VideoResultsItem) {

@@ -16,7 +16,6 @@ import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import java.util.Stack
 import kotlin.collections.ArrayList
@@ -91,18 +90,18 @@ class MovieDetailFragment : Fragment(), ListItemClickListener {
     }
 
     private fun setupObservers(viewLifecycleOwner: LifecycleOwner) {
-        movieId.observe(viewLifecycleOwner, Observer {
+        movieId.observe(viewLifecycleOwner) {
             movieDetailViewModel.movieId.postValue(it)
-        })
+        }
 
-        movieDetailViewModel.movieId.observe(viewLifecycleOwner, Observer {
+        movieDetailViewModel.movieId.observe(viewLifecycleOwner) {
             movieDetailViewModel.fetchMovieDetails()
             movieDetailViewModel.fetchCastAndCrew()
             movieDetailViewModel.fetchVideos()
             movieDetailViewModel.fetchRecommendations()
-        })
+        }
 
-        movieDetailViewModel.movieDetail.observe(viewLifecycleOwner, Observer {
+        movieDetailViewModel.movieDetail.observe(viewLifecycleOwner) {
             with(binding) {
                 if (it.overview.isNullOrEmpty()) {
                     synopsis.gone()
@@ -127,19 +126,19 @@ class MovieDetailFragment : Fragment(), ListItemClickListener {
                 it.backdropPath?.let { url -> movieHeader.movieBackground.setHeroImage(url) }
                 it.posterPath?.let { url -> movieHeader.moviePoster.setPosterImage(url) }
             }
-        })
+        }
 
-        movieDetailViewModel.genres.observe(viewLifecycleOwner, Observer {
+        movieDetailViewModel.genres.observe(viewLifecycleOwner) {
             if (it.isEmpty()) {
                 binding.genreRecyclerView.gone()
-                return@Observer
+                return@observe
             }
             binding.genreRecyclerView.visible()
 
             binding.genreRecyclerView.adapter = GenreAdapter(it)
-        })
+        }
 
-        movieDetailViewModel.cast.observe(viewLifecycleOwner, Observer {
+        movieDetailViewModel.cast.observe(viewLifecycleOwner) {
             val castList: ArrayList<CastItem> = arrayListOf()
             for (castListItem in it) {
                 if (castListItem.profilePath != null) {
@@ -150,16 +149,16 @@ class MovieDetailFragment : Fragment(), ListItemClickListener {
             if (castList.isEmpty()) {
                 binding.castRecyclerView.gone()
                 binding.titleCast.gone()
-                return@Observer
+                return@observe
             }
             binding.castRecyclerView.visible()
             binding.titleCast.visible()
 
             binding.castRecyclerView.adapter =
                 CreditsAdapter(castList as List<CastItem>, CreditsType.CAST)
-        })
+        }
 
-        movieDetailViewModel.crew.observe(viewLifecycleOwner, Observer {
+        movieDetailViewModel.crew.observe(viewLifecycleOwner) {
             val crewList: ArrayList<CrewItem> = arrayListOf()
             for (crewListItem in it) {
                 if (crewListItem.profilePath != null) {
@@ -170,33 +169,33 @@ class MovieDetailFragment : Fragment(), ListItemClickListener {
             if (crewList.isEmpty()) {
                 binding.crewRecyclerView.gone()
                 binding.titleCrew.gone()
-                return@Observer
+                return@observe
             }
             binding.crewRecyclerView.visible()
             binding.titleCrew.visible()
 
             binding.crewRecyclerView.adapter =
                 CreditsAdapter(crewList as List<CrewItem>, CreditsType.CREW)
-        })
+        }
 
-        movieDetailViewModel.videos.observe(viewLifecycleOwner, Observer {
+        movieDetailViewModel.videos.observe(viewLifecycleOwner) {
             if (it.isEmpty()) {
                 binding.videosRecyclerView.gone()
                 binding.titleVideos.gone()
-                return@Observer
+                return@observe
             }
             binding.videosRecyclerView.visible()
             binding.titleVideos.visible()
             binding.videosRecyclerView.adapter = VideoAdapter(it) { videoResultItem ->
                 onVideoItemClick(videoResultItem)
             }
-        })
+        }
 
-        movieDetailViewModel.recommendations.observe(viewLifecycleOwner, Observer { list ->
+        movieDetailViewModel.recommendations.observe(viewLifecycleOwner) { list ->
             if (list.isEmpty()) {
                 binding.recommendedRecyclerView.gone()
                 binding.titleRecommended.gone()
-                return@Observer
+                return@observe
             }
             binding.recommendedRecyclerView.visible()
             binding.titleRecommended.visible()
@@ -206,16 +205,16 @@ class MovieDetailFragment : Fragment(), ListItemClickListener {
                 urlIdList.add(Pair(it.posterPath ?: "", it.id.toString()))
             }
             binding.recommendedRecyclerView.adapter = RecommendationAdapter(urlIdList, this)
-        })
+        }
 
-        movieDetailViewModel.isLoading.observe(viewLifecycleOwner, Observer {
+        movieDetailViewModel.isLoading.observe(viewLifecycleOwner) {
             if (it == false) lifecycleScope.launch(Dispatchers.IO) {
                 delay(300)
                 withContext(Dispatchers.Main) {
                     movieDetailActivity.hideLoading()
                 }
             }
-        })
+        }
     }
 
     private fun onVideoItemClick(videoResultsItem: VideoResultsItem) {
