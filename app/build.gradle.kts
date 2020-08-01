@@ -99,12 +99,4 @@ dependencies {
 
     kapt(Dependencies.AndroidX.room_compiler)
     kapt(Dependencies.ThirdParty.glide_compiler)
-
-    // Gson
-//    implementation("com.google.code.gson:gson:2.8.6")
-
-    // Anko Commons
-//    implementation("org.jetbrains.anko:anko-commons:0.10.8")
-    // room
-//    implementation("androidx.room:room-runtime:2.2.5")
 }
