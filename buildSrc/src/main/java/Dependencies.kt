@@ -1,13 +1,13 @@
 object Plugins {
-    const val agp = "com.android.tools.build:gradle:4.0.1"
-    const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.0-rc"
+    const val agp = "com.android.tools.build:gradle:4.2.0-alpha08"
+    const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.0"
 }
 
 object Dependencies {
     object Kotlin {
         object Coroutines {
-            const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.8-1.4.0-rc"
-            const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.8-1.4.0-rc"
+            const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.0"
+            const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.0"
         }
     }
 

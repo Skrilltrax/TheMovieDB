@@ -19,7 +19,7 @@ fun ImageView.setPosterImage(url: String) {
 
 fun ImageView.setHeroImage(url: String) {
     Glide.with(this.context)
-        .load(Constants.POSTER_W500_IMAGE_PATH + url)
+        .load(Constants.POSTER_ORIGINAL_IMAGE_PATH + url)
         .transform(FitCenter())
         .transition(DrawableTransitionOptions.withCrossFade())
         .into(this)

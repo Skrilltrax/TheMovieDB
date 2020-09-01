@@ -77,8 +77,8 @@ dependencies {
     implementation(Dependencies.AndroidX.room_ktx)
     implementation(Dependencies.AndroidX.viewpager2)
 
-    implementation(Dependencies.Kotlin.Coroutines.android)
-    implementation(Dependencies.Kotlin.Coroutines.core)
+//    implementation(Dependencies.Kotlin.Coroutines.android)
+//    implementation(Dependencies.Kotlin.Coroutines.core)
 
     implementation(Dependencies.ThirdParty.glide)
     implementation(Dependencies.ThirdParty.koin_android)
