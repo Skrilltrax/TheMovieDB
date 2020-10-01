@@ -59,6 +59,9 @@ android {
 
     buildFeatures.viewBinding = true
     kapt.correctErrorTypes = true
+    lintOptions {
+        disable("InvalidFragmentVersionForActivityResult")
+    }
 }
 
 dependencies {

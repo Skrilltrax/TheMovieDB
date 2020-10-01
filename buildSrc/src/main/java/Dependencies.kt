@@ -20,7 +20,7 @@ object Dependencies {
     object AndroidX {
         const val hiltAndroidXVersion = "1.0.0-alpha02"
 
-        const val activity_ktx = "androidx.activity:activity-ktx:1.2.0-alpha08"
+        const val activity_ktx = "androidx.activity:activity-ktx:1.2.0-beta01"
         const val annotation = "androidx.annotation:annotation:1.2.0-alpha01"
         const val appcompat = "androidx.appcompat:appcompat:1.3.0-alpha02"
         const val constraint_layout = "androidx.constraintlayout:constraintlayout:2.0.1"
@@ -44,9 +44,6 @@ object Dependencies {
     object ThirdParty {
         const val glide = "com.github.bumptech.glide:glide:4.11.0"
         const val glide_compiler = "com.github.bumptech.glide:glide:4.11.0"
-        const val koin_android = "org.koin:koin-android:2.1.3"
-        const val koin_androidx_scope = "org.koin:koin-androidx-scope:2.1.3"
-        const val koin_androidx_viewmodel = "org.koin:koin-androidx-viewmodel:2.1.3"
         const val lottie = "com.airbnb.android:lottie:3.4.1"
         const val material_rating_bar = "me.zhanghai.android.materialratingbar:library:1.4.0"
         const val okhttp_logging_interceptor = "com.squareup.okhttp3:logging-interceptor:4.7.2"
