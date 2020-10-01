@@ -1,9 +1,14 @@
 object Plugins {
     const val agp = "com.android.tools.build:gradle:4.2.0-alpha12"
     const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.10"
+    const val hilt = "com.google.dagger:hilt-android-gradle-plugin:2.29.1-alpha"
 }
 
 object Dependencies {
+    const val hiltVersion = "1.0.0-alpha02"
+    const val lifecycleVersion = "2.3.0-alpha07"
+    const val roomVersion = "2.3.0-alpha02"
+
     object Kotlin {
         object Coroutines {
             const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.0"
@@ -18,14 +23,16 @@ object Dependencies {
         const val constraint_layout = "androidx.constraintlayout:constraintlayout:2.0.1"
         const val core_ktx = "androidx.core:core-ktx:1.5.0-alpha03"
         const val fragment_ktx = "androidx.fragment:fragment-ktx:1.3.0-alpha08"
-        const val lifecycle_common = "androidx.lifecycle:lifecycle-common-java8:2.3.0-alpha07"
-        const val lifecycle_livedata_ktx = "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0-alpha07"
-        const val lifecycle_viewmodel_ktx = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-alpha07"
+        const val hilt = "com.google.dagger:hilt-android:$hiltVersion"
+        const val hilt_compiler = "com.google.dagger:hilt-android-compiler:$hiltVersion"
+        const val lifecycle_common = "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion"
+        const val lifecycle_livedata_ktx = "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
+        const val lifecycle_viewmodel_ktx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
         const val material = "com.google.android.material:material:1.3.0-alpha02"
         const val preference = "androidx.preference:preference:1.1.1"
         const val recycler_view = "androidx.recyclerview:recyclerview:1.2.0-alpha05"
-        const val room_compiler = "androidx.room:room-compiler:2.3.0-alpha02"
-        const val room_ktx = "androidx.room:room-ktx:2.3.0-alpha02"
+        const val room_compiler = "androidx.room:room-compiler:$roomVersion"
+        const val room_ktx = "androidx.room:room-ktx:$roomVersion"
         const val viewpager2 = "androidx.viewpager2:viewpager2:1.1.0-alpha01"
     }
 

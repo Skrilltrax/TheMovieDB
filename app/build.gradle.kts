@@ -3,6 +3,7 @@ import java.util.Properties
 
 plugins {
     id("com.android.application")
+    id("dagger.hilt.android.plugin")
     kotlin("android")
     kotlin("kapt")
     kotlin("android.extensions")
@@ -67,6 +68,7 @@ dependencies {
     implementation(Dependencies.AndroidX.constraint_layout)
     implementation(Dependencies.AndroidX.core_ktx)
     implementation(Dependencies.AndroidX.fragment_ktx)
+    implementation(Dependencies.AndroidX.hilt)
     implementation(Dependencies.AndroidX.lifecycle_common)
     implementation(Dependencies.AndroidX.lifecycle_livedata_ktx)
     implementation(Dependencies.AndroidX.lifecycle_viewmodel_ktx)
@@ -95,6 +97,7 @@ dependencies {
     androidTestImplementation(Dependencies.Testing.AndroidX.runner)
     androidTestImplementation(Dependencies.Testing.AndroidX.espresso_core)
 
+    kapt(Dependencies.AndroidX.hilt_compiler)
     kapt(Dependencies.AndroidX.room_compiler)
     kapt(Dependencies.ThirdParty.glide_compiler)
 }
