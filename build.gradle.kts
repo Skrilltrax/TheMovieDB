@@ -3,6 +3,7 @@
 buildscript {
     repositories {
         google()
+
         jcenter()
     }
     dependencies {
@@ -15,6 +16,7 @@ buildscript {
 
 plugins {
     id("com.diffplug.gradle.spotless") version "3.26.1"
+    id("com.github.ben-manes.versions") version "0.31.0"
 }
 
 spotless {

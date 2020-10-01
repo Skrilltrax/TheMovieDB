@@ -73,12 +73,8 @@ dependencies {
     implementation(Dependencies.AndroidX.material)
     implementation(Dependencies.AndroidX.preference)
     implementation(Dependencies.AndroidX.recycler_view)
-    implementation(Dependencies.AndroidX.recycler_view_selection)
     implementation(Dependencies.AndroidX.room_ktx)
     implementation(Dependencies.AndroidX.viewpager2)
-
-//    implementation(Dependencies.Kotlin.Coroutines.android)
-//    implementation(Dependencies.Kotlin.Coroutines.core)
 
     implementation(Dependencies.ThirdParty.glide)
     implementation(Dependencies.ThirdParty.koin_android)
@@ -91,6 +87,8 @@ dependencies {
     implementation(Dependencies.ThirdParty.timber)
     implementation(Dependencies.ThirdParty.timberkt)
     implementation(Dependencies.ThirdParty.whatthestack)
+
+    debugImplementation(Dependencies.ThirdParty.whatthestack)
 
     testImplementation(Dependencies.Testing.junit)
 

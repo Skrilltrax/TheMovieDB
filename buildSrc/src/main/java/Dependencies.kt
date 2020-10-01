@@ -1,6 +1,6 @@
 object Plugins {
-    const val agp = "com.android.tools.build:gradle:4.2.0-alpha08"
-    const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.0"
+    const val agp = "com.android.tools.build:gradle:4.2.0-alpha12"
+    const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.10"
 }
 
 object Dependencies {
@@ -12,21 +12,20 @@ object Dependencies {
     }
 
     object AndroidX {
-        const val activity_ktx = "androidx.activity:activity-ktx:1.2.0-alpha07"
+        const val activity_ktx = "androidx.activity:activity-ktx:1.2.0-alpha08"
         const val annotation = "androidx.annotation:annotation:1.2.0-alpha01"
-        const val appcompat = "androidx.appcompat:appcompat:1.3.0-alpha01"
-        const val constraint_layout = "androidx.constraintlayout:constraintlayout:2.0.0-beta8"
-        const val core_ktx = "androidx.core:core-ktx:1.5.0-alpha01"
-        const val fragment_ktx = "androidx.fragment:fragment-ktx:1.3.0-alpha07"
-        const val lifecycle_common = "androidx.lifecycle:lifecycle-common-java8:2.3.0-alpha06"
-        const val lifecycle_livedata_ktx = "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0-alpha06"
-        const val lifecycle_viewmodel_ktx = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-alpha06"
-        const val material = "com.google.android.material:material:1.3.0-alpha01"
+        const val appcompat = "androidx.appcompat:appcompat:1.3.0-alpha02"
+        const val constraint_layout = "androidx.constraintlayout:constraintlayout:2.0.1"
+        const val core_ktx = "androidx.core:core-ktx:1.5.0-alpha03"
+        const val fragment_ktx = "androidx.fragment:fragment-ktx:1.3.0-alpha08"
+        const val lifecycle_common = "androidx.lifecycle:lifecycle-common-java8:2.3.0-alpha07"
+        const val lifecycle_livedata_ktx = "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0-alpha07"
+        const val lifecycle_viewmodel_ktx = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0-alpha07"
+        const val material = "com.google.android.material:material:1.3.0-alpha02"
         const val preference = "androidx.preference:preference:1.1.1"
         const val recycler_view = "androidx.recyclerview:recyclerview:1.2.0-alpha05"
-        const val recycler_view_selection = "androidx.recyclerview:recyclerview-selection:1.1.0-rc01"
-        const val room_compiler = "androidx.room:room-compiler:2.2.5"
-        const val room_ktx = "androidx.room:room-ktx:2.2.5"
+        const val room_compiler = "androidx.room:room-compiler:2.3.0-alpha02"
+        const val room_ktx = "androidx.room:room-ktx:2.3.0-alpha02"
         const val viewpager2 = "androidx.viewpager2:viewpager2:1.1.0-alpha01"
     }
 
