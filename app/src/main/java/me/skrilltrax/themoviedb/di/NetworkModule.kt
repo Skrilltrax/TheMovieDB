@@ -5,6 +5,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import javax.inject.Singleton
 import me.skrilltrax.themoviedb.constants.Constants
 import me.skrilltrax.themoviedb.network.api.movie.MovieApiInterface
 import me.skrilltrax.themoviedb.network.api.tv.TVApiInterface
@@ -12,7 +13,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import javax.inject.Singleton
 
 @InstallIn(ApplicationComponent::class)
 @Module
@@ -26,7 +26,6 @@ object NetworkModule {
                 override fun log(message: String) {
                     d { message }
                 }
-
             })
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         return httpLoggingInterceptor

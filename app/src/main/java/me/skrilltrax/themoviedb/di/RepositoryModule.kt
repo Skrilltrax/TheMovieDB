@@ -4,13 +4,13 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ApplicationComponent
+import javax.inject.Singleton
 import me.skrilltrax.themoviedb.network.api.movie.MovieApiInterface
 import me.skrilltrax.themoviedb.network.api.movie.MovieDetailRepository
 import me.skrilltrax.themoviedb.network.api.movie.MovieListRepository
 import me.skrilltrax.themoviedb.network.api.tv.TVApiInterface
 import me.skrilltrax.themoviedb.network.api.tv.TVDetailRepository
 import me.skrilltrax.themoviedb.network.api.tv.TVListRepository
-import javax.inject.Singleton
 
 @InstallIn(ApplicationComponent::class)
 @Module
