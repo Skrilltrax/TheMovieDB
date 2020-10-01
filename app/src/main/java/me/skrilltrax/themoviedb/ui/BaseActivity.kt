@@ -4,8 +4,10 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
+import dagger.hilt.android.AndroidEntryPoint
 import me.skrilltrax.themoviedb.R
 
+@AndroidEntryPoint
 open class BaseActivity : AppCompatActivity() {
 
     var dialog: Dialog? = null

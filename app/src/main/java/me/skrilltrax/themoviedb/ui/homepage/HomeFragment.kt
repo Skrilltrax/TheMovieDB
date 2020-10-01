@@ -5,16 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
+import dagger.hilt.android.AndroidEntryPoint
 import me.skrilltrax.themoviedb.adapter.MovieViewPagerAdapter
 import me.skrilltrax.themoviedb.adapter.TVViewPagerAdapter
 import me.skrilltrax.themoviedb.constants.Tabs
 import me.skrilltrax.themoviedb.databinding.FragmentHomeBinding
 import me.skrilltrax.themoviedb.ui.homepage.movie.MovieListViewModel
 import me.skrilltrax.themoviedb.ui.homepage.tv.TVListViewModel
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class HomeFragment : Fragment() {
 
@@ -23,8 +25,8 @@ class HomeFragment : Fragment() {
     private lateinit var movieAdapter: MovieViewPagerAdapter
     private lateinit var tvAdapter: TVViewPagerAdapter
 
-    private val movieListViewModel by sharedViewModel<MovieListViewModel>()
-    private val tvListViewModel by sharedViewModel<TVListViewModel>()
+    private val movieListViewModel by activityViewModels<MovieListViewModel>()
+    private val tvListViewModel by activityViewModels<TVListViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,

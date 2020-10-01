@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
 import me.skrilltrax.themoviedb.adapter.TVListAdapter
 import me.skrilltrax.themoviedb.constants.Tabs
@@ -13,12 +14,11 @@ import me.skrilltrax.themoviedb.databinding.FragmentCommonViewpagerBinding
 import me.skrilltrax.themoviedb.interfaces.ListItemClickListener
 import me.skrilltrax.themoviedb.model.list.tv.TVListResultItem
 import me.skrilltrax.themoviedb.ui.tvdetail.TVDetailActivity
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
 
 class TVViewPagerFragment : Fragment(), ListItemClickListener {
 
-    private val tvListViewModel by sharedViewModel<TVListViewModel>()
+    private val tvListViewModel by activityViewModels<TVListViewModel>()
 
     private lateinit var binding: FragmentCommonViewpagerBinding
     private var fragmentType: Int? = null
@@ -29,7 +29,7 @@ class TVViewPagerFragment : Fragment(), ListItemClickListener {
         savedInstanceState: Bundle?
     ): View? {
         val args = arguments
-        if (args != null) {
+        if (args is Bundle) {
             fragmentType = args.getInt("fragmentType", 0)
             Timber.d(fragmentType.toString())
         }
@@ -67,11 +67,11 @@ class TVViewPagerFragment : Fragment(), ListItemClickListener {
 
     companion object {
         fun newInstance(fragmentType: Int): TVViewPagerFragment {
-            val bundle = Bundle()
-            val commonViewPagerFragment = TVViewPagerFragment()
-            bundle.putInt("fragmentType", fragmentType)
-            commonViewPagerFragment.arguments = bundle
-            return commonViewPagerFragment
+            return TVViewPagerFragment().apply {
+                val bundle = Bundle()
+                bundle.putInt("fragmentType", fragmentType)
+                arguments = bundle
+            }
         }
     }
 }

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
 import me.skrilltrax.themoviedb.adapter.MovieListAdapter
 import me.skrilltrax.themoviedb.constants.Tabs
@@ -13,14 +14,13 @@ import me.skrilltrax.themoviedb.databinding.FragmentCommonViewpagerBinding
 import me.skrilltrax.themoviedb.interfaces.ListItemClickListener
 import me.skrilltrax.themoviedb.model.list.movie.MovieListResultItem
 import me.skrilltrax.themoviedb.ui.moviedetail.MovieDetailActivity
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
 
 class MovieViewPagerFragment : Fragment(), ListItemClickListener {
 
     private lateinit var binding: FragmentCommonViewpagerBinding
 
-    private val movieListViewModel by sharedViewModel<MovieListViewModel>()
+    private val movieListViewModel by activityViewModels<MovieListViewModel>()
     private var fragmentType: Int? = null
 
     override fun onCreateView(
