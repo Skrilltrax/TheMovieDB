@@ -1,11 +1,12 @@
+const val hiltVersion = "2.29.1-alpha"
+
 object Plugins {
     const val agp = "com.android.tools.build:gradle:4.2.0-alpha12"
     const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.10"
-    const val hilt = "com.google.dagger:hilt-android-gradle-plugin:2.29.1-alpha"
+    const val hilt = "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
 }
 
 object Dependencies {
-    const val hiltVersion = "1.0.0-alpha02"
     const val lifecycleVersion = "2.3.0-alpha07"
     const val roomVersion = "2.3.0-alpha02"
 
@@ -17,6 +18,8 @@ object Dependencies {
     }
 
     object AndroidX {
+        const val hiltAndroidXVersion = "1.0.0-alpha02"
+
         const val activity_ktx = "androidx.activity:activity-ktx:1.2.0-alpha08"
         const val annotation = "androidx.annotation:annotation:1.2.0-alpha01"
         const val appcompat = "androidx.appcompat:appcompat:1.3.0-alpha02"
@@ -24,7 +27,9 @@ object Dependencies {
         const val core_ktx = "androidx.core:core-ktx:1.5.0-alpha03"
         const val fragment_ktx = "androidx.fragment:fragment-ktx:1.3.0-alpha08"
         const val hilt = "com.google.dagger:hilt-android:$hiltVersion"
-        const val hilt_compiler = "com.google.dagger:hilt-android-compiler:$hiltVersion"
+        const val hilt_android_compiler = "com.google.dagger:hilt-android-compiler:$hiltVersion"
+        const val hilt_compiler = "androidx.hilt:hilt-compiler:$hiltAndroidXVersion"
+        const val hilt_lifecycle_viewmodel = "androidx.hilt:hilt-lifecycle-viewmodel:$hiltAndroidXVersion"
         const val lifecycle_common = "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion"
         const val lifecycle_livedata_ktx = "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
         const val lifecycle_viewmodel_ktx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
