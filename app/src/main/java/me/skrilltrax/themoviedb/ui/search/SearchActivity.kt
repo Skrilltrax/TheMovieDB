@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.snackbar.Snackbar
+import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,14 +17,15 @@ import me.skrilltrax.themoviedb.adapter.MovieListAdapter
 import me.skrilltrax.themoviedb.interfaces.ListItemClickListener
 import me.skrilltrax.themoviedb.model.list.movie.MovieListResultItem
 import me.skrilltrax.themoviedb.network.api.movie.MovieApiInterface
-import org.koin.android.ext.android.inject
 import retrofit2.HttpException
 
 class SearchActivity : AppCompatActivity(), ListItemClickListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var collapsingToolbar: CollapsingToolbarLayout
-    private val client: MovieApiInterface by inject()
+
+    @Inject
+    lateinit var client: MovieApiInterface
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +64,11 @@ class SearchActivity : AppCompatActivity(), ListItemClickListener {
                 } else {
                     withContext(Dispatchers.Main) {
                         //                            hideLoading()
-                        Snackbar.make(recyclerView, "Please check your network connection", Snackbar.LENGTH_SHORT)
+                        Snackbar.make(
+                            recyclerView,
+                            "Please check your network connection",
+                            Snackbar.LENGTH_SHORT
+                        )
                             .show()
                     }
                 }

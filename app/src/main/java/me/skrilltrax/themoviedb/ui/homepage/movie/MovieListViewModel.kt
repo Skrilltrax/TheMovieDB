@@ -1,5 +1,6 @@
 package me.skrilltrax.themoviedb.ui.homepage.movie
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,17 +11,21 @@ import me.skrilltrax.themoviedb.network.api.movie.MovieListRepository
 import timber.log.Timber
 
 @Suppress("UNCHECKED_CAST")
-class MovieListViewModel(private val movieListRepository: MovieListRepository) : ViewModel() {
+class MovieListViewModel @ViewModelInject constructor(private val movieListRepository: MovieListRepository) : ViewModel() {
 
     private var popularMovieStatus: Boolean = false
     private var playingMovieStatus: Boolean = false
     private var upcomingMovieStatus: Boolean = false
     private var topRatedMovieStatus: Boolean = false
 
-    private val _popularMovieList: MutableLiveData<ArrayList<MovieListResultItem>> = MutableLiveData()
-    private val _playingMovieList: MutableLiveData<ArrayList<MovieListResultItem>> = MutableLiveData()
-    private val _upcomingMovieList: MutableLiveData<ArrayList<MovieListResultItem>> = MutableLiveData()
-    private val _topRatedMovieList: MutableLiveData<ArrayList<MovieListResultItem>> = MutableLiveData()
+    private val _popularMovieList: MutableLiveData<ArrayList<MovieListResultItem>> =
+        MutableLiveData()
+    private val _playingMovieList: MutableLiveData<ArrayList<MovieListResultItem>> =
+        MutableLiveData()
+    private val _upcomingMovieList: MutableLiveData<ArrayList<MovieListResultItem>> =
+        MutableLiveData()
+    private val _topRatedMovieList: MutableLiveData<ArrayList<MovieListResultItem>> =
+        MutableLiveData()
 
     val isLoading: MutableLiveData<Boolean> = MutableLiveData(true)
 

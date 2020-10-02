@@ -1,5 +1,6 @@
 package me.skrilltrax.themoviedb.ui.tvdetail
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,7 +16,7 @@ import me.skrilltrax.themoviedb.network.api.tv.TVDetailRepository
 import timber.log.Timber
 
 @Suppress("UNCHECKED_CAST")
-class TVDetailViewModel(private val tvDetailRepository: TVDetailRepository) : ViewModel() {
+class TVDetailViewModel @ViewModelInject constructor(private val tvDetailRepository: TVDetailRepository) : ViewModel() {
 
     private var tvDetailStatus: Boolean = false
     private var crewStatus: Boolean = false

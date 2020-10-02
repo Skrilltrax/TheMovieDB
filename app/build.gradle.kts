@@ -3,6 +3,7 @@ import java.util.Properties
 
 plugins {
     id("com.android.application")
+    id("dagger.hilt.android.plugin")
     kotlin("android")
     kotlin("kapt")
     kotlin("android.extensions")
@@ -58,6 +59,9 @@ android {
 
     buildFeatures.viewBinding = true
     kapt.correctErrorTypes = true
+    lintOptions {
+        disable("InvalidFragmentVersionForActivityResult")
+    }
 }
 
 dependencies {
@@ -67,6 +71,8 @@ dependencies {
     implementation(Dependencies.AndroidX.constraint_layout)
     implementation(Dependencies.AndroidX.core_ktx)
     implementation(Dependencies.AndroidX.fragment_ktx)
+    implementation(Dependencies.AndroidX.hilt)
+    implementation(Dependencies.AndroidX.hilt_lifecycle_viewmodel)
     implementation(Dependencies.AndroidX.lifecycle_common)
     implementation(Dependencies.AndroidX.lifecycle_livedata_ktx)
     implementation(Dependencies.AndroidX.lifecycle_viewmodel_ktx)
@@ -76,17 +82,15 @@ dependencies {
     implementation(Dependencies.AndroidX.room_ktx)
     implementation(Dependencies.AndroidX.viewpager2)
 
+    implementation(Dependencies.Kotlin.kotlin_reflect)
+
     implementation(Dependencies.ThirdParty.glide)
-    implementation(Dependencies.ThirdParty.koin_android)
-    implementation(Dependencies.ThirdParty.koin_androidx_scope)
-    implementation(Dependencies.ThirdParty.koin_androidx_viewmodel)
     implementation(Dependencies.ThirdParty.lottie)
     implementation(Dependencies.ThirdParty.material_rating_bar)
     implementation(Dependencies.ThirdParty.okhttp_logging_interceptor)
     implementation(Dependencies.ThirdParty.retrofit_converter_gson)
     implementation(Dependencies.ThirdParty.timber)
     implementation(Dependencies.ThirdParty.timberkt)
-    implementation(Dependencies.ThirdParty.whatthestack)
 
     debugImplementation(Dependencies.ThirdParty.whatthestack)
 
@@ -95,6 +99,8 @@ dependencies {
     androidTestImplementation(Dependencies.Testing.AndroidX.runner)
     androidTestImplementation(Dependencies.Testing.AndroidX.espresso_core)
 
+    kapt(Dependencies.AndroidX.hilt_android_compiler)
+    kapt(Dependencies.AndroidX.hilt_compiler)
     kapt(Dependencies.AndroidX.room_compiler)
     kapt(Dependencies.ThirdParty.glide_compiler)
 }

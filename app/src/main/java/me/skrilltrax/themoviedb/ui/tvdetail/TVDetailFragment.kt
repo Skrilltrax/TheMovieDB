@@ -14,6 +14,7 @@ import androidx.activity.addCallback
 import androidx.core.view.ViewCompat
 import androidx.core.view.updatePadding
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
@@ -41,11 +42,10 @@ import me.skrilltrax.themoviedb.utils.gone
 import me.skrilltrax.themoviedb.utils.setHeroImage
 import me.skrilltrax.themoviedb.utils.setPosterImage
 import me.skrilltrax.themoviedb.utils.visible
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TVDetailFragment : Fragment(), ListItemClickListener {
 
-    private val tvDetailViewModel: TVDetailViewModel by viewModel()
+    private val tvDetailViewModel by activityViewModels<TVDetailViewModel>()
     private val tvDetailActivity by lazy { requireActivity() as TVDetailActivity }
     private var showId: MutableLiveData<String> = MutableLiveData("")
     private lateinit var showStack: Stack<String>

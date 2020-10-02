@@ -1,5 +1,6 @@
 package me.skrilltrax.themoviedb.ui.moviedetail
 
+import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,7 +16,7 @@ import me.skrilltrax.themoviedb.network.api.movie.MovieDetailRepository
 import timber.log.Timber
 
 @Suppress("UNCHECKED_CAST")
-class MovieDetailViewModel(private val movieDetailRepository: MovieDetailRepository) : ViewModel() {
+class MovieDetailViewModel @ViewModelInject constructor(private val movieDetailRepository: MovieDetailRepository) : ViewModel() {
 
     private var movieDetailStatus: Boolean = false
     private var crewStatus: Boolean = false
