@@ -82,6 +82,8 @@ dependencies {
     implementation(Dependencies.AndroidX.room_ktx)
     implementation(Dependencies.AndroidX.viewpager2)
 
+    implementation(Dependencies.Kotlin.kotlin_reflect)
+
     implementation(Dependencies.ThirdParty.glide)
     implementation(Dependencies.ThirdParty.lottie)
     implementation(Dependencies.ThirdParty.material_rating_bar)

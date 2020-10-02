@@ -1,7 +1,7 @@
 const val hiltVersion = "2.29.1-alpha"
 
 object Plugins {
-    const val agp = "com.android.tools.build:gradle:4.2.0-alpha12"
+    const val agp = "com.android.tools.build:gradle:4.2.0-alpha13"
     const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.10"
     const val hilt = "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
 }
@@ -12,9 +12,11 @@ object Dependencies {
 
     object Kotlin {
         object Coroutines {
-            const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.0"
-            const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.0"
+            const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.10"
+            const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.10"
         }
+        const val kotlin_reflect = "org.jetbrains.kotlin:kotlin-reflect:1.4.10"
+
     }
 
     object AndroidX {
@@ -25,7 +27,7 @@ object Dependencies {
         const val appcompat = "androidx.appcompat:appcompat:1.3.0-alpha02"
         const val constraint_layout = "androidx.constraintlayout:constraintlayout:2.0.1"
         const val core_ktx = "androidx.core:core-ktx:1.5.0-alpha03"
-        const val fragment_ktx = "androidx.fragment:fragment-ktx:1.3.0-alpha08"
+        const val fragment_ktx = "androidx.fragment:fragment-ktx:1.3.0-beta01"
         const val hilt = "com.google.dagger:hilt-android:$hiltVersion"
         const val hilt_android_compiler = "com.google.dagger:hilt-android-compiler:$hiltVersion"
         const val hilt_compiler = "androidx.hilt:hilt-compiler:$hiltAndroidXVersion"
