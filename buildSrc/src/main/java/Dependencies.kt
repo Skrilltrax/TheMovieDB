@@ -16,7 +16,6 @@ object Dependencies {
             const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.10"
         }
         const val kotlin_reflect = "org.jetbrains.kotlin:kotlin-reflect:1.4.10"
-
     }
 
     object AndroidX {
