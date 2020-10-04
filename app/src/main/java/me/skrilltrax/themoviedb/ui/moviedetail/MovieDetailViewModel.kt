@@ -5,9 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import me.skrilltrax.themoviedb.model.credits.CastItem
 import me.skrilltrax.themoviedb.model.credits.CreditsResponse
 import me.skrilltrax.themoviedb.model.credits.CrewItem
@@ -60,7 +58,6 @@ class MovieDetailViewModel @ViewModelInject constructor(private val movieDetailR
     val recommendations: LiveData<List<MovieListResultItem>>
         get() = _recommendations
 
-    @Suppress("UNCHECKED_CAST")
     fun fetchMovieDetailsWithExtras() {
         viewModelScope.launch {
             val movieDetailExtraData = movieDetailRepository.getMovieDetailsWithExtras(movieId.value!!)
@@ -74,7 +71,6 @@ class MovieDetailViewModel @ViewModelInject constructor(private val movieDetailR
         }
     }
 
-    @Suppress("UNCHECKED_CAST")
     fun fetchMovieDetails() {
         viewModelScope.launch {
             val movieDetailData = movieDetailRepository.getMovieDetails(movieId.value!!)
@@ -98,28 +94,28 @@ class MovieDetailViewModel @ViewModelInject constructor(private val movieDetailR
 
     fun fetchCastAndCrew() {
         viewModelScope.launch {
-            val movieCredits = movieDetailRepository.getCastCrew(movieId.value!!)
-            updateCredits(movieCredits)
+            val credits = movieDetailRepository.getCastCrew(movieId.value!!)
+            updateCredits(credits)
         }
     }
 
-    private fun updateCredits(movieCredits: CreditsResponse?) {
-        if (movieCredits is CreditsResponse) {
-            _cast.postValue(movieCredits.cast as List<CastItem>)
-            _crew.postValue(movieCredits.crew as List<CrewItem>)
+    private fun updateCredits(credits: CreditsResponse?) {
+        if (credits is CreditsResponse) {
+            _cast.postValue(credits.cast as List<CastItem>)
+            _crew.postValue(credits.crew as List<CrewItem>)
         }
     }
 
     fun fetchVideos() {
         viewModelScope.launch {
-            val movieVideos = movieDetailRepository.getVideos(movieId.value!!)
-            updateVideos(movieVideos)
+            val videos = movieDetailRepository.getVideos(movieId.value!!)
+            updateVideos(videos)
         }
     }
 
-    private fun updateVideos(movieVideos: VideoResponse?) {
-        if (movieVideos is VideoResponse) {
-            _videos.postValue(movieVideos.results as List<VideoResultsItem>)
+    private fun updateVideos(videos: VideoResponse?) {
+        if (videos is VideoResponse) {
+            _videos.postValue(videos.results as List<VideoResultsItem>)
             sortVideos()
         }
     }
@@ -153,5 +149,4 @@ class MovieDetailViewModel @ViewModelInject constructor(private val movieDetailR
         _trailers.postValue(trailerList)
         _extraVideos.postValue(extraList)
     }
-
 }

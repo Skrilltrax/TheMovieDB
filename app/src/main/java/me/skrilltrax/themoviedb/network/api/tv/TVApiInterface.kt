@@ -1,6 +1,7 @@
 package me.skrilltrax.themoviedb.network.api.tv
 
 import me.skrilltrax.themoviedb.model.credits.CreditsResponse
+import me.skrilltrax.themoviedb.model.detail.tv.TVDetailExtraResponse
 import me.skrilltrax.themoviedb.model.detail.tv.TVDetailResponse
 import me.skrilltrax.themoviedb.model.list.tv.TVListResponse
 import me.skrilltrax.themoviedb.model.videos.VideoResponse
@@ -27,16 +28,36 @@ interface TVApiInterface {
     suspend fun getTopRatedShows(@Query("api_key") apiKey: String): Response<TVListResponse>
 
     @GET("tv/{show_id}")
-    suspend fun getShowDetails(@Path("show_id") id: String, @Query("api_key") apiKey: String): Response<TVDetailResponse>
+    suspend fun getShowDetails(
+        @Path("show_id") id: String,
+        @Query("api_key") apiKey: String
+    ): Response<TVDetailResponse>
+
+    @GET("tv/{show_id}")
+    suspend fun getShowDetailsWithExtras(
+        @Path("show_id") id: String,
+        @Query("api_key") apiKey: String,
+        @Query("append_to_response") extras: String
+    ): Response<TVDetailExtraResponse>
+
 
     @GET("tv/{show_id}/credits")
-    suspend fun getShowCredits(@Path("show_id") id: String, @Query("api_key") apiKey: String): Response<CreditsResponse>
+    suspend fun getShowCredits(
+        @Path("show_id") id: String,
+        @Query("api_key") apiKey: String
+    ): Response<CreditsResponse>
 
     @GET("tv/{show_id}/videos")
-    suspend fun getShowVideos(@Path("show_id") id: String, @Query("api_key") apiKey: String): Response<VideoResponse>
+    suspend fun getShowVideos(
+        @Path("show_id") id: String,
+        @Query("api_key") apiKey: String
+    ): Response<VideoResponse>
 
     @GET("tv/{show_id}/recommendations")
-    suspend fun getShowRecommendations(@Path("show_id") id: String, @Query("api_key") apiKey: String): Response<TVListResponse>
+    suspend fun getShowRecommendations(
+        @Path("show_id") id: String,
+        @Query("api_key") apiKey: String
+    ): Response<TVListResponse>
 
     companion object {
         fun getClient(): TVApiInterface {

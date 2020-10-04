@@ -95,10 +95,11 @@ class TVDetailFragment : Fragment(), ListItemClickListener {
         }
 
         tvDetailViewModel.showId.observe(viewLifecycleOwner) {
-            tvDetailViewModel.fetchShowDetails()
-            tvDetailViewModel.fetchCastAndCrew()
-            tvDetailViewModel.fetchVideos()
-            tvDetailViewModel.fetchRecommendations()
+//            tvDetailViewModel.fetchShowDetails()
+//            tvDetailViewModel.fetchCastAndCrew()
+//            tvDetailViewModel.fetchVideos()
+//            tvDetailViewModel.fetchRecommendations()
+            tvDetailViewModel.fetchShowDetailsWithExtras()
         }
 
         tvDetailViewModel.tvDetail.observe(viewLifecycleOwner) {

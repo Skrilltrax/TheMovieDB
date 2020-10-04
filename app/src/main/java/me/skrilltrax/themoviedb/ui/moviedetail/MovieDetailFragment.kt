@@ -36,12 +36,11 @@ import me.skrilltrax.themoviedb.model.credits.CastItem
 import me.skrilltrax.themoviedb.model.credits.CrewItem
 import me.skrilltrax.themoviedb.model.list.movie.MovieListResultItem
 import me.skrilltrax.themoviedb.model.videos.VideoResultsItem
+import me.skrilltrax.themoviedb.utils.*
 import me.skrilltrax.themoviedb.utils.SystemLayoutUtils.makeFullScreenHideNavigation
 import me.skrilltrax.themoviedb.utils.SystemLayoutUtils.setStatusBarTint
-import me.skrilltrax.themoviedb.utils.gone
-import me.skrilltrax.themoviedb.utils.setHeroImage
-import me.skrilltrax.themoviedb.utils.setPosterImage
-import me.skrilltrax.themoviedb.utils.visible
+import me.skrilltrax.themoviedb.utils.YoutubeUtils.launchYoutube
+
 
 class MovieDetailFragment : Fragment(), ListItemClickListener {
 
@@ -97,10 +96,6 @@ class MovieDetailFragment : Fragment(), ListItemClickListener {
         }
 
         movieDetailViewModel.movieId.observe(viewLifecycleOwner) {
-//            movieDetailViewModel.fetchMovieDetails()
-//            movieDetailViewModel.fetchCastAndCrew()
-//            movieDetailViewModel.fetchVideos()
-//            movieDetailViewModel.fetchRecommendations()
             movieDetailViewModel.fetchMovieDetailsWithExtras()
         }
 
@@ -221,16 +216,7 @@ class MovieDetailFragment : Fragment(), ListItemClickListener {
     }
 
     private fun onVideoItemClick(videoResultsItem: VideoResultsItem) {
-        val appIntent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:${videoResultsItem.key}"))
-        val webIntent = Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse("http://www.youtube.com/watch?v=${videoResultsItem.key}")
-        )
-        try {
-            requireContext().startActivity(appIntent)
-        } catch (ex: ActivityNotFoundException) {
-            requireContext().startActivity(webIntent)
-        }
+        launchYoutube(this.requireContext(), videoResultsItem.key)
     }
 
     override fun onItemClick(resultsItem: MovieListResultItem) {
