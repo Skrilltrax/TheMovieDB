@@ -1,6 +1,7 @@
 package me.skrilltrax.themoviedb.network.api.movie
 
 import me.skrilltrax.themoviedb.model.credits.CreditsResponse
+import me.skrilltrax.themoviedb.model.detail.movie.MovieDetailExtraResponse
 import me.skrilltrax.themoviedb.model.detail.movie.MovieDetailResponse
 import me.skrilltrax.themoviedb.model.list.movie.MovieListResponse
 import me.skrilltrax.themoviedb.model.videos.VideoResponse
@@ -29,16 +30,35 @@ interface MovieApiInterface {
     suspend fun getTopRatedMovies(@Query("api_key") apiKey: String): Response<MovieListResponse>
 
     @GET("movie/{movie_id}")
-    suspend fun getMovieDetails(@Path("movie_id") id: String, @Query("api_key") apiKey: String): Response<MovieDetailResponse>
+    suspend fun getMovieDetailsWithExtras(
+        @Path("movie_id") id: String,
+        @Query("api_key") apiKey: String,
+        @Query("append_to_response") extras: String
+    ): Response<MovieDetailExtraResponse>
+
+    @GET("movie/{movie_id}")
+    suspend fun getMovieDetails(
+        @Path("movie_id") id: String,
+        @Query("api_key") apiKey: String
+    ): Response<MovieDetailResponse>
 
     @GET("movie/{movie_id}/credits")
-    suspend fun getMovieCredits(@Path("movie_id") id: String, @Query("api_key") apiKey: String): Response<CreditsResponse>
+    suspend fun getMovieCredits(
+        @Path("movie_id") id: String,
+        @Query("api_key") apiKey: String
+    ): Response<CreditsResponse>
 
     @GET("movie/{movie_id}/videos")
-    suspend fun getMovieVideos(@Path("movie_id") id: String, @Query("api_key") apiKey: String): Response<VideoResponse>
+    suspend fun getMovieVideos(
+        @Path("movie_id") id: String,
+        @Query("api_key") apiKey: String
+    ): Response<VideoResponse>
 
     @GET("movie/{movie_id}/recommendations")
-    suspend fun getMovieRecommendations(@Path("movie_id") id: String, @Query("api_key") apiKey: String): Response<MovieListResponse>
+    suspend fun getMovieRecommendations(
+        @Path("movie_id") id: String,
+        @Query("api_key") apiKey: String
+    ): Response<MovieListResponse>
 
     companion object {
         fun getClient(): MovieApiInterface {

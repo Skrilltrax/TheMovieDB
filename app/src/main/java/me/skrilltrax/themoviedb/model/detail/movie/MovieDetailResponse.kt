@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import me.skrilltrax.themoviedb.model.detail.GenresItem
 import me.skrilltrax.themoviedb.model.detail.ProductionCompaniesItem
 
-data class MovieDetailResponse(
+open class MovieDetailResponse(
 
     @field:SerializedName("original_language")
     val originalLanguage: String? = null,
@@ -25,7 +25,7 @@ data class MovieDetailResponse(
     val revenue: Long? = null,
 
     @field:SerializedName("genres")
-    val genres: List<GenresItem?>? = null,
+    val genres: List<GenresItem>? = null,
 
     @field:SerializedName("popularity")
     val popularity: Double? = null,

@@ -97,10 +97,11 @@ class MovieDetailFragment : Fragment(), ListItemClickListener {
         }
 
         movieDetailViewModel.movieId.observe(viewLifecycleOwner) {
-            movieDetailViewModel.fetchMovieDetails()
-            movieDetailViewModel.fetchCastAndCrew()
-            movieDetailViewModel.fetchVideos()
-            movieDetailViewModel.fetchRecommendations()
+//            movieDetailViewModel.fetchMovieDetails()
+//            movieDetailViewModel.fetchCastAndCrew()
+//            movieDetailViewModel.fetchVideos()
+//            movieDetailViewModel.fetchRecommendations()
+            movieDetailViewModel.fetchMovieDetailsWithExtras()
         }
 
         movieDetailViewModel.movieDetail.observe(viewLifecycleOwner) {
