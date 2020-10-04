@@ -4,7 +4,6 @@ import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import androidx.fragment.app.FragmentActivity
 import java.lang.IllegalArgumentException
 
 object YoutubeUtils {
@@ -61,10 +60,10 @@ object YoutubeUtils {
             throw IllegalArgumentException("Video id should not be null")
         }
 
-        val appIntent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:${videoId}"))
+        val appIntent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$videoId"))
         val webIntent = Intent(
             Intent.ACTION_VIEW,
-            Uri.parse("http://www.youtube.com/watch?v=${videoId}")
+            Uri.parse("http://www.youtube.com/watch?v=$videoId")
         )
         try {
             context.startActivity(appIntent)

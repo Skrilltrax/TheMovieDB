@@ -1,8 +1,5 @@
 package me.skrilltrax.themoviedb.ui.moviedetail
 
-import android.content.ActivityNotFoundException
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -36,11 +33,13 @@ import me.skrilltrax.themoviedb.model.credits.CastItem
 import me.skrilltrax.themoviedb.model.credits.CrewItem
 import me.skrilltrax.themoviedb.model.list.movie.MovieListResultItem
 import me.skrilltrax.themoviedb.model.videos.VideoResultsItem
-import me.skrilltrax.themoviedb.utils.*
 import me.skrilltrax.themoviedb.utils.SystemLayoutUtils.makeFullScreenHideNavigation
 import me.skrilltrax.themoviedb.utils.SystemLayoutUtils.setStatusBarTint
 import me.skrilltrax.themoviedb.utils.YoutubeUtils.launchYoutube
-
+import me.skrilltrax.themoviedb.utils.gone
+import me.skrilltrax.themoviedb.utils.setHeroImage
+import me.skrilltrax.themoviedb.utils.setPosterImage
+import me.skrilltrax.themoviedb.utils.visible
 
 class MovieDetailFragment : Fragment(), ListItemClickListener {
 

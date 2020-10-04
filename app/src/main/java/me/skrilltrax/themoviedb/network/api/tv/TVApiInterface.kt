@@ -40,7 +40,6 @@ interface TVApiInterface {
         @Query("append_to_response") extras: String
     ): Response<TVDetailExtraResponse>
 
-
     @GET("tv/{show_id}/credits")
     suspend fun getShowCredits(
         @Path("show_id") id: String,

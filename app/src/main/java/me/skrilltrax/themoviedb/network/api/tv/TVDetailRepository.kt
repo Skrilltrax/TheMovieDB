@@ -2,7 +2,6 @@ package me.skrilltrax.themoviedb.network.api.tv
 
 import me.skrilltrax.themoviedb.BuildConfig
 import me.skrilltrax.themoviedb.model.credits.CreditsResponse
-import me.skrilltrax.themoviedb.model.detail.movie.MovieDetailExtraResponse
 import me.skrilltrax.themoviedb.model.detail.tv.TVDetailExtraResponse
 import me.skrilltrax.themoviedb.model.detail.tv.TVDetailResponse
 import me.skrilltrax.themoviedb.model.list.tv.TVListResponse

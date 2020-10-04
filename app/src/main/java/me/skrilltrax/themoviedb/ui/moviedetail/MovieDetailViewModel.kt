@@ -120,7 +120,6 @@ class MovieDetailViewModel @ViewModelInject constructor(private val movieDetailR
         }
     }
 
-
     fun fetchRecommendations() {
         viewModelScope.launch {
             val recommendations = movieDetailRepository.getRecommendations(movieId.value!!)

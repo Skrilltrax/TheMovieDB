@@ -1,8 +1,5 @@
 package me.skrilltrax.themoviedb.ui.tvdetail
 
-import android.content.ActivityNotFoundException
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -95,10 +92,6 @@ class TVDetailFragment : Fragment(), ListItemClickListener {
         }
 
         tvDetailViewModel.showId.observe(viewLifecycleOwner) {
-//            tvDetailViewModel.fetchShowDetails()
-//            tvDetailViewModel.fetchCastAndCrew()
-//            tvDetailViewModel.fetchVideos()
-//            tvDetailViewModel.fetchRecommendations()
             tvDetailViewModel.fetchShowDetailsWithExtras()
         }
 
@@ -220,16 +213,7 @@ class TVDetailFragment : Fragment(), ListItemClickListener {
     }
 
     private fun onVideoItemClick(videoResultsItem: VideoResultsItem) {
-        val appIntent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:${videoResultsItem.key}"))
-        val webIntent = Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse("http://www.youtube.com/watch?v=${videoResultsItem.key}")
-        )
-        try {
-            requireContext().startActivity(appIntent)
-        } catch (ex: ActivityNotFoundException) {
-            requireContext().startActivity(webIntent)
-        }
+        YoutubeUtils.launchYoutube(requireContext(), videoResultsItem.key)
     }
 
     override fun onItemClick(resultsItem: TVListResultItem) {
