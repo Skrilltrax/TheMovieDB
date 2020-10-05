@@ -1,8 +1,5 @@
 package me.skrilltrax.themoviedb.ui.moviedetail
 
-import android.content.ActivityNotFoundException
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -38,6 +35,7 @@ import me.skrilltrax.themoviedb.model.list.movie.MovieListResultItem
 import me.skrilltrax.themoviedb.model.videos.VideoResultsItem
 import me.skrilltrax.themoviedb.utils.SystemLayoutUtils.makeFullScreenHideNavigation
 import me.skrilltrax.themoviedb.utils.SystemLayoutUtils.setStatusBarTint
+import me.skrilltrax.themoviedb.utils.YoutubeUtils.launchYoutube
 import me.skrilltrax.themoviedb.utils.gone
 import me.skrilltrax.themoviedb.utils.setHeroImage
 import me.skrilltrax.themoviedb.utils.setPosterImage
@@ -97,10 +95,7 @@ class MovieDetailFragment : Fragment(), ListItemClickListener {
         }
 
         movieDetailViewModel.movieId.observe(viewLifecycleOwner) {
-            movieDetailViewModel.fetchMovieDetails()
-            movieDetailViewModel.fetchCastAndCrew()
-            movieDetailViewModel.fetchVideos()
-            movieDetailViewModel.fetchRecommendations()
+            movieDetailViewModel.fetchMovieDetailsWithExtras()
         }
 
         movieDetailViewModel.movieDetail.observe(viewLifecycleOwner) {
@@ -220,16 +215,7 @@ class MovieDetailFragment : Fragment(), ListItemClickListener {
     }
 
     private fun onVideoItemClick(videoResultsItem: VideoResultsItem) {
-        val appIntent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:${videoResultsItem.key}"))
-        val webIntent = Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse("http://www.youtube.com/watch?v=${videoResultsItem.key}")
-        )
-        try {
-            requireContext().startActivity(appIntent)
-        } catch (ex: ActivityNotFoundException) {
-            requireContext().startActivity(webIntent)
-        }
+        launchYoutube(this.requireContext(), videoResultsItem.key)
     }
 
     override fun onItemClick(resultsItem: MovieListResultItem) {

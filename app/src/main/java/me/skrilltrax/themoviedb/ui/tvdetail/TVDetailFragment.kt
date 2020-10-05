@@ -1,8 +1,5 @@
 package me.skrilltrax.themoviedb.ui.tvdetail
 
-import android.content.ActivityNotFoundException
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +15,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.lifecycleScope
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.Stack
 import kotlin.collections.ArrayList
 import kotlinx.coroutines.Dispatchers
@@ -38,11 +36,13 @@ import me.skrilltrax.themoviedb.model.list.tv.TVListResultItem
 import me.skrilltrax.themoviedb.model.videos.VideoResultsItem
 import me.skrilltrax.themoviedb.utils.SystemLayoutUtils.makeFullScreenHideNavigation
 import me.skrilltrax.themoviedb.utils.SystemLayoutUtils.setStatusBarTint
+import me.skrilltrax.themoviedb.utils.YoutubeUtils
 import me.skrilltrax.themoviedb.utils.gone
 import me.skrilltrax.themoviedb.utils.setHeroImage
 import me.skrilltrax.themoviedb.utils.setPosterImage
 import me.skrilltrax.themoviedb.utils.visible
 
+@AndroidEntryPoint
 class TVDetailFragment : Fragment(), ListItemClickListener {
 
     private val tvDetailViewModel by activityViewModels<TVDetailViewModel>()
@@ -95,10 +95,7 @@ class TVDetailFragment : Fragment(), ListItemClickListener {
         }
 
         tvDetailViewModel.showId.observe(viewLifecycleOwner) {
-            tvDetailViewModel.fetchShowDetails()
-            tvDetailViewModel.fetchCastAndCrew()
-            tvDetailViewModel.fetchVideos()
-            tvDetailViewModel.fetchRecommendations()
+            tvDetailViewModel.fetchShowDetailsWithExtras()
         }
 
         tvDetailViewModel.tvDetail.observe(viewLifecycleOwner) {
@@ -219,16 +216,7 @@ class TVDetailFragment : Fragment(), ListItemClickListener {
     }
 
     private fun onVideoItemClick(videoResultsItem: VideoResultsItem) {
-        val appIntent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:${videoResultsItem.key}"))
-        val webIntent = Intent(
-            Intent.ACTION_VIEW,
-            Uri.parse("http://www.youtube.com/watch?v=${videoResultsItem.key}")
-        )
-        try {
-            requireContext().startActivity(appIntent)
-        } catch (ex: ActivityNotFoundException) {
-            requireContext().startActivity(webIntent)
-        }
+        YoutubeUtils.launchYoutube(requireContext(), videoResultsItem.key)
     }
 
     override fun onItemClick(resultsItem: TVListResultItem) {
