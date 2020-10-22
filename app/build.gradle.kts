@@ -79,9 +79,6 @@ android {
 dependencies {
     compileOnly(Dependencies.AndroidX.annotation)
 
-    implementation(Dependencies.AndroidX.Compose.ui)
-    implementation(Dependencies.AndroidX.Compose.material)
-
     implementation(Dependencies.AndroidX.activity_ktx)
     implementation(Dependencies.AndroidX.appcompat)
     implementation(Dependencies.AndroidX.constraint_layout)
@@ -100,7 +97,13 @@ dependencies {
     implementation(Dependencies.AndroidX.ui_tooling)
     implementation(Dependencies.AndroidX.viewpager2)
 
+    implementation(Dependencies.AndroidX.Compose.ui)
+    implementation(Dependencies.AndroidX.Compose.material)
+
     implementation(Dependencies.Kotlin.kotlin_stdlib)
+
+    implementation(Dependencies.Kotlin.Coroutines.android)
+    implementation(Dependencies.Kotlin.Coroutines.core)
 
     implementation(Dependencies.ThirdParty.glide)
     implementation(Dependencies.ThirdParty.lottie)
