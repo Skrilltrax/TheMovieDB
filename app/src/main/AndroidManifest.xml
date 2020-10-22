@@ -14,6 +14,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity
+            android:name=".ComposeActivity"
+            android:label="@string/title_activity_compose"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".ui.homepage.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,10 +27,8 @@
         </activity>
         <activity android:name=".ui.moviedetail.MovieDetailActivity" />
         <activity android:name=".ui.search.SearchActivity" />
-        <activity
-            android:name=".ui.BaseActivity"
-             />
+        <activity android:name=".ui.BaseActivity" />
         <activity android:name=".ui.tvdetail.TVDetailActivity" />
     </application>
-    <!--android:configChanges="orientation|screenSize|keyboardHidden"-->
+
 </manifest>

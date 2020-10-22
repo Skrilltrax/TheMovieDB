@@ -1,25 +1,33 @@
+const val composeVersion = "1.0.0-alpha04"
 const val hiltVersion = "2.29.1-alpha"
+const val hiltAndroidXVersion = "1.0.0-alpha02"
+const val kotlinVersion = "1.4.10"
 
 object Plugins {
     const val agp = "com.android.tools.build:gradle:4.2.0-alpha13"
-    const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.10"
+    const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     const val hilt = "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
 }
 
 object Dependencies {
-    const val lifecycleVersion = "2.3.0-alpha07"
+    const val lifecycleVersion = "2.3.0-beta01"
     const val roomVersion = "2.3.0-alpha02"
 
     object Kotlin {
         object Coroutines {
-            const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.10"
-            const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.10"
+            const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinVersion"
+            const val core = "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinVersion"
         }
-        const val kotlin_reflect = "org.jetbrains.kotlin:kotlin-reflect:1.4.10"
+
+        const val kotlin_stdlib = "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+        const val kotlin_reflect = "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
     }
 
     object AndroidX {
-        const val hiltAndroidXVersion = "1.0.0-alpha02"
+        object Compose {
+            const val ui = "androidx.compose.ui:ui:$composeVersion"
+            const val material = "androidx.compose.material:material:$composeVersion"
+        }
 
         const val activity_ktx = "androidx.activity:activity-ktx:1.2.0-beta01"
         const val annotation = "androidx.annotation:annotation:1.2.0-alpha01"
@@ -33,12 +41,14 @@ object Dependencies {
         const val hilt_lifecycle_viewmodel = "androidx.hilt:hilt-lifecycle-viewmodel:$hiltAndroidXVersion"
         const val lifecycle_common = "androidx.lifecycle:lifecycle-common-java8:$lifecycleVersion"
         const val lifecycle_livedata_ktx = "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycleVersion"
+        const val lifecycle_runtime = "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion"
         const val lifecycle_viewmodel_ktx = "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycleVersion"
         const val material = "com.google.android.material:material:1.3.0-alpha02"
         const val preference = "androidx.preference:preference:1.1.1"
         const val recycler_view = "androidx.recyclerview:recyclerview:1.2.0-alpha05"
         const val room_compiler = "androidx.room:room-compiler:$roomVersion"
         const val room_ktx = "androidx.room:room-ktx:$roomVersion"
+        const val ui_tooling = "androidx.ui:ui-tooling:$composeVersion"
         const val viewpager2 = "androidx.viewpager2:viewpager2:1.1.0-alpha01"
     }
 

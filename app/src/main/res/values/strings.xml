@@ -3,4 +3,5 @@
     <string name="release_date_s">Release Date : %s</string>
     <string name="seasons_s">Seasons : %s</string>
     <string name="s_seasons_s_episodes">%s Seasons (%s Episodes)</string>
+    <string name="title_activity_compose">My Compose App</string>
 </resources>
