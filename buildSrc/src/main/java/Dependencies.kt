@@ -1,7 +1,7 @@
 const val hiltVersion = "2.29.1-alpha"
 
 object Plugins {
-    const val agp = "com.android.tools.build:gradle:4.2.0-alpha13"
+    const val agp = "com.android.tools.build:gradle:4.2.0-alpha14"
     const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:1.4.10"
     const val hilt = "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
 }
