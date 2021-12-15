@@ -12,8 +12,7 @@ plugins {
 var apiKey = ""
 val key: String? = System.getenv("TMDB_API_KEY")
 if (!key.isNullOrEmpty()) {
-    apiKey = System.getenv("TMDB_API_KEY")
-    apiKey = "\"$apiKey\""
+    apiKey = "\"$key\""
 } else {
     val secretsFile = rootProject.file("secrets.properties")
     if (secretsFile.exists()) {
